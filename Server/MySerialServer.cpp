@@ -47,6 +47,11 @@ bool MySerialServer::bind()
     return true;
 }
 
+// Listen & handle client in succession
+bool MySerialServer::start() {
+
+}
+
 int MySerialServer::listen()
 {
     // Attempt to listen
@@ -73,7 +78,7 @@ char* MySerialServer::get_buffer() {
     return buffer;
 }
 
-int MySerialServer::get_read_value() {
+int MySerialServer::get_read() {
     return read_value;
 }
 

@@ -7,13 +7,14 @@
 
 #include "Server.h"
 
-#include <string>
-#include <bits/socket.h>
-#include <sys/socket.h>
-#include <cstring>
-#include <unistd.h>
-#include <netinet/in.h>
-
+#include <iostream>	// cout
+#include <stdio.h>	// printf
+#include <string.h>	// strlen
+#include <string>	// string
+#include <sys/socket.h>	// socket
+#include <arpa/inet.h>	// inet_addr
+#include <netdb.h>	// hostent
+#include <unistd.h> // read
 
 using namespace server_side;
 class MySerialServer : public Server {
@@ -37,6 +38,7 @@ public:
     int listen();
     void read(int sock);
     char* get_buffer();
+    int get_read();
 };
 
 
