@@ -10,12 +10,14 @@
 namespace server_side {
     class Server {
         // Elementary
-        virtual int open(int port, ClientHandler handler) = 0; // Uses bind & listen
-        virtual int stop() = 0; // Stops server
+        virtual bool open(int port, ClientHandler* handler) = 0; // Uses bind & listen
+        virtual bool start() = 0; // Handle clients
+        virtual void stop() = 0; // Stop handling clients
         virtual char* get_buffer() = 0; // Gets buffer
         // Helper
-        virtual bool bind(int port) = 0; // Binds to a port
-        virtual int listen() = 0; // Listens for clients
+        virtual bool bind() = 0; // Bind to a port
+        virtual int listen() = 0; // Listen for a client
+        virtual int handle() = 0; // Handle client
     };
 }
 

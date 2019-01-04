@@ -5,27 +5,37 @@
 #ifndef SOLUTION_SERVER_MYSERIALSERVER_H
 #define SOLUTION_SERVER_MYSERIALSERVER_H
 
-#include <string>
 #include "Server.h"
+
+#include <string>
+#include <bits/socket.h>
+#include <sys/socket.h>
+#include <cstring>
+#include <unistd.h>
+#include <netinet/in.h>
 
 
 using namespace server_side;
 class MySerialServer : public Server {
 private:
-    int sock;
+    ClientHandler* handler;
+    struct sockaddr_in server;
     std::string address;
     int port;
-    struct sockaddr_in server;
+    int sock;
     // Variables for reading
     char buffer[1024] = {0};
     int read_value;
 public:
+    // Elementary
     MySerialServer();
-    int open(int port);
-    int stop();
-    int bind(int port);
+    bool open(int port, ClientHandler* handler);
+    bool start();
+    void stop();
+    // Helpers
+    bool bind();
     int listen();
-    void read();
+    void read(int sock);
     char* get_buffer();
 };
 

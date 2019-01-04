@@ -1,0 +1,3 @@
+# Ignore all CLion generated files
+cmake-build-debug/
+.idea/
