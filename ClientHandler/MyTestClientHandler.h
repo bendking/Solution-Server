@@ -6,11 +6,16 @@
 #define SOLUTION_SERVER_MYTESTCLIENTHANDLER_H
 
 #include "ClientHandler.h"
+#include <string>
+#include "../CacheManager/CacheManager.h"
+#include "../Searcher/StringReverser.h"
 
-class MyTestClientHandler {
-private:
-
+using namespace std;
+class MyTestClientHandler : ClientHandler{
+StringReverser* solver;
+CacheManager* cacheManager;
 public:
+    // implement ClientHandler
     void handleClient(istream input, ostream output);
 };
 
