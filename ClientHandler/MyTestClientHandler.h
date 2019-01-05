@@ -8,16 +8,25 @@
 #include "ClientHandler.h"
 #include "../CacheManager/CacheManager.h"
 #include "../Searcher/StringReverser.h"
+#include "../Server/InputStream.h"
+#include "../Server/OutputStream.h"
 #include <string>
+
+#define MY_TEST_CLIENT_FILE_NAME "my_text_file.txt"
 
 using namespace std;
 
 class MyTestClientHandler : ClientHandler{
 private:
-    StringReverser* solver;
+    Solver<string, string>* solver;
     CacheManager* cacheManager;
 public:
-    void handleClient(istream input, ostream output);
+    // C_tor
+    MyTestClientHandler(Solver<string, string>* _solver, CacheManager* _cacheManager);
+    ~MyTestClientHandler();
+
+    // Implement ClientHandler
+    void handleClient(InputStream& input, OutputStream& output);
 };
 
 

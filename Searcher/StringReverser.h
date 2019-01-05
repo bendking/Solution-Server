@@ -11,13 +11,10 @@
 using namespace std;
 
 class StringReverser : Solver<string, string> {
-string problem;
-string solution;
+
 public:
-    // C_tor
-    StringReverser(string s);
     // reverse string
-    string solve();
+    string solve(string s);
 };
 
 

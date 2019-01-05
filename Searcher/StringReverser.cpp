@@ -5,11 +5,9 @@
 #include "StringReverser.h"
 
 
-StringReverser::StringReverser(string str) {
-    this->problem = str;
-}
 
-string StringReverser::solve() {
+string StringReverser::solve(string problem) {
+    string solution;
     solution = string(problem);
     std::reverse(solution.begin(), solution.end());
     return solution;
