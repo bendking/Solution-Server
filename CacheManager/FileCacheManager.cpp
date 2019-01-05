@@ -47,16 +47,18 @@ void FileCacheManager::loadFromFile()
     ifstream infile(fileName);
     string problem, solution;
 
+    // Check if succeeded opening file
     if (infile.good()) {
-
-
-        while (! file.eof() ) {
-          //  getline (file,problem);
+        // Load file here
+        while ( getline (infile,problem) ) {
+            if (!problem.empty()) {
+                getline (infile,solution);
+                map[problem] = solution;
+            }
         }
-
-        while (infile >> key >> value)
-            map[key] = value;
     }
+
+    // Don't forget to close the file!
     infile.close();
 }
 
@@ -69,6 +71,7 @@ void FileCacheManager::saveAllToFile()
         file << x.first << endl << x.second << endl;
     }
 
+    // Closing the file
     file.close();
 }
 
