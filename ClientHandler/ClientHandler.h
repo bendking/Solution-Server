@@ -9,6 +9,9 @@
 
 using namespace std;
 class ClientHandler {
+private:
+
+public:
     virtual void handleClient(istream input, ostream output) = 0;
 };
 

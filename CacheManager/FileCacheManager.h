@@ -17,16 +17,16 @@ unordered_map<string, string> map;
 string fileName;
 
 public:
-    // C_tor D_tor
+    // CTOR & DTOR
     FileCacheManager(string _fileName);
     ~FileCacheManager();
 
     // Cache Manager functions
-    bool isExist(string _solution);
+    bool exists(string _solution);
     string getSolution(string _problem);
     string saveSolution(string _problem, string _solution);
 
-    // files
+    // File management
     void loadFromFile();
     void saveAllToFile();
 };

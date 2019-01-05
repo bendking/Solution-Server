@@ -12,11 +12,13 @@
 
 class InputStream {
 private:
+    pthread_mutex_t* mutex = NULL;
     int socket;
     char buffer[1024] = {0};
 public:
     InputStream();
     void setSocket(int _socket);
+    void setMutex(pthread_mutex_t* _mutex);
     std::string read();
 };
 

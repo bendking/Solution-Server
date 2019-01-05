@@ -12,7 +12,7 @@ using namespace std;
 class CacheManager {
 
 public:
-    virtual bool isExist(string _solution) = 0;
+    virtual bool exists(string _solution) = 0;
     virtual string getSolution(string _problem) = 0;
     virtual string saveSolution(string _problem, string _solution)  = 0;
 };

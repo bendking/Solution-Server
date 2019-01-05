@@ -18,7 +18,7 @@ private:
 public:
     OutputStream();
     void setSocket(int _socket);
-    bool send(string buffer);
+    int send(string buffer);
 };
 
 
