@@ -16,7 +16,7 @@ bool TCPServer::open(int port, ClientHandler* handler)
     return bind();
 }
 
-int TCPServer::handle(InputStream *input, OutputStream *output) {
+void TCPServer::handle(InputStream *input, OutputStream *output) {
     return handler->handleClient(input, output);
 }
 
@@ -81,5 +81,5 @@ int TCPServer::get_read() {
 }
 
 bool& TCPServer::getStop() {
-    return stop;
+    return stop_flag;
 }

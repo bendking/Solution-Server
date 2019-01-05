@@ -5,14 +5,15 @@
 #ifndef SOLUTION_SERVER_CLIENTHANDLER_H
 #define SOLUTION_SERVER_CLIENTHANDLER_H
 
-#include <iostream>
+#include "../Server/InputStream.h"
+#include "../Server/OutputStream.h"
 
 using namespace std;
 class ClientHandler {
 private:
 
 public:
-    virtual void handleClient(istream input, ostream output) = 0;
+    virtual void handleClient(InputStream *input, OutputStream *output) = 0;
 };
 
 #endif //SOLUTION_SERVER_CLIENTHANDLER_H

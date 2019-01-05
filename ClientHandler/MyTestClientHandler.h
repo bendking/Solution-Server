@@ -8,8 +8,6 @@
 #include "ClientHandler.h"
 #include "../CacheManager/CacheManager.h"
 #include "../Searcher/StringReverser.h"
-#include "../Server/InputStream.h"
-#include "../Server/OutputStream.h"
 #include <string>
 
 #define MY_TEST_CLIENT_FILE_NAME "my_text_file.txt"
@@ -26,7 +24,7 @@ public:
     ~MyTestClientHandler();
 
     // Implement ClientHandler
-    void handleClient(InputStream& input, OutputStream& output);
+    void handleClient(InputStream *input, OutputStream *output);
 };
 
 

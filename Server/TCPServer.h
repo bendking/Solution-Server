@@ -34,7 +34,7 @@ protected:
     int read_value;
 public:
     // Virtual
-    virtual ~TCPServer() = 0;
+    virtual ~TCPServer() = default;
     virtual bool start() = 0;        // Start handle loop
     virtual void stop() = 0;         // Stop handle loop
     virtual void read(int sock) = 0; // Read from client
@@ -42,7 +42,7 @@ public:
     // Elementary
     TCPServer();
     bool open(int port, ClientHandler* handler) override;
-    int handle(InputStream* input,OutputStream* output) override;
+    void handle(InputStream* input,OutputStream* output) override;
 
     // Helpers
     bool bind() override;         // Bind to port supplied

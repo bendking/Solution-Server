@@ -11,7 +11,7 @@ class Solver {
 private:
 
 public:
-    virtual ~Solver() = 0;
+    virtual ~Solver() = default;
 
     virtual Solution solve(Problem) = 0; // solves the problem
 };

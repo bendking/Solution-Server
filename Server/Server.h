@@ -19,7 +19,7 @@ namespace server_side {
         // Helper
         virtual bool bind() = 0; // Bind to a port
         virtual int listen() = 0; // Listen for a client
-        virtual int handle(InputStream* input,OutputStream* output) = 0; // Handle client
+        virtual void handle(InputStream* input,OutputStream* output) = 0; // Handle client
     };
 }
 

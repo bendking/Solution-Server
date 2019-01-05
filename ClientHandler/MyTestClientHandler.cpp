@@ -15,12 +15,14 @@ MyTestClientHandler::~MyTestClientHandler() {
     delete cacheManager;
 }
 
-void MyTestClientHandler::handleClient(InputStream& input, OutputStream& output)
+
+// TO - THINK : WHO IS RESPONSIBLE FOR THE DELETION OF THE STREAMS?
+void MyTestClientHandler::handleClient(InputStream *input, OutputStream *output)
 {
    string inputLine, outputLine;
 
    // Get next line from client
-   inputLine = input.read();
+   inputLine = input->read();
 
    while (inputLine != "end") {
 
@@ -32,10 +34,10 @@ void MyTestClientHandler::handleClient(InputStream& input, OutputStream& output)
        }
 
        // Send Solution
-       output.send(outputLine);
+       output->send(outputLine);
 
        // Get next line from client
-       inputLine = input.read();
+       inputLine = input->read();
    }
 
 }

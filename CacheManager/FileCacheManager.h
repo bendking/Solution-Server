@@ -18,13 +18,13 @@ string fileName;
 
 public:
     // CTOR & DTOR
-    FileCacheManager(string _fileName);
-    ~FileCacheManager();
+    explicit FileCacheManager(string _fileName);
+    ~FileCacheManager() override;
 
     // Cache Manager functions
-    bool exists(string _solution);
-    string getSolution(string _problem);
-    string saveSolution(string _problem, string _solution);
+    bool exists(string _solution) override;
+    string getSolution(string _problem) override;
+    void saveSolution(string _problem, string _solution) override;
 
     // File management
     void loadFromFile();

@@ -25,7 +25,7 @@ string FileCacheManager::getSolution(string _problem) {
     return map.at(_problem);
 }
 
-string FileCacheManager::saveSolution(string _problem, string _solution) {
+void FileCacheManager::saveSolution(string _problem, string _solution) {
     map[_problem] = _solution;
 }
 
