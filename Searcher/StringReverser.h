@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class StringReverser : Solver<string, string> {
+class StringReverser : public Solver<string, string> {
 
 public:
     // reverse string

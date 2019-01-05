@@ -12,7 +12,7 @@
 #include <fstream>
 
 using namespace std;
-class FileCacheManager : CacheManager{
+class FileCacheManager : public CacheManager{
 unordered_map<string, string> map;
 string fileName;
 

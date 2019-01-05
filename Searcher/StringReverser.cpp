@@ -5,7 +5,6 @@
 #include "StringReverser.h"
 
 
-
 string StringReverser::solve(string problem) {
     string solution;
     solution = string(problem);
