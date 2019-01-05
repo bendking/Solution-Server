@@ -2,11 +2,18 @@
 // Created by ben on 1/4/19.
 //
 
+#include <sstream>
 #include "MySerialServer.h"
 
 MySerialServer::MySerialServer() {
     sock = -1;
     port = 0;
+}
+
+MySerialServer::~MySerialServer() {
+    if (thread != NULL) {
+        delete thread;
+    }
 }
 
 bool MySerialServer::open(int port, ClientHandler* handler)
@@ -47,10 +54,36 @@ bool MySerialServer::bind()
     return true;
 }
 
-// Listen & handle client in succession
-bool MySerialServer::start() {
+void* loop(void* args)
+{
+    MySerialServer* server = (MySerialServer*) args;
+    InputStream* input = new InputStream;
+    OutputStream* output = new OutputStream;
 
+    bool stop = server->getStop();
+    while (!stop)
+    {
+        int new_socket = server->listen();
+        input->setSocket(new_socket);
+        output->setSocket(new_socket);
+        server->handle(input, output);
+    }
+
+    delete input;
+    delete output;
 }
+
+// Listen & handle client in succession
+bool MySerialServer::start()
+{
+    thread = new pthread_t;
+    pthread_create(thread, nullptr, loop, this);
+}
+
+void MySerialServer::stop() {
+    stop = true;
+}
+
 
 int MySerialServer::listen()
 {
@@ -60,7 +93,7 @@ int MySerialServer::listen()
     }
 
     int addrlen = sizeof(address);
-    int new_socket; // Socket to be returned         BIG BUG
+    int new_socket; // Socket with client            BIG BUG
     // Attempt to accept new client                  MEMORIAL
     if ((new_socket = accept(sock, (struct sockaddr *)&server, (socklen_t*)&addrlen)) < 0) {
         perror("accept");
@@ -82,8 +115,14 @@ int MySerialServer::get_read() {
     return read_value;
 }
 
-// Close connection
-void MySerialServer::stop() {
+bool& MySerialServer::getStop() {
+    return stop;
+}
+
+/* OLD CLOSE
+void MySerialServer::stop_server()
+ {
     shutdown(sock, SHUT_WR);
     close(sock);
 }
+*/

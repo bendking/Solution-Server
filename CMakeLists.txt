@@ -10,5 +10,9 @@ add_executable(Solution_Server
         Server/MySerialServer.h
         Server/Server.h
         ClientHandler/ClientHandler.h
+        ClientHandler/MyTestClientHandler.cpp
         ClientHandler/MyTestClientHandler.h
-        ClientHandler/MyTestClientHandler.cpp)
+        Server/InputStream.cpp
+        Server/InputStream.h
+        Server/OutputStream.cpp
+        Server/OutputStream.h)

@@ -15,6 +15,7 @@
 #include <arpa/inet.h>	// inet_addr
 #include <netdb.h>	// hostent
 #include <unistd.h> // read
+#include <pthread.h> // thread
 
 using namespace server_side;
 class MySerialServer : public Server {
@@ -22,6 +23,10 @@ private:
     ClientHandler* handler;
     struct sockaddr_in server;
     std::string address;
+    // Thread
+    pthread_t* thread = NULL;
+    bool stop = false;
+    // Config
     int port;
     int sock;
     // Variables for reading
@@ -30,15 +35,19 @@ private:
 public:
     // Elementary
     MySerialServer();
+    ~MySerialServer();
     bool open(int port, ClientHandler* handler);
     bool start();
     void stop();
+    void handle(InputStream* input,OutputStream* output);
     // Helpers
     bool bind();
     int listen();
     void read(int sock);
     char* get_buffer();
     int get_read();
+    // Get methods
+    bool& getStop();
 };
 
 

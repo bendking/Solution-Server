@@ -6,6 +6,8 @@
 #define SOLUTION_SERVER_SERVER_H
 
 #include "../ClientHandler/ClientHandler.h"
+#include "InputStream.h"
+#include "OutputStream.h"
 
 namespace server_side {
     class Server {
@@ -17,7 +19,7 @@ namespace server_side {
         // Helper
         virtual bool bind() = 0; // Bind to a port
         virtual int listen() = 0; // Listen for a client
-        virtual int handle() = 0; // Handle client
+        virtual int handle(InputStream* input,OutputStream* output) = 0; // Handle client
     };
 }
 
