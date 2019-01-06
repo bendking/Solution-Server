@@ -16,6 +16,8 @@ public:
 
     T& getState();
 
+    double getCost();
+
     bool operator==(const State<T>& rhs);
 
 };
@@ -35,6 +37,11 @@ bool State<T>::operator==(const State<T> &rhs) {
 template <class T>
 T& State<T>::getState() {
     return state;
+}
+
+template <class T>
+double State<T>::getCost() {
+    return cost;
 }
 
 #endif //SOLUTION_SERVER_STATE_H
