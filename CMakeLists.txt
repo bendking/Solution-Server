@@ -27,4 +27,4 @@ add_executable(Solution_Server
         Searcher/StringReverser.h
         CacheManager/CacheManager.h
         CacheManager/FileCacheManager.cpp
-        CacheManager/FileCacheManager.h)
+        CacheManager/FileCacheManager.h Searcher/State.h Searcher/Searchable.h Searcher/Searcher.h)
