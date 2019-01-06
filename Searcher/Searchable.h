@@ -16,9 +16,9 @@ public:
     virtual ~Searchable() = default;
 
     // Functions of interface
-    virtual State<T> getInitialState() = 0;
-    virtual bool isGoal(State<T>) = 0;
-    virtual std::set<State<T>> getAllPossibleStates(State<T>) = 0;
+    virtual State<T>* getInitialState() = 0;
+    virtual bool isGoal(State<T>*) = 0;
+    virtual std::set<State<T>*> getAllPossibleStates(State<T>*) = 0;
 };
 
 

@@ -19,20 +19,34 @@ public:
 template <class T>
 State<T> BestFirstSearch<T>::search(Searchable<T> searchable) {
     pushToOpenList(searchable.getInitialState());
-    std::set<State<T>> closed;
+    std::set<State<T>*> closed;
 
     while (this->openListSize() > 0) {
-        State<T> n = this->popOpenList();
+        State<T>* n = this->popOpenList();
         closed.insert(n);
 
+        // If n is the goal state
         if (searchable.isGoal(n)) {
             return n;
         }
 
-        std::set<State<T>> succerssors = searchable.getAllPossibleStates(n);
+        // Create n's successors
+        std::set<State<T>*> successors = searchable.getAllPossibleStates(n);
 
-        for (State<T> s: succerssors) {
-           // Not finished
+        // For each successor s do:
+        for (State<T>* s: successors) {
+
+          // If s is not in CLOSED and s is not in OPEN:
+          if (closed.find(s) != closed.end() && this->openContains(s)) {
+            this->pushToOpenList(s);
+          }
+          // Otherwise, if this new path is better than previous one
+          else {
+            //  If it is not in OPEN add it to OPEN.
+
+            // Otherwise, adjust its priority in OPEN
+            
+          }
         }
     }
 }
