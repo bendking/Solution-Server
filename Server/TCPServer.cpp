@@ -45,7 +45,7 @@ bool TCPServer::bind()
     server.sin_port = htons(port);
 
     // Bind server to socket
-    if ((::bind(sock, (struct sockaddr *)&server, sizeof(address))) < 0) {
+    if ((::bind(sock, (struct sockaddr*) &server, sizeof(address))) < 0) {
         perror("Failed to bind TCPServer");
         return false;
     }

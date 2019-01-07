@@ -19,7 +19,7 @@ private:
     Solver<Problem, Solution>* solver;
     CacheManager* cacheManager;
 public:
-    // C_tor
+    // Constructor & Destructor
     MyTestClientHandler(Solver<Problem, Solution>* _solver, CacheManager* _cacheManager);
     ~MyTestClientHandler();
 
@@ -27,42 +27,44 @@ public:
     void handleClient(InputStream *input, OutputStream *output);
 };
 
-// Should be in cpp but it won't work there
+//
+// Implementation
+// Note - this should be in cpp but it won't work there
+//
 
 template<class Problem, class Solution>
-MyTestClientHandler<Problem, Solution>::MyTestClientHandler(Solver<Problem, Solution>* _solver, CacheManager* _cacheManager) {
+MyTestClientHandler<Problem, Solution>::MyTestClientHandler(Solver<Problem, Solution>* _solver, CacheManager* _cacheManager)
+{
     solver = _solver;
     cacheManager = _cacheManager;
 }
 
 template<class Problem, class Solution>
-MyTestClientHandler<Problem, Solution>::~MyTestClientHandler() {
+MyTestClientHandler<Problem, Solution>::~MyTestClientHandler()
+{
     delete solver;
     delete cacheManager;
 }
 
-
-// TO - THINK : WHO IS RESPONSIBLE FOR THE DELETION OF THE STREAMS?
 template<class Problem, class Solution>
 void MyTestClientHandler<Problem, Solution>::handleClient(InputStream *input, OutputStream *output)
 {
-    string inputLine, outputLine;
+    string inputLine;
+    string outputLine;
 
     // Get next line from client
     inputLine = input->read();
-
     while (inputLine != "end") {
 
         // Check if exist in cache, if not, solve it
         if (cacheManager->exists(inputLine)) {
             outputLine = cacheManager->getSolution(inputLine);
         } else {
-            outputLine = solver -> solve(inputLine);
+            outputLine = solver->solve(inputLine);
         }
 
         // Send Solution
         output->send(outputLine);
-
         // Get next line from client
         inputLine = input->read();
     }

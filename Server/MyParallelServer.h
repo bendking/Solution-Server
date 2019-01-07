@@ -24,8 +24,6 @@ public:
 
     // Elementary
     MyParallelServer();
-
-    // Helpers
     pthread_mutex_t* getMutex();
     void addThread(pthread_t* pthread);
     void deleteThreads();

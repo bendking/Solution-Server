@@ -9,6 +9,7 @@
 #include "State.h"
 #include "StateCompare.h"
 #include <set>
+#include <algorithm>
 
 template <class T>
 class BestFirstSearch : public PriorityQueueSearcher<T>{
@@ -47,18 +48,18 @@ State<T>* BestFirstSearch<T>::search(Searchable<T> searchable) {
 
           // Otherwise, if this new path is better than previous one
           else {
-              // pop the same state if it costs more
+              // Pop the same state if it costs more
               State<T>* ss = popSameStateIfCostMore(s);
               if (ss != nullptr) {
-                  // insert the better path-state
+                  // Insert the better path-state
                   pushToOpenList(s);
               }
           }
         }
     }
 
-    // didn't find a solution
-    // free space
+    // Didn't find a solution
+    // Free space
     clearStates();
 
     return nullptr;
@@ -67,10 +68,10 @@ State<T>* BestFirstSearch<T>::search(Searchable<T> searchable) {
 template <class T>
 State<T>* BestFirstSearch<T>::popSameStateIfCostMore(State<T>* _state) {
     State<T>* result = PriorityQueueSearcher<T>::popSameStateIfCostMore(_state);
-    // if it is in open list
+    // If it is in open list
     if (result != nullptr) return result;
 
-    // if it is in close
+    // If it is in close
     for (auto x : closed) {
         if (*x == *_state) {
             if (x->getCost() > _state->getCost()) {
@@ -81,21 +82,19 @@ State<T>* BestFirstSearch<T>::popSameStateIfCostMore(State<T>* _state) {
         }
     }
 
-    // not in both
+    // If not in both
     return nullptr;
 }
 
 template <class T>
 void BestFirstSearch<T>::clearStates() {
     PriorityQueueSearcher<T>::clearStates();
-    // clear closed
+    // Clear closed
     for (auto x : closed) {
-
-        // if it's not in solution
-        if (! x->getIsInSolution()) {
+        // if it's not in solution, delete
+        if (! x->isInSolution()) {
             delete x;
         }
-
     }
 }
 

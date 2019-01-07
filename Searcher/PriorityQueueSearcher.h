@@ -13,27 +13,27 @@
 
 template <class T>
 class PriorityQueueSearcher : public Searcher<T>{
-
+private:
     int evaluatedNodes;
-    std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> myPriorityQueue;
-
+    std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> priorityQueue;
 public:
-
-    // C_tor
+    // Constructor & Destructor
     PriorityQueueSearcher();
 
-    // Queue stuff
+    // Queue manipulation
     State<T>* popOpenList();
     void pushToOpenList(State<T>* _state);
     bool openContains(State<T>* _state);
     int openListSize();
-    virtual State<T>* popSameStateIfCostMore(State<T>* _state);
 
-    int getNumberOfNodesEvaluated();
+    // Virtual
+    virtual State<T>* popSameStateIfCostMore(State<T>* _state);
     virtual void clearStates();
 
     // Implement Searcher interface
     virtual State<T> search(Searchable<T> searchable) = 0;
+    int getNumberOfNodesEvaluated();
+
 
 };
 
@@ -44,9 +44,10 @@ PriorityQueueSearcher<T>::PriorityQueueSearcher() {
 }
 
 template <class T>
-State<T>* PriorityQueueSearcher<T>::popOpenList(){
+State<T>* PriorityQueueSearcher<T>::popOpenList()
+{
     evaluatedNodes++;
-    return myPriorityQueue.pop();
+    return priorityQueue.pop();
 }
 
 template <class T>
@@ -55,44 +56,44 @@ bool PriorityQueueSearcher<T>::openContains(State<T>* _state) {
 }
 
 template <class T>
-State<T>* PriorityQueueSearcher<T>::popSameStateIfCostMore(State<T>* _state) {
-    //std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> temp = myPriorityQueue;
-    std::vector<State<T>*> v;
+State<T>* PriorityQueueSearcher<T>::popSameStateIfCostMore(State<T>* _state)
+{
+    //std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> temp = priorityQueue;
+    std::vector<State<T>*> vec;
     State<T>* result = nullptr;
-    // iterate over the queue
-    while (!myPriorityQueue.empty()) {
-        State<T>* s = myPriorityQueue.top();
+    // Iterate over the queue
+    while (!priorityQueue.empty())
+    {
+        State<T>* state = priorityQueue.top();
 
         // Check if this is what we are looking for
-        if (*s == *_state) {
-            if (s->getCost() > _state->getCost())
-                result = s;
+        if (*state == *_state) {
+            if (state->getCost() > _state->getCost())
+                result = state;
             break;
         }
 
-        // save it before pop
-        v.push_back(s);
-
-        // Get the next one
-        myPriorityQueue.pop();
+        // Save it then  pop
+        vec.push_back(state);
+        priorityQueue.pop();
     }
 
-    // add them back
-    for (auto x : v) {
-        myPriorityQueue.push(x);
+    // Add states back
+    for (auto x : vec) {
+        priorityQueue.push(x);
     }
 
-    // return the result
+    // Return the result
     return result;
 }
 template <class T>
 void PriorityQueueSearcher<T>::pushToOpenList(State<T>* _state) {
-    myPriorityQueue.push(_state);
+    priorityQueue.push(_state);
 }
 
 template <class T>
 int PriorityQueueSearcher<T>::openListSize() {
-    return  (int)myPriorityQueue.size();
+    return  (int)priorityQueue.size();
 }
 
 template <class T>
@@ -103,17 +104,16 @@ int PriorityQueueSearcher<T>::getNumberOfNodesEvaluated() {
 
 template <class T>
 void PriorityQueueSearcher<T>::clearStates() {
-    // delete open list
-    // iterate over the queue
-    while (!myPriorityQueue.empty()) {
-
+    // Iterate over the queue & delete unnecessary states
+    while (!priorityQueue.empty())
+    {
         // Get the top and pop
-        State<T>* s = myPriorityQueue.top();
-        myPriorityQueue.pop();
+        State<T>* state = priorityQueue.top();
+        priorityQueue.pop();
 
         // Check if it in solution, if not, delete it
-        if (! s->getIsInSolution()) {
-            delete s;
+        if (!state->isInSolution()) {
+            delete state;
         }
 
     }

@@ -10,7 +10,6 @@
 
 template <class T>
 class DepthFirstSearch : public DequeSearcher<T> {
-
 public:
     State<T>* getNextElement();
     void insertElementToOpen(State<T>* _state);
@@ -19,10 +18,10 @@ public:
 
 template <class T>
 State<T>* DepthFirstSearch<T>::getNextElement() {
-    State<T>* s = DequeSearcher<T>::open.back();
+    State<T>* state = DequeSearcher<T>::open.back();
     DequeSearcher<T>::open.pop_back();
-
-    return s;
+    //
+    return state;
 }
 
 template <class T>

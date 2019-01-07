@@ -12,10 +12,10 @@
 #include <fstream>
 
 using namespace std;
-class FileCacheManager : public CacheManager{
-unordered_map<string, string> map;
-string fileName;
-
+class FileCacheManager : public CacheManager {
+private:
+    unordered_map<string, string> map;
+    string fileName;
 public:
     // CTOR & DTOR
     explicit FileCacheManager(string _fileName);

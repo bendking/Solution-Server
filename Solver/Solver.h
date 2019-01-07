@@ -12,8 +12,7 @@ private:
 
 public:
     virtual ~Solver() = default;
-
-    virtual Solution solve(Problem) = 0; // solves the problem
+    virtual Solution solve(Problem) = 0;
 };
 
 

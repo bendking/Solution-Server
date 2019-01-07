@@ -13,6 +13,7 @@ class ClientHandler {
 private:
 
 public:
+    // Accepts abstract stream and handles it
     virtual void handleClient(InputStream *input, OutputStream *output) = 0;
 };
 

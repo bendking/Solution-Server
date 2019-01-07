@@ -10,8 +10,7 @@
 template <class T>
 class StateCompare {
 public:
-    bool operator() (State<T> *a, State<T> *b)
-    {
+    bool operator() (State<T> *a, State<T> *b) {
         return a->getCost() < b->getCost();
     }
 };
@@ -19,11 +18,10 @@ public:
 template <class T>
 struct StatePointerCompare
 {
-    State<T>* _search;
+    State<T*>* _search;
+    StatePointerCompare(State<T*> search) : _search(search) { }
 
-    StatePointerCompare(State<T*> search) : _search(search){}
-    bool operator()(const State<T*>* ptr)
-    {
+    bool operator()(const State<T*>* ptr) {
         return ptr->getState() == _search->getState();
     }
 

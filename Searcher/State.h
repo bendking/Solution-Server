@@ -10,11 +10,10 @@ class State {
 T state;
 double cost;
 State<T>* cameFrom = nullptr;
-bool isInSolution = false;
+bool inSolution = false;
 
 
 public:
-    // C_tor
     State(T _state, double _cost, State<T> &_cameFrom);
 
     // getters, setters
@@ -22,8 +21,8 @@ public:
     double getCost();
     void setCameFrom(State<T>* _cameFrom);
     State<T>* getCameFrom();
-    void toggleIsInSolution();
-    bool getIsInSolution();
+    void toggleInSolution();
+    bool isInSolution();
 
     // operator == override
     bool operator==(const State<T>& rhs);
@@ -62,13 +61,13 @@ State<T>* State<T>::getCameFrom() {
     return cameFrom;
 }
 template <class T>
-void State<T>::toggleIsInSolution() {
-    isInSolution = !isInSolution;
+void State<T>::toggleInSolution() {
+    inSolution = !inSolution;
 }
 
 template <class T>
-bool State<T>::getIsInSolution() {
-    return isInSolution;
+bool State<T>::isInSolution() {
+    return inSolution;
 }
 
 #endif //SOLUTION_SERVER_STATE_H

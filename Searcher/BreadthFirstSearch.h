@@ -20,10 +20,10 @@ public:
 
 template <class T>
 State<T>* BreadthFirstSearch<T>::getNextElement() {
-    State<T>* s = DequeSearcher<T>::open.front();
+    State<T>* state = DequeSearcher<T>::open.front();
     DequeSearcher<T>::open.pop_front();
 
-    return s;
+    return state;
 }
 
 template <class T>

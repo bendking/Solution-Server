@@ -8,6 +8,7 @@
 #include "Searcher.h"
 #include "StateCompare.h"
 #include <queue>
+#include <algorithm>
 
 
 template <class T>
@@ -22,7 +23,6 @@ public:
     virtual void insertElementToOpen(State<T>* _state) = 0;
     void visit(State<T*> _state);
     bool hasVisited(State<T*> _state);
-
     State<T>* search(Searchable<T> searchable) override;
 
 };
@@ -36,7 +36,7 @@ State<T>* DequeSearcher<T>::search(Searchable<T> searchable) {
         State<T*> node = getNextElement();
 
         if (searchable.isGoal(node)) {
-            // TO DO - free up space!!
+            // TODO (OFEK): free up space!!!
             markSolutionPath(node);
             clearStates();
             return node;
@@ -44,14 +44,13 @@ State<T>* DequeSearcher<T>::search(Searchable<T> searchable) {
 
         std::set<State<T>*> expand = searchable.getAllPossibleStates();
         for (auto child : expand) {
-            // if not visited
+            // If not visited
             if (! hasVisited(child)) {
                 visit(child);
-                // add element to open list
+                // Add element to open list
                 insertElementToOpen(child);
             }
         }
-
     }
 }
 
@@ -59,25 +58,20 @@ State<T>* DequeSearcher<T>::search(Searchable<T> searchable) {
 
 template <class T>
 void DequeSearcher<T>::clearStates(){
-    // clear closed
+    // Clear closed
     for (auto x : closed) {
-
-        // if it's not in solution
-        if (! x->getIsInSolution()) {
+        // If it's not in solution, delete
+        if (! x->isInSolution()) {
             delete x;
         }
-
     }
 
-    // clear open
-    // clear closed
+    // Clear open
     for (auto x : open) {
-
-        // if it's not in solution
-        if (! x->getIsInSolution()) {
+        // If it's not in solution, delete
+        if (!x->isInSolution()) {
             delete x;
         }
-
     }
 }
 

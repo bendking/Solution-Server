@@ -35,8 +35,7 @@ void FileCacheManager::saveSolution(string _problem, string _solution) {
 
 void FileCacheManager::loadFromFile()
 {
-
-    // create file if needed
+    // Create file (if not already created)
     ofstream file(fileName);
     file.close();
 

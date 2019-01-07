@@ -7,13 +7,14 @@
 
 #include "../Solver/Solver.h"
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
 class StringReverser : public Solver<string, string> {
 
 public:
-    // reverse string
+    // Reverse string given and return result
     string solve(string s);
 };
 
