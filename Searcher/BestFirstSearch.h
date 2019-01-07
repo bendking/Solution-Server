@@ -10,7 +10,7 @@
 #include <set>
 
 template <class T>
-class BestFirstSearch : PriorityQueueSearcher<T>{
+class BestFirstSearch : public PriorityQueueSearcher<T>{
     std::set<State<T>*> closed;
 public:
     void markSolutionPath(State<T>* _goal);
@@ -22,8 +22,7 @@ public:
 template <class T>
 void BestFirstSearch<T>::markSolutionPath(State<T>* _goal) {
     // clear open and mark the solution
-    PriorityQueueSearcher<T>::foundSolution(_goal);
-
+    PriorityQueueSearcher<T>::markSolutionPath(_goal);
 }
 template <class T>
 State<T>* BestFirstSearch<T>::search(Searchable<T> searchable) {

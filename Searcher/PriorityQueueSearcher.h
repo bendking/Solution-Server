@@ -12,7 +12,7 @@
 #include <queue>
 
 template <class T>
-class PriorityQueueSearcher : Searcher<T>{
+class PriorityQueueSearcher : public Searcher<T>{
 
     int evaluatedNodes;
     std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> myPriorityQueue;
@@ -30,7 +30,6 @@ public:
     virtual State<T>* popSameStateIfCostMore(State<T>* _state);
 
     int getNumberOfNodesEvaluated();
-    virtual void markSolutionPath(State<T>* _goal);
     virtual void clearStates();
 
     // Implement Searcher interface
@@ -101,16 +100,6 @@ int PriorityQueueSearcher<T>::getNumberOfNodesEvaluated() {
     return evaluatedNodes;
 };
 
-template <class T>
-void PriorityQueueSearcher<T>::markSolutionPath(State<T>* _goal){
-    State<T>* tmp = _goal;
-    // mark the solution
-    do {
-        tmp->toggleIsInSolution();
-        tmp = tmp->getCameFrom();
-    } while (tmp != nullptr);
-
-}
 
 template <class T>
 void PriorityQueueSearcher<T>::clearStates() {
