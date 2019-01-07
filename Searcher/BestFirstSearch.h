@@ -7,6 +7,7 @@
 
 #include "PriorityQueueSearcher.h"
 #include "State.h"
+#include "StateCompare.h"
 #include <set>
 
 template <class T>
@@ -46,7 +47,7 @@ State<T>* BestFirstSearch<T>::search(Searchable<T> searchable) {
         for (State<T>* s: successors) {
 
           // If s is not in CLOSED and s is not in OPEN:
-          if (closed.find(s) != closed.end() && this->openContains(s)) {
+          if (closed.end() != std::find_if(closed.begin(), closed.end(), StatePointerCompare<T>(s)) && this->openContains(s)) {
             this->pushToOpenList(s);
           }
 
