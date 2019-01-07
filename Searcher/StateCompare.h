@@ -12,7 +12,7 @@ class StateCompare {
 public:
     bool operator() (State<T> *a, State<T> *b)
     {
-        return a->getCost() > b->getCost();
+        return a->getCost() < b->getCost();
     }
 };
 

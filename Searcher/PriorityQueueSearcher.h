@@ -27,10 +27,11 @@ public:
     void pushToOpenList(State<T>* _state);
     bool openContains(State<T>* _state);
     int openListSize();
-    State<T>* getSameState(State<T>* _state);
+    virtual State<T>* popSameStateIfCostMore(State<T>* _state);
 
     int getNumberOfNodesEvaluated();
-    virtual void foundSolution(State<T>* _goal);
+    virtual void markSolutionPath(State<T>* _goal);
+    virtual void clearStates();
 
     // Implement Searcher interface
     virtual State<T> search(Searchable<T> searchable) = 0;
@@ -55,24 +56,35 @@ bool PriorityQueueSearcher<T>::openContains(State<T>* _state) {
 }
 
 template <class T>
-State<T>* PriorityQueueSearcher<T>::getSameState(State<T>* _state) {
-    std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> temp = myPriorityQueue;
-
+State<T>* PriorityQueueSearcher<T>::popSameStateIfCostMore(State<T>* _state) {
+    //std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> temp = myPriorityQueue;
+    std::vector<State<T>*> v;
+    State<T>* result = nullptr;
     // iterate over the queue
-    while (!temp.empty()) {
-        State<T>* s = temp.top();
+    while (!myPriorityQueue.empty()) {
+        State<T>* s = myPriorityQueue.top();
 
         // Check if this is what we are looking for
         if (*s == *_state) {
-            return s;
+            if (s->getCost() > _state->getCost())
+                result = s;
+            break;
         }
 
+        // save it before pop
+        v.push_back(s);
+
         // Get the next one
-        temp.pop();
+        myPriorityQueue.pop();
     }
 
-    // Didn't find
-    return nullptr;
+    // add them back
+    for (auto x : v) {
+        myPriorityQueue.push(x);
+    }
+
+    // return the result
+    return result;
 }
 template <class T>
 void PriorityQueueSearcher<T>::pushToOpenList(State<T>* _state) {
@@ -90,7 +102,7 @@ int PriorityQueueSearcher<T>::getNumberOfNodesEvaluated() {
 };
 
 template <class T>
-void PriorityQueueSearcher<T>::foundSolution(State<T>* _goal){
+void PriorityQueueSearcher<T>::markSolutionPath(State<T>* _goal){
     State<T>* tmp = _goal;
     // mark the solution
     do {
@@ -98,6 +110,10 @@ void PriorityQueueSearcher<T>::foundSolution(State<T>* _goal){
         tmp = tmp->getCameFrom();
     } while (tmp != nullptr);
 
+}
+
+template <class T>
+void PriorityQueueSearcher<T>::clearStates() {
     // delete open list
     // iterate over the queue
     while (!myPriorityQueue.empty()) {
@@ -112,6 +128,5 @@ void PriorityQueueSearcher<T>::foundSolution(State<T>* _goal){
         }
 
     }
-
 }
 #endif //SOLUTION_SERVER_MYSEARCHER_H
