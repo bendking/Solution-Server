@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 project(Solution_Server)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS -pthread)
 
 include_directories(ClientHandler)
 include_directories(Server)
@@ -27,4 +28,16 @@ add_executable(Solution_Server
         Searcher/StringReverser.h
         CacheManager/CacheManager.h
         CacheManager/FileCacheManager.cpp
-        CacheManager/FileCacheManager.h Searcher/State.h Searcher/Searchable.h Searcher/Searcher.h Searcher/BestFirstSearch.cpp Searcher/BestFirstSearch.h Searcher/PriorityQueueSearcher.cpp Searcher/PriorityQueueSearcher.h Searcher/StateCompare.h Searcher/BreadthFirstSearch.cpp Searcher/BreadthFirstSearch.h Searcher/DequeSearcher.h Searcher/DepthFirstSearch.h)
+        CacheManager/FileCacheManager.h
+        Searcher/State.h
+        Searcher/Searchable.h
+        Searcher/Searcher.h
+        Searcher/BestFirstSearch.cpp
+        Searcher/BestFirstSearch.h
+        Searcher/PriorityQueueSearcher.cpp
+        Searcher/PriorityQueueSearcher.h
+        Searcher/StateCompare.h
+        Searcher/BreadthFirstSearch.cpp
+        Searcher/BreadthFirstSearch.h
+        Searcher/DequeSearcher.h
+        Searcher/DepthFirstSearch.h)
