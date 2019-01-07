@@ -12,7 +12,7 @@
 #include <queue>
 
 template <class T>
-class MySearcher : Searcher<T>{
+class PriorityQueueSearcher : Searcher<T>{
 
     int evaluatedNodes;
     std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> myPriorityQueue;
@@ -20,7 +20,7 @@ class MySearcher : Searcher<T>{
 public:
 
     // C_tor
-    MySearcher();
+    PriorityQueueSearcher();
 
     // Queue stuff
     State<T>* popOpenList();
@@ -30,6 +30,7 @@ public:
     State<T>* getSameState(State<T>* _state);
 
     int getNumberOfNodesEvaluated();
+    virtual void foundSolution(State<T>* _goal);
 
     // Implement Searcher interface
     virtual State<T> search(Searchable<T> searchable) = 0;
@@ -38,23 +39,23 @@ public:
 
 
 template <class T>
-MySearcher<T>::MySearcher() {
+PriorityQueueSearcher<T>::PriorityQueueSearcher() {
     evaluatedNodes = 0;
 }
 
 template <class T>
-State<T>* MySearcher<T>::popOpenList(){
+State<T>* PriorityQueueSearcher<T>::popOpenList(){
     evaluatedNodes++;
     return myPriorityQueue.pop();
 }
 
 template <class T>
-bool MySearcher<T>::openContains(State<T>* _state) {
+bool PriorityQueueSearcher<T>::openContains(State<T>* _state) {
     return getSameState(_state) != nullptr;
 }
 
 template <class T>
-State<T>* MySearcher<T>::getSameState(State<T>* _state) {
+State<T>* PriorityQueueSearcher<T>::getSameState(State<T>* _state) {
     std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> temp = myPriorityQueue;
 
     // iterate over the queue
@@ -74,18 +75,43 @@ State<T>* MySearcher<T>::getSameState(State<T>* _state) {
     return nullptr;
 }
 template <class T>
-void MySearcher<T>::pushToOpenList(State<T>* _state) {
+void PriorityQueueSearcher<T>::pushToOpenList(State<T>* _state) {
     myPriorityQueue.push(_state);
 }
 
 template <class T>
-int MySearcher<T>::openListSize() {
+int PriorityQueueSearcher<T>::openListSize() {
     return  (int)myPriorityQueue.size();
 }
 
 template <class T>
-int MySearcher<T>::getNumberOfNodesEvaluated() {
+int PriorityQueueSearcher<T>::getNumberOfNodesEvaluated() {
     return evaluatedNodes;
 };
 
+template <class T>
+void PriorityQueueSearcher<T>::foundSolution(State<T>* _goal){
+    State<T>* tmp = _goal;
+    // mark the solution
+    do {
+        tmp->toggleIsInSolution();
+        tmp = tmp->getCameFrom();
+    } while (tmp != nullptr);
+
+    // delete open list
+    // iterate over the queue
+    while (!myPriorityQueue.empty()) {
+
+        // Get the top and pop
+        State<T>* s = myPriorityQueue.top();
+        myPriorityQueue.pop();
+
+        // Check if it in solution, if not, delete it
+        if (! s->getIsInSolution()) {
+            delete s;
+        }
+
+    }
+
+}
 #endif //SOLUTION_SERVER_MYSEARCHER_H

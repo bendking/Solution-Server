@@ -16,7 +16,7 @@ public:
     virtual ~Searcher() = default;
 
     // the search method
-    virtual State<T> search (Searchable<T> searchable) = 0;
+    virtual State<T>* search (Searchable<T> searchable) = 0;
     // get how many nodes were evaluated by the algorithm
     virtual int getNumberOfNodesEvaluated() = 0;
 };
