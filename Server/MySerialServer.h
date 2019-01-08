@@ -21,6 +21,7 @@ public:
 
     // Elementary
     MySerialServer();
+    MySerialServer(ClientHandler* clientHandler);
 };
 
 

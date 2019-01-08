@@ -9,23 +9,22 @@ TCPServer::TCPServer() {
     port = 0;
 }
 
-bool TCPServer::open(int port, ClientHandler* handler)
+bool TCPServer::open(int port)
 {
     this->port = port;
-    this->handler = handler;
     return bind();
 }
 
-void TCPServer::handle(InputStream *input, OutputStream *output) {
-    return handler->handleClient(input, output);
+void TCPServer::handleClient(InputStream *input, OutputStream *output) {
+    handler->handleClient(input, output);
 }
 
 bool TCPServer::bind()
 {
     // Attempt socket creation if it is not already created
     if (sock == -1) {
-        // Create socket
-        sock = socket(AF_INET , SOCK_STREAM , 0);
+        // Create socket (non-blocking)
+        sock = socket(AF_INET , SOCK_STREAM | SOCK_NONBLOCK , 0);
         if (sock == -1) {
             perror("Failed to create socket");
             return false;
@@ -61,15 +60,48 @@ int TCPServer::listen()
         perror("listen");
     }
 
+    // TIMEOUT
+    // Timeout limit (in seconds)
+    int time_limit = 60;
+
+    struct timeval timeout;
+    fd_set fd;
+    int retval;
+
+    // Define timout
+    timeout.tv_sec = time_limit;
+    timeout.tv_usec = 0;
+
+    // Track fd
+    FD_ZERO(&fd);
+    FD_SET(0, &fd);
+
+    // Check if socket is ready
+    retval = ::select(1, &fd, NULL, NULL, &timeout);
+
+    // If error has occured
+    if (retval == -1) {
+        perror("select()");
+    }
+    // If no client has connected within 60 seconds
+    if (retval == 0) {
+        throw logic_error("Server timed out");
+    }
+
     int addrlen = sizeof(address);
     int new_socket; // Socket with client            BIG BUG
     // Attempt to accept new client                  MEMORIAL
-    if ((new_socket = accept(sock, (struct sockaddr *)&server, (socklen_t*)&addrlen)) < 0) {
+    if ((new_socket = accept(sock, (struct sockaddr*) &server, (socklen_t*)&addrlen)) < 0) {
         perror("accept");
     }
 
     // Return socket for input
     return new_socket;
+}
+
+void TCPServer::closeSocket(int socket) {
+    shutdown(socket, SHUT_WR);
+    close(socket);
 }
 
 char* TCPServer::get_buffer() {

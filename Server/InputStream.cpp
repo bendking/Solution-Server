@@ -6,13 +6,7 @@
 
 using namespace std;
 
-InputStream::InputStream() {
 
-}
-
-void InputStream::setSocket(int _socket) {
-    socket = _socket;
-}
 
 void InputStream::setMutex(pthread_mutex_t* _mutex) {
     mutex = _mutex;

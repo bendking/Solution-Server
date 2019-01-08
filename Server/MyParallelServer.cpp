@@ -10,10 +10,7 @@ MyParallelServer::MyParallelServer() : TCPServer() {
 
 MyParallelServer::~MyParallelServer()
 {
-    // In case stop wasn't activated
-    stop();
-
-    // Wait for threads
+        // Wait for threads
     char* dummy;
     for (pthread_t* thread : threads) {
         pthread_join(*thread, (void**)dummy);
@@ -51,7 +48,8 @@ void* handle_client(void* _args)
     OutputStream* output = args->output;
 
     // Handle client
-    server->handle(input, output);
+    server->handleClient(input, output);
+    server->closeSocket(input->getSocket());
 
     delete input;
     delete output;

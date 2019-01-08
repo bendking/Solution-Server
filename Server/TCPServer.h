@@ -42,12 +42,13 @@ public:
 
     // Elementary
     TCPServer();
-    bool open(int port, ClientHandler* handler) override;
-    void handle(InputStream* input,OutputStream* output) override;
+    bool open(int port) override;
+    void handleClient(InputStream* input,OutputStream* output);
 
     // Helpers
     bool bind() override;         // Bind to port supplied
     int listen() override;        // Listen for client
+    void closeSocket(int socket);
     char* get_buffer() override;  // Get what was read
     int get_read();               // Return read value
     bool& getStop();              // Flag for start()

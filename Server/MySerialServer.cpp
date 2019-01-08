@@ -6,8 +6,16 @@
 
 MySerialServer::MySerialServer() : TCPServer() { }
 
+MySerialServer::MySerialServer(ClientHandler* clientHandler) : TCPServer() {
+    handler = clientHandler;
+}
+
 MySerialServer::~MySerialServer()
 {
+    // Wait for thread
+    char* dummy;
+    pthread_join(*thread, (void**)dummy);
+
     // Delete pthread_t
     if (thread != NULL) {
         delete thread;
@@ -37,7 +45,8 @@ void* loop(void* args)
         input->setSocket(new_socket);
         output->setSocket(new_socket);
         // Give streams to handler
-        server->handle(input, output);
+        server->handleClient(input, output);
+        server->closeSocket(new_socket);
     }
 
     delete input;

@@ -12,8 +12,7 @@
 namespace server_side {
     class Server {
         // Elementary
-        virtual void handle(InputStream* input,OutputStream* output) = 0; // Handle client
-        virtual bool open(int port, ClientHandler* handler) = 0; // Uses bind & listen
+        virtual bool open(int port) = 0; // Uses bind & listen
         virtual bool start() = 0; // Handle clients
         virtual void stop() = 0; // Stop handling clients
         virtual char* get_buffer() = 0; // Gets buffer

@@ -19,6 +19,8 @@ add_executable(Solution_Server
         Server/MySerialServer.h
         Server/MyParallelServer.cpp
         Server/MyParallelServer.h
+        Server/SocketStream.cpp
+        Server/SocketStream.h
         Server/InputStream.cpp
         Server/InputStream.h
         Server/OutputStream.cpp

@@ -14,7 +14,7 @@
 using namespace std;
 
 template <class Problem, class Solution>
-class MyTestClientHandler : ClientHandler{
+class MyTestClientHandler : public ClientHandler {
 private:
     Solver<Problem, Solution>* solver;
     CacheManager* cacheManager;
