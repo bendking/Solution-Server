@@ -62,7 +62,7 @@ int TCPServer::listen()
 
     // TIMEOUT
     // Timeout limit (in seconds)
-    int time_limit = 60;
+    int time_limit = 10;
 
     struct timeval timeout;
     fd_set fd;
@@ -74,10 +74,11 @@ int TCPServer::listen()
 
     // Track fd
     FD_ZERO(&fd);
-    FD_SET(0, &fd);
+    FD_SET(sock, &fd);
 
     // Check if socket is ready
-    retval = ::select(1, &fd, NULL, NULL, &timeout);
+    int max = sock + 1;
+    retval = ::select(max, &fd, NULL, NULL, &timeout);
 
     // If error has occured
     if (retval == -1) {
