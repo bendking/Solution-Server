@@ -1,0 +1,117 @@
+//
+// Created by Yaron Israel on 2019-01-07.
+//
+
+#ifndef SOLUTION_SERVER_DEQUESEARCHER_H
+#define SOLUTION_SERVER_DEQUESEARCHER_H
+
+#include "Searcher.h"
+#include "StateCompare.h"
+#include <queue>
+#include <algorithm>
+
+
+template <class T>
+class MySearcher : public Searcher<T> {
+protected:
+    std::set<State<T>*> closed;
+    int evaluatedNodes = 0;
+
+public:
+    virtual void clearStates() = 0;
+    virtual State<T>* popOpenList() = 0;
+    virtual void addToOpenList(State<T>* _state) = 0;
+    virtual void processState(State<T>* _state, Searchable<T>& searchable) = default;
+    virtual bool isOpenEmpty() = 0;
+
+    int getNumberOfNodesEvaluated();
+    void visit(State<T*> _state);
+    bool hasVisited(State<T*> _state);
+    State<T>* search(Searchable<T>& searchable) override;
+
+};
+
+template <class T>
+State<T>* MySearcher<T>::search(Searchable<T>& searchable) {
+    // Insert first element
+    insertElementToOpen(searchable.getInitialState());
+
+    while (! isOpenEmpty()) {
+        State<T*> node = popOpenList();
+
+        if (searchable.isGoal(node)) {
+            // Marks all states that n solution so they will not be deleted
+            markSolutionPath(node);
+            // Delete all states that are not in solution
+            clearStates();
+            return node;
+        }
+
+        std::set<State<T>*> expand = searchable.getAllPossibleStates(node);
+
+        for (auto child : expand) {
+            // If not visited
+            if (! hasVisited(child)) {
+                // do process if needed
+                processState(child, searchable);
+                // visit child
+                visit(child);
+                // Add element to open list
+                addToOpenList(child);
+            }
+        }
+    }
+
+    // Didn't find a solution
+    return nullptr;
+}
+
+template <class T>
+void MySearcher<T>::clearStates() {
+    // Clear closed
+    for (auto x : closed) {
+        // If it's not in solution, delete
+        if (!x->isInSolution()) {
+            delete x;
+        }
+    }
+}
+
+/*
+template <class T>
+void MySearcher<T>::clearStates(){
+    // Clear closed
+    for (auto x : closed) {
+        // If it's not in solution, delete
+        if (! x->isInSolution()) {
+            delete x;
+        }
+    }
+
+    // Clear open
+    for (auto x : open) {
+        // If it's not in solution, delete
+        if (!x->isInSolution()) {
+            delete x;
+        }
+    }
+}
+*/
+
+
+template <class T>
+void MySearcher<T>::visit(State<T*> _state) {
+    closed.insert(_state);
+}
+
+template <class T>
+bool MySearcher<T>::hasVisited(State<T*> _state) {
+   return closed.end() != std::find_if(closed.begin(), closed.end(), StatePointerCompare<T>(_state));
+}
+
+template <class T>
+int MySearcher<T>::getNumberOfNodesEvaluated() {
+    return evaluatedNodes;
+}
+
+#endif //SOLUTION_SERVER_DEQUESEARCHER_H

@@ -13,11 +13,12 @@ class Searcher {
 
 public:
     virtual ~Searcher() = default;
-    virtual State<T>* search (Searchable<T> searchable) = 0;
+    virtual State<T>* search (Searchable<T>& searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
-    void markSolutionPath(State<T>* _goal);
+   // void markSolutionPath(State<T>* _goal);
 };
 
+/*
 template <class T>
 void Searcher<T>::markSolutionPath(State<T>* _goal){
     State<T>* vertex = _goal;
@@ -28,5 +29,6 @@ void Searcher<T>::markSolutionPath(State<T>* _goal){
     } while (vertex != nullptr);
 
 }
+ */
 
 #endif //SOLUTION_SERVER_SEARCHER_H

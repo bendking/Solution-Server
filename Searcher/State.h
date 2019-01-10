@@ -23,7 +23,7 @@ public:
     State<T>* getCameFrom();
     void toggleInSolution();
     bool isInSolution();
-
+    void setCost(double _cost);
     // operator == override
     bool operator==(const State<T>& rhs);
 
@@ -44,6 +44,11 @@ bool State<T>::operator==(const State<T> &rhs) {
 template <class T>
 T& State<T>::getState() {
     return state;
+}
+
+template <class T>
+void State<T>::setCost(double _cost) {
+    cost = _cost;
 }
 
 template <class T>

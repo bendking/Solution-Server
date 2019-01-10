@@ -34,12 +34,9 @@ add_executable(Solution_Server
         Searcher/State.h
         Searcher/Searchable.h
         Searcher/Searcher.h
-        Searcher/BestFirstSearch.cpp
         Searcher/BestFirstSearch.h
-        Searcher/PriorityQueueSearcher.cpp
         Searcher/PriorityQueueSearcher.h
         Searcher/StateCompare.h
-        Searcher/BreadthFirstSearch.cpp
         Searcher/BreadthFirstSearch.h
-        Searcher/DequeSearcher.h
-        Searcher/DepthFirstSearch.h)
+        Searcher/MySearcher.h
+        Searcher/DepthFirstSearch.h Searcher/AStar.h)
