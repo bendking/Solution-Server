@@ -6,6 +6,7 @@
 
 
 FileCacheManager::FileCacheManager(string _fileName) {
+    fileName = _fileName;
     loadFromFile();
 }
 
@@ -36,8 +37,7 @@ void FileCacheManager::saveSolution(string _problem, string _solution) {
 void FileCacheManager::loadFromFile()
 {
     // Create file (if not already created)
-    ofstream file(fileName);
-    file.close();
+    ofstream file(fileName, std::fstream::app);
 
     // key and value
     string key, value;
@@ -49,9 +49,9 @@ void FileCacheManager::loadFromFile()
     // Check if succeeded opening file
     if (infile.good()) {
         // Load file here
-        while ( getline (infile,problem) ) {
+        while (getline(infile, problem)) {
             if (!problem.empty()) {
-                getline (infile,solution);
+                getline(infile,solution);
                 map[problem] = solution;
             }
         }

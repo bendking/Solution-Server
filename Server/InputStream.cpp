@@ -20,18 +20,19 @@ string InputStream::read() {
 
     // Reset buffer
     memset(buffer, 0, sizeof(buffer));
+    ::read(socket, buffer, 1024);
 
-    // Read until a line has been input
-    while (strlen(buffer) == 0) {
-        ::read(socket, buffer, 1024);
+    // If no mutex, simply return buffer
+    if (mutex == NULL) {
+        return buffer;
     }
 
-    // Get copy of buffer (for multi-threading)
+    // Else, get copy of buffer
     string _buffer = buffer;
 
     // If mutex in place, unlock
     if (mutex != NULL) {
-        pthread_mutex_lock(mutex);
+        pthread_mutex_unlock(mutex);
     }
 
     return _buffer;

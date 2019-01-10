@@ -6,14 +6,23 @@
 
 MyParallelServer::MyParallelServer() : TCPServer() {
     mutex = new pthread_mutex_t;
+    pthread_mutex_init(mutex, nullptr);
+}
+
+MyParallelServer::MyParallelServer(ClientHandler* clientHandler) : TCPServer() {
+    mutex = new pthread_mutex_t;
+    pthread_mutex_init(mutex, nullptr);
+    handler = clientHandler;
 }
 
 MyParallelServer::~MyParallelServer()
 {
-        // Wait for threads
-    char* dummy;
+    // Wait for threads to finish
+    char dummy;
     for (pthread_t* thread : threads) {
-        pthread_join(*thread, (void**)dummy);
+        if (thread != NULL) {
+            pthread_join(*thread, (void**)dummy);
+        }
     }
 
     deleteThreads();
@@ -39,7 +48,7 @@ struct arg_struct {
  * Thread in charge of handling the client
  * and deleting their relevant allocated types
  */
-void* handle_client(void* _args)
+void* client_thread(void* _args)
 {
     // Get arguments needed
     arg_struct* args = (arg_struct*) _args;
@@ -53,7 +62,6 @@ void* handle_client(void* _args)
 
     delete input;
     delete output;
-    delete args;
 }
 
 
@@ -64,13 +72,20 @@ void* handle_client(void* _args)
 void* get_clients(void* args)
 {
     MyParallelServer* server = (MyParallelServer*) args;
-    bool stop = server->getStop();
-
     vector<arg_struct*> structs;
+
+    bool stop = server->getStop();
     while (!stop)
     {
         // Get new client
         int new_socket = server->listen();
+        // If listen failed, continue
+        if (new_socket == -1)
+        {
+            stop = server->getStop();
+            continue;
+        }
+        cout << new_socket << endl;
 
         // Make input & output streams
         InputStream* input = new InputStream;
@@ -82,7 +97,7 @@ void* get_clients(void* args)
 
 
         // Initialize arg_struct
-        auto args = new struct arg_struct;
+        auto args = new arg_struct();
         args->server = server;
         args->input = input;
         args->output = output;
@@ -92,7 +107,14 @@ void* get_clients(void* args)
         // Initialize new thread
         pthread_t* pthread = new pthread_t;
         server->addThread(pthread);
-        pthread_create(pthread, nullptr, handle_client, args);
+        pthread_create(pthread, nullptr, client_thread, args);
+        // Update stop
+        stop = server->getStop();
+    }
+
+    // Clear allocated structs
+    for (arg_struct* _struct : structs) {
+        delete _struct;
     }
 }
 

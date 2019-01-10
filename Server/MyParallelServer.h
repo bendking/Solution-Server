@@ -17,13 +17,14 @@ private:
     vector<pthread_t*> threads;
 public:
     // Override
-    ~MyParallelServer() override;   // Delete handler & thread
+    ~MyParallelServer() override;  // Delete handler & thread
     bool start() override;        // Start handle loop
     void stop() override;         // Stop handle loop
     void read(int sock);          // Read from client
 
     // Elementary
     MyParallelServer();
+    MyParallelServer(ClientHandler* clientHandler);
     pthread_mutex_t* getMutex();
     void addThread(pthread_t* pthread);
     void deleteThreads();

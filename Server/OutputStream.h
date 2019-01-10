@@ -14,8 +14,6 @@
 using namespace std;
 
 class OutputStream : public SocketStream {
-private:
-    int socket;
 public:
     int send(string buffer);
 };

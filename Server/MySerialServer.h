@@ -5,6 +5,7 @@
 #ifndef SOLUTION_SERVER_MYSERIALSERVER_H
 #define SOLUTION_SERVER_MYSERIALSERVER_H
 
+
 #include "TCPServer.h"
 
 using namespace server_side;

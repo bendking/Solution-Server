@@ -65,6 +65,8 @@ void MyTestClientHandler<Problem, Solution>::handleClient(InputStream *input, Ou
 
         // Send Solution
         output->send(outputLine);
+        // Save solution to map
+        cacheManager->saveSolution(inputLine, outputLine);
         // Get next line from client
         inputLine = input->read();
     }

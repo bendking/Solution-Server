@@ -16,6 +16,7 @@
 #include <netdb.h>	// hostent
 #include <unistd.h> // read
 #include <pthread.h> // thread
+#include <fcntl.h>
 
 using namespace server_side;
 
@@ -48,7 +49,8 @@ public:
     // Helpers
     bool bind() override;         // Bind to port supplied
     int listen() override;        // Listen for client
-    void closeSocket(int socket);
+    bool set_blocking(const int &socket, bool should_block);
+    void closeSocket(int socket); // Shutdown and close
     char* get_buffer() override;  // Get what was read
     int get_read();               // Return read value
     bool& getStop();              // Flag for start()

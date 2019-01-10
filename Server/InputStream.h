@@ -15,7 +15,6 @@ class InputStream : public SocketStream {
 private:
     pthread_mutex_t* mutex = NULL;
     char buffer[1024] = {0};
-    int socket;
 public:
     void setMutex(pthread_mutex_t* _mutex);
     std::string read();

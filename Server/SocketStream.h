@@ -7,7 +7,7 @@
 
 
 class SocketStream {
-private:
+protected:
     int socket;
 public:
     SocketStream();
