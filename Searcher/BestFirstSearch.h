@@ -13,13 +13,14 @@
 
 template <class T>
 class BestFirstSearch : public PriorityQueueSearcher<T>{
-    std::set<State<T>*> closed;
+//    std::set<State<T>*> closed;
 public:
-    State<T>* search(Searchable<T> searchable) override;
-    State<T>* popSameStateIfCostMore(State<T>* _state);
-    void clearStates();
+   // State<T>* search(Searchable<T> searchable) override;
+   // State<T>* popSameStateIfCostMore(State<T>* _state);
+   // void clearStates();
 };
 
+/*
 template <class T>
 State<T>* BestFirstSearch<T>::search(Searchable<T> searchable) {
     pushToOpenList(searchable.getInitialState());
@@ -97,5 +98,6 @@ void BestFirstSearch<T>::clearStates() {
         }
     }
 }
+ */
 
 #endif //SOLUTION_SERVER_BESTFIRSTSEARCH_H

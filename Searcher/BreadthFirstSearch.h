@@ -7,28 +7,45 @@
 
 #include "Searcher.h"
 #include "State.h"
-#include "DequeSearcher.h"
+#include "MySearcher.h"
 #include <set>
 
 template <class T>
-class BreadthFirstSearch : public DequeSearcher<T> {
+class BreadthFirstSearch : public MySearcher<T> {
+    std::deque<State<T>*> open;
 
 public:
-    State<T>* getNextElement();
-    void insertElementToOpen(State<T>* _state);
+    State<T>* popOpenList();
+    void addToOpenList(State<T>* _state);
+    void clearStates();
 };
 
 template <class T>
-State<T>* BreadthFirstSearch<T>::getNextElement() {
-    State<T>* state = DequeSearcher<T>::open.front();
-    DequeSearcher<T>::open.pop_front();
+State<T>* BreadthFirstSearch<T>::popOpenList() {
+    MySearcher<T>::evaluatedNodes++;
+
+    State<T>* state = open.front();
+    open.pop_front();
 
     return state;
 }
 
 template <class T>
-void BreadthFirstSearch<T>::insertElementToOpen(State<T>* _state) {
-    DequeSearcher<T>::open.push_back(_state);
+void BreadthFirstSearch<T>::addToOpenList(State<T>* _state) {
+    open.push_back(_state);
+}
+
+template <class T>
+void BreadthFirstSearch<T>::clearStates() {
+    MySearcher<T>::clearStates();
+
+    // Clear open
+    for (auto x : open) {
+        // If it's not in solution, delete
+        if (!x->isInSolution()) {
+            delete x;
+        }
+    }
 }
 
 
