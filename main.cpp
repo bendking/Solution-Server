@@ -1,6 +1,6 @@
 #include "Searcher/StringReverser.h"
 #include "CacheManager/FileCacheManager.h"
-#include "ClientHandler/MyTestClientHandler.h"
+#include "TestClientHandler.h"
 #include "Server/MySerialServer.h"
 #include "Server/MyParallelServer.h"
 #include <string>
@@ -14,7 +14,7 @@ namespace boot {
         {
             StringReverser* stringReverser = new StringReverser();
             FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
-            MyTestClientHandler<string, string>* clientHandler = new MyTestClientHandler<string, string>(stringReverser, cacheManager);
+            TestClientHandler<string, string>* clientHandler = new TestClientHandler<string, string>(stringReverser, cacheManager);
 
             // Define server and start it
             MySerialServer* server = new MySerialServer(clientHandler);
@@ -35,7 +35,7 @@ namespace boot {
         {
             StringReverser* stringReverser = new StringReverser();
             FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
-            MyTestClientHandler<string, string>* clientHandler = new MyTestClientHandler<string, string>(stringReverser, cacheManager);
+            TestClientHandler<string, string>* clientHandler = new TestClientHandler<string, string>(stringReverser, cacheManager);
 
             // Define server and start it
             MyParallelServer* server = new MyParallelServer(clientHandler);

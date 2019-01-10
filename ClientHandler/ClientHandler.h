@@ -9,11 +9,10 @@
 #include "../Server/OutputStream.h"
 
 using namespace std;
-class ClientHandler {
-private:
 
+class ClientHandler {
 public:
-    // Accepts abstract stream and handles it
+    // Accepts abstract streams with client
     virtual void handleClient(InputStream *input, OutputStream *output) = 0;
 };
 

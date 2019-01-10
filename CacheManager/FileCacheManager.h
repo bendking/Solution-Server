@@ -12,17 +12,18 @@
 #include <fstream>
 
 using namespace std;
-class FileCacheManager : public CacheManager {
+
+class FileCacheManager : public CacheManager<string, string> {
 private:
     unordered_map<string, string> map;
     string fileName;
 public:
-    // CTOR & DTOR
+    // Constructor & Destructor
     explicit FileCacheManager(string _fileName);
     ~FileCacheManager() override;
 
     // Cache Manager functions
-    bool exists(string _solution) override;
+    bool exists(string _problem) override;
     string getSolution(string _problem) override;
     void saveSolution(string _problem, string _solution) override;
 

@@ -18,8 +18,8 @@ FileCacheManager::~FileCacheManager() {
 // Cache Manager functions
 //
 
-bool FileCacheManager::exists(string _solution) {
-    return map.count(_solution) > 0;
+bool FileCacheManager::exists(key _problem) {
+    return map.count(key) > 0;
 }
 
 string FileCacheManager::getSolution(string _problem) {
@@ -39,10 +39,10 @@ void FileCacheManager::loadFromFile()
     // Create file (if not already created)
     ofstream file(fileName, std::fstream::app);
 
-    // key and value
+    // Key and value
     string key, value;
 
-    // load from fle
+    // Load from fle
     ifstream infile(fileName);
     string problem, solution;
 
@@ -63,9 +63,10 @@ void FileCacheManager::loadFromFile()
 
 void FileCacheManager::saveAllToFile()
 {
+    // Open file
     ofstream file(fileName);
 
-    // save all table to file
+    // Save all table to file
     for (auto const& x : map) {
         file << x.first << endl << x.second << endl;
     }

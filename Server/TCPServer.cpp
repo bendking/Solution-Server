@@ -52,27 +52,6 @@ bool TCPServer::bind()
     return true;
 }
 
-/* Blocking listen
-int TCPServer::listen()
-{
-    int client_limit = 100;
-    // Attempt to listen
-    if (::listen(sock, client_limit) < 0) {
-        perror("listen");
-    }
-
-    int addrlen = sizeof(address);
-    int new_socket; // Socket with client            BIG BUG
-    // Attempt to accept new client                  MEMORIAL
-    if ((new_socket = accept(sock, (struct sockaddr*) &server, (socklen_t*)&addrlen)) < 0) {
-        perror("accept");
-    }
-
-    // Return socket for input
-    return new_socket;
-}
-*/
-
 // Non-blocking listen
 int TCPServer::listen()
 {

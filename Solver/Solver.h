@@ -8,8 +8,6 @@
 
 template <class Problem, class Solution>
 class Solver {
-private:
-
 public:
     virtual ~Solver() = default;
     virtual Solution solve(Problem) = 0;

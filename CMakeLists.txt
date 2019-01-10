@@ -10,8 +10,8 @@ include_directories(Server)
 add_executable(Solution_Server
         main.cpp
         ClientHandler/ClientHandler.h
-        ClientHandler/MyTestClientHandler.cpp
-        ClientHandler/MyTestClientHandler.h
+        ClientHandler/TestClientHandler.cpp
+        ClientHandler/TestClientHandler.h
         Server/Server.h
         Server/TCPServer.cpp
         Server/TCPServer.h

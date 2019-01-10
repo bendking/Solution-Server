@@ -7,24 +7,26 @@
 
 template <class T>
 class State {
-T state;
-double cost;
-State<T>* cameFrom = nullptr;
-bool inSolution = false;
-
-
+private:
+    T state;
+    double cost;
+    State<T>* cameFrom = nullptr;
+    bool inSolution = false;
 public:
     State(T _state, double _cost, State<T> &_cameFrom);
 
-    // getters, setters
+    // Getters & setters
     T& getState();
     double getCost();
-    void setCameFrom(State<T>* _cameFrom);
+    void setCost(double _cost);
     State<T>* getCameFrom();
+    void setCameFrom(State<T>* _cameFrom);
+
+    // Helpers
     void toggleInSolution();
     bool isInSolution();
-    void setCost(double _cost);
-    // operator == override
+
+    // Operators
     bool operator==(const State<T>& rhs);
 
 };

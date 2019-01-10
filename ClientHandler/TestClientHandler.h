@@ -14,40 +14,35 @@
 using namespace std;
 
 template <class Problem, class Solution>
-class MyTestClientHandler : public ClientHandler {
+class TestClientHandler : public ClientHandler {
 private:
     Solver<Problem, Solution>* solver;
-    CacheManager* cacheManager;
+    CacheManager<string, string>* cacheManager;
 public:
     // Constructor & Destructor
-    MyTestClientHandler(Solver<Problem, Solution>* _solver, CacheManager* _cacheManager);
-    ~MyTestClientHandler();
+    TestClientHandler(Solver<Problem, Solution>* _solver, CacheManager<Problem, Solution>* _cacheManager);
+    ~TestClientHandler();
 
     // Implement ClientHandler
     void handleClient(InputStream *input, OutputStream *output);
 };
 
-//
-// Implementation
-// Note - this should be in cpp but it won't work there
-//
-
 template<class Problem, class Solution>
-MyTestClientHandler<Problem, Solution>::MyTestClientHandler(Solver<Problem, Solution>* _solver, CacheManager* _cacheManager)
+TestClientHandler<Problem, Solution>::TestClientHandler(Solver<Problem, Solution>* _solver, CacheManager<Problem, Solution>* _cacheManager)
 {
     solver = _solver;
     cacheManager = _cacheManager;
 }
 
 template<class Problem, class Solution>
-MyTestClientHandler<Problem, Solution>::~MyTestClientHandler()
+TestClientHandler<Problem, Solution>::~TestClientHandler()
 {
     delete solver;
     delete cacheManager;
 }
 
 template<class Problem, class Solution>
-void MyTestClientHandler<Problem, Solution>::handleClient(InputStream *input, OutputStream *output)
+void TestClientHandler<Problem, Solution>::handleClient(InputStream *input, OutputStream *output)
 {
     string inputLine;
     string outputLine;

@@ -9,13 +9,13 @@
 
 using namespace std;
 
+template<class key, class value>
 class CacheManager {
-
 public:
     virtual ~CacheManager() = default;
-    virtual bool exists(string _solution) = 0;
-    virtual string getSolution(string _problem) = 0;
-    virtual void saveSolution(string _problem, string _solution)  = 0;
+    virtual bool exists(key _problem) = 0;
+    virtual value getSolution(key _problem) = 0;
+    virtual void saveSolution(key _problem, value _solution) = 0;
 };
 
 
