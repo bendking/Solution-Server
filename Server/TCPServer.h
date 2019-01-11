@@ -36,17 +36,19 @@ protected:
     int read_value;
 public:
     // Virtual
+    TCPServer(ClientHandler* clientHandler);
     virtual ~TCPServer() = default;
     virtual bool start() = 0;        // Start handle loop
     virtual void stop() = 0;         // Stop handle loop
     virtual void read(int sock) = 0; // Read from client
-
     // Elementary
     TCPServer();
+
     bool open(int port) override;
     void handleClient(InputStream* input,OutputStream* output);
 
     // Helpers
+    void setClientHandler(ClientHandler* clientHandler);
     bool bind() override;         // Bind to port supplied
     int listen() override;        // Listen for client
     bool set_blocking(const int &socket, bool should_block);

@@ -4,15 +4,16 @@
 
 #include "MyParallelServer.h"
 
-MyParallelServer::MyParallelServer() : TCPServer() {
+MyParallelServer::MyParallelServer() : TCPServer()
+{
     mutex = new pthread_mutex_t;
     pthread_mutex_init(mutex, nullptr);
 }
 
-MyParallelServer::MyParallelServer(ClientHandler* clientHandler) : TCPServer() {
+MyParallelServer::MyParallelServer(ClientHandler* clientHandler) : TCPServer(clientHandler)
+{
     mutex = new pthread_mutex_t;
     pthread_mutex_init(mutex, nullptr);
-    handler = clientHandler;
 }
 
 MyParallelServer::~MyParallelServer()

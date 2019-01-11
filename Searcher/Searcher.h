@@ -7,6 +7,7 @@
 
 #include "Searchable.h"
 #include "State.h"
+#include "../Solver/Solver.h"
 
 template <class T>
 class Searcher {

@@ -6,9 +6,7 @@
 
 MySerialServer::MySerialServer() : TCPServer() { }
 
-MySerialServer::MySerialServer(ClientHandler* clientHandler) : TCPServer() {
-    handler = clientHandler;
-}
+MySerialServer::MySerialServer(ClientHandler* clientHandler) : TCPServer(clientHandler) { }
 
 MySerialServer::~MySerialServer()
 {

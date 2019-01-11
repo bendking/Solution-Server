@@ -12,6 +12,8 @@ add_executable(Solution_Server
         ClientHandler/ClientHandler.h
         ClientHandler/TestClientHandler.cpp
         ClientHandler/TestClientHandler.h
+        ClientHandler/MyClientHandler.cpp
+        ClientHandler/MyClientHandler.h
         Server/Server.h
         Server/TCPServer.cpp
         Server/TCPServer.h
@@ -39,4 +41,9 @@ add_executable(Solution_Server
         Searcher/StateCompare.h
         Searcher/BreadthFirstSearch.h
         Searcher/MySearcher.h
-        Searcher/DepthFirstSearch.h Searcher/AStar.h)
+        Searcher/DepthFirstSearch.h
+        Searcher/AStar.h
+        Tester/Tester.cpp
+        Tester/Tester.h
+        Tester/SearcherTester.cpp
+        Tester/SearcherTester.h)

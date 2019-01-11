@@ -9,11 +9,20 @@ TCPServer::TCPServer() {
     port = 0;
 }
 
+TCPServer::TCPServer(ClientHandler* clientHandler) : TCPServer() {
+    handler = clientHandler;
+}
+
+void TCPServer::setClientHandler(ClientHandler* clientHandler) {
+    handler = clientHandler;
+}
+
 bool TCPServer::open(int port)
 {
     this->port = port;
     return bind();
 }
+
 
 void TCPServer::handleClient(InputStream *input, OutputStream *output) {
     handler->handleClient(input, output);

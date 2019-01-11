@@ -28,10 +28,10 @@ void MySearcher<T>::addToOpenList(State<T>* _state) {
 
 template <class T>
 void AStar<T>::processState(State<T>* _state, Searchable<T>& searchable) {
-    // get all childs
+    // Get all children
     std::set<State<T>*> expand = searchable.getAllPossibleStates(_state);
 
-    // get the cost plus the minimum child
+    // Get the cost plus the minimum child
     double lowest = DBL_MAX;
     for (auto x : expand) {
         if (x -> getCost() < lowest) {

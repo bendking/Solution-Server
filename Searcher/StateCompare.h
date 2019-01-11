@@ -10,8 +10,9 @@
 template <class T>
 class StateCompare {
 public:
-    bool operator() (State<T> *a, State<T> *b) {
-        return a->getCost() < b->getCost();
+    // Returns whether left < right
+    bool operator() (State<T>* left, State<T>* right) {
+        return left->getCost() < right->getCost();
     }
 };
 

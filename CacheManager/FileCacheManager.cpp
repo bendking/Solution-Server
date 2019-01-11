@@ -18,8 +18,8 @@ FileCacheManager::~FileCacheManager() {
 // Cache Manager functions
 //
 
-bool FileCacheManager::exists(key _problem) {
-    return map.count(key) > 0;
+bool FileCacheManager::exists(string _problem) {
+    return map.count(_problem) > 0;
 }
 
 string FileCacheManager::getSolution(string _problem) {

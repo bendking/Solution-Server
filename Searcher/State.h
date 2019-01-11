@@ -28,7 +28,6 @@ public:
 
     // Operators
     bool operator==(const State<T>& rhs);
-
 };
 
 template <class T>
