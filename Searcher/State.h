@@ -8,15 +8,15 @@
 template <class T>
 class State {
 private:
-    T state;
+    T* state;
     double cost;
     State<T>* cameFrom = nullptr;
     bool inSolution = false;
 public:
-    State(T _state, double _cost, State<T> &_cameFrom);
-
+    State(T* _state, double _cost, State<T>* _cameFrom);
+    ~State() {delete state;}
     // Getters & setters
-    T& getState();
+    T* getState();
     double getCost();
     void setCost(double _cost);
     State<T>* getCameFrom();
@@ -31,7 +31,7 @@ public:
 };
 
 template <class T>
-State<T>::State(T _state, double _cost, State<T> &_cameFrom) {
+State<T>::State(T* _state, double _cost, State<T>* _cameFrom) {
     state = _state;
     cost = _cost;
     cameFrom = _cameFrom;
@@ -39,11 +39,11 @@ State<T>::State(T _state, double _cost, State<T> &_cameFrom) {
 
 template <class T>
 bool State<T>::operator==(const State<T> &rhs) {
-    return this->getState() == rhs.getState();
+    return (*this->getState()) == (*rhs.getState());
 }
 
 template <class T>
-T& State<T>::getState() {
+T* State<T>::getState() {
     return state;
 }
 

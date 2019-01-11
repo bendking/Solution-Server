@@ -18,6 +18,7 @@ public:
     State<T>* popOpenList();
     void addToOpenList(State<T>* _state);
     void clearStates();
+    bool isOpenEmpty();
 };
 
 template <class T>
@@ -48,5 +49,13 @@ void BreadthFirstSearch<T>::clearStates() {
     }
 }
 
+template <class T>
+bool BreadthFirstSearch<T>::isOpenEmpty() {
+
+    if (open.empty()) {
+        return true;
+    }
+    return false;
+}
 
 #endif //SOLUTION_SERVER_BREADTHFIRSTSEARCH_H
