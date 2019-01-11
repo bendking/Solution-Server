@@ -3,6 +3,8 @@
 #include "TestClientHandler.h"
 #include "Server/MySerialServer.h"
 #include "Server/MyParallelServer.h"
+#include "Searcher/ConcreteSearchables/MatrixSearchable.h"
+#include "Searcher/BreadthFirstSearch.h"
 #include <string>
 #include <thread>
 
@@ -51,8 +53,27 @@ namespace boot {
             delete server;
         }
 
+        void test_solver() {
+            int** a = new int*[3];
+            for(int i = 0; i < 4; ++i) {
+                a[i] = new int[3];
+                a[i][0] = 0;
+                a[i][1] = 1;
+                a[i][2] = 2;
+                a[i][3] = 3;
+
+            }
+
+            MatrixSearchable sr = MatrixSearchable(4,4,a);
+            BreadthFirstSearch<Location> s = BreadthFirstSearch<Location>();
+            State<Location>* state = s.search(sr);
+
+
+        }
+
         int main () {
-            test_parallel_server();
+            //test_parallel_server();
+            //test_solver();
             return 1;
         }
     };

@@ -18,11 +18,11 @@ public:
 template <class T>
 struct StatePointerCompare
 {
-    State<T*>* _search;
-    StatePointerCompare(State<T*> search) : _search(search) { }
+    State<T>* _search;
+    explicit StatePointerCompare(State<T>* search) : _search(search) { }
 
-    bool operator()(const State<T*>* ptr) {
-        return ptr->getState() == _search->getState();
+    bool operator()(State<T>* ptr) {
+        return *ptr == *_search;
     }
 
 };
