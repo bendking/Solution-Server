@@ -12,7 +12,7 @@ class StateCompare {
 public:
     // Returns whether left < right
     bool operator() (State<T>* left, State<T>* right) {
-        return left->getCost() < right->getCost();
+        return left->getCost() > right->getCost();
     }
 };
 

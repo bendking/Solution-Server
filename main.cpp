@@ -5,6 +5,8 @@
 #include "Server/MyParallelServer.h"
 #include "Searchable/MatrixSearchable.h"
 #include "Searcher/BreadthFirstSearch.h"
+#include "Searcher/AStar.h"
+
 #include <string>
 #include <thread>
 
@@ -59,13 +61,13 @@ namespace boot {
                 a[i] = new int[3];
                 a[i][0] = 0;
                 a[i][1] = 1;
-                a[i][2] = 2;
-                a[i][3] = 3;
+                a[i][2] = 0;
+                a[i][3] = 1;
 
             }
 
             MatrixSearchable sr = MatrixSearchable(4,4,a);
-            BreadthFirstSearch<Location> s = BreadthFirstSearch<Location>();
+            AStar<Location> s = AStar<Location>();
             State<Location>* state = s.search(sr);
 
 
@@ -73,7 +75,7 @@ namespace boot {
 
         int main () {
             //test_parallel_server();
-            //test_solver();
+            test_solver();
             return 1;
         }
     };

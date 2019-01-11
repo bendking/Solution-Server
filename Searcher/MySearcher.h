@@ -24,7 +24,7 @@ public:
     virtual void processState(State<T>* _state, Searchable<T>& searchable) {};
     virtual bool isOpenEmpty() = 0;
 
-    int getNumberOfNodesEvaluated();
+    int getNumberOfNodesEvaluated() override;
     void visit(State<T>* _state);
     bool hasVisited(State<T>* _state);
     State<T>* search(Searchable<T>& searchable) override;
@@ -50,13 +50,14 @@ State<T>* MySearcher<T>::search(Searchable<T>& searchable)
 
         std::set<State<T>*> expand = searchable.getAllPossibleStates(node);
 
+        // visit state
+        visit(node);
+
         for (auto child : expand) {
             // If not visited
             if (! hasVisited(child)) {
                 // do process if needed
                 processState(child, searchable);
-                // visit child
-                visit(child);
                 // Add element to open list
                 addToOpenList(child);
             }

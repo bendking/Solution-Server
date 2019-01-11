@@ -21,13 +21,10 @@ public:
     void processState(State<T>* _state, Searchable<T>& searchable);
 };
 
-template <class T>
-void MySearcher<T>::addToOpenList(State<T>* _state) {
-
-}
 
 template <class T>
 void AStar<T>::processState(State<T>* _state, Searchable<T>& searchable) {
+    /*
     // Get all children
     std::set<State<T>*> expand = searchable.getAllPossibleStates(_state);
 
@@ -35,13 +32,16 @@ void AStar<T>::processState(State<T>* _state, Searchable<T>& searchable) {
     double lowest = DBL_MAX;
     for (auto x : expand) {
         if (x -> getCost() < lowest) {
-            lowest = x;
+            lowest = x -> getCost();
         }
 
         delete x;
     }
     _state -> setCost(lowest);
 
+     */
+
 }
+
 
 #endif //SOLUTION_SERVER_ASTAR_H

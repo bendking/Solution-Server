@@ -4,7 +4,7 @@
 
 #include "Tester.h"
 
-void Tester::Tester() {
+Tester::Tester() {
 
 }
 
