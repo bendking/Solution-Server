@@ -5,9 +5,9 @@
 #ifndef SOLUTION_SERVER_BESTFIRSTSEARCH_H
 #define SOLUTION_SERVER_BESTFIRSTSEARCH_H
 
-#include "PriorityQueueSearcher.h"
 #include "State.h"
 #include "StateCompare.h"
+#include "PriorityQueueSearcher.h"
 #include <set>
 #include <algorithm>
 

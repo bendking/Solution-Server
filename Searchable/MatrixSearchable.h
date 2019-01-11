@@ -7,33 +7,33 @@
 
 #include "Searchable.h"
 
-class Location {
+class Cell {
 public:
     int i;
     int j;
 
-    Location(int x,int y)
+    Cell(int x,int y)
     {
         i = x;
         j = y;
     }
 
-    bool operator==(Location& rhs) {
+    bool operator==(Cell& rhs) {
         return (rhs.i == i && rhs.j == j);
     }
 
 };
 
-class MatrixSearchable : public Searchable<Location> {
+class MatrixSearchable : public Searchable<Cell> {
 private:
     int **matrix;
     int rows, cols;
-    State<Location>* createState(int i, int j, State<Location>* father);
+    State<Cell>* createState(int i, int j, State<Cell>* father);
 public:
     MatrixSearchable(int _rows, int _cols, int **_matrix);
-    State<Location>* getInitialState() override;
-    bool isGoal(State<Location>*) override;
-    std::set<State<Location>*> getAllPossibleStates(State<Location>*) override;
+    State<Cell>* getInitialState() override;
+    bool isGoal(State<Cell>*) override;
+    std::set<State<Cell>*> getAllPossibleStates(State<Cell>*) override;
 };
 
 

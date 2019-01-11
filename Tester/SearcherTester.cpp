@@ -9,23 +9,65 @@ SearcherTester::SearcherTester() {
 
 }
 
-void SearcherTester::run()
+int** SearcherTester::generate_matrix(int rows, int cols, int random_limit)
 {
-    StringReverser* stringReverser = new StringReverser();
-    FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
-    TestClientHandler<string, string>* clientHandler = new TestClientHandler<string, string>(stringReverser, cacheManager);
+    int** matrix = new int*[rows];
+    for (int i = 0; i < rows; ++i) {
+        matrix[i] = new int[cols];
+        for (int j = 0; j < cols; ++j) {
+            // Give value between -1 and limit
+            matrix[i][j] = (rand() % random_limit + 1) - 1;
+        }
+    }
+}
 
-    // Define server and start it
-    MySerialServer* server = new MySerialServer(clientHandler);
-    server->open(5400);
-    server->start();
-    /*
-     * Run Python code as client (must open new socket for each connection)
-     * Python code is in python_test (copy-paste into python3 command-line)
-     */
-    // Sleep then stop
-    std::this_thread::sleep_for(std::chrono::seconds(5));
-    server->stop();
-    // Delete server (and handler)
-    delete server;
+void SearcherTester::delete_matrix(int** matrix, int rows)
+{
+    for (int i = 0; i < rows; ++i)
+        delete [] matrix[i];
+    delete [] matrix;
+
+}
+
+tuple<int, int> SearcherTester::run(Searcher<Cell>* searcher, Searchable<Cell>* searchable)
+{
+    State<Cell>* solution = searcher->search(*searchable);
+    int evaluated_nodes = searcher->getNumberOfNodesEvaluated();
+    int solution_price = solution->getCost();
+    tuple<int,int> result = tuple<int,int>(evaluated_nodes, solution_price);
+    return result;
+}
+
+void SearcherTester::test()
+{
+    // TODO (OFEK): Make it so there aren't any errors
+    Searcher<Cell>* BreatdthFS = new BreadthFirstSearch<Cell>();
+    Searcher<Cell>* BestFS = new BestFirstSearch<Cell>();
+    Searcher<Cell>* DFS = new DepthFirstSearch<Cell>();
+    Searcher<Cell>* Astar = new AStar<Cell>();
+
+    list<tuple<int,int>> BreadthFS_results;
+    list<tuple<int,int>> BestFS_results;
+    list<tuple<int,int>> DFS_results;
+    list<tuple<int,int>> AStar_results;
+
+    // TODO: Open files
+
+    list<tuple
+    // Test 10 times for each matrix with each algorithm
+    for (int n = 10; n < 50; n += 5)
+    {
+        int aggregate;
+        int** matrix = generate_matrix(n, n, 10);
+        for (int i = 0; i < 10; ++i) {
+
+        }
+    }
+
+    // TODO: Write results to file
+
+    delete BreatdthFS;
+    delete BestFS;
+    delete DFS;
+    delete Astar;
 }

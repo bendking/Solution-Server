@@ -2,13 +2,13 @@
 // Created by ben on 1/11/19.
 //
 
-#include "Tester.h"
+#include "ModuleTester.h"
 
-void Tester::Tester() {
+void ModuleTester::ModuleTester() {
 
 }
 
-void Tester::run(TCPServer* server)
+void ModuleTester::run(TCPServer* server)
 {
     StringReverser* stringReverser = new StringReverser();
     FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
@@ -30,13 +30,13 @@ void Tester::run(TCPServer* server)
 }
 
 
-void Tester::run_serial()
+void ModuleTester::run_serial()
 {
     MySerialServer* server = new MySerialServer();
     run(server);
 }
 
-void Tester::run_parallel()
+void ModuleTester::run_parallel()
 {
     MyParallelServer* server = new MyParallelServer();
     run(server);

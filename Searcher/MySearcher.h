@@ -2,8 +2,8 @@
 // Created by Yaron Israel on 2019-01-07.
 //
 
-#ifndef SOLUTION_SERVER_DEQUESEARCHER_H
-#define SOLUTION_SERVER_DEQUESEARCHER_H
+#ifndef SOLUTION_SERVER_MYSEARCHER_H
+#define SOLUTION_SERVER_MYSEARCHER_H
 
 #include "Searcher.h"
 #include "StateCompare.h"
@@ -29,6 +29,7 @@ public:
     bool hasVisited(State<T>* _state);
     State<T>* search(Searchable<T>& searchable) override;
     void markSolutionPath(State<T>* _goal);
+    int getPathPrice(State<T>*);
 };
 
 template <class T>
@@ -128,4 +129,4 @@ void MySearcher<T>::markSolutionPath(State<T>* _goal)
     } while (vertex != nullptr);
 
 }
-#endif //SOLUTION_SERVER_DEQUESEARCHER_H
+#endif //SOLUTION_SERVER_MYSEARCHER_H

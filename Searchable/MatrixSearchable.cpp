@@ -11,15 +11,15 @@ MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix)
     matrix = _matrix;
 }
 
-State<Location>* MatrixSearchable::getInitialState() {
+State<Cell>* MatrixSearchable::getInitialState() {
     return createState(0, 0, nullptr);
 }
 
 
-bool MatrixSearchable::isGoal(State<Location>* state)
+bool MatrixSearchable::isGoal(State<Cell>* state)
 {
     // Get where is the state
-    Location *arr = (state->getState());
+    Cell *arr = (state->getState());
     int i = arr->i;
     int j = arr->j;
 
@@ -31,14 +31,14 @@ bool MatrixSearchable::isGoal(State<Location>* state)
     return false;
 }
 
-std::set<State<Location>*> MatrixSearchable::getAllPossibleStates(State<Location>* state)
+std::set<State<Cell>*> MatrixSearchable::getAllPossibleStates(State<Cell>* state)
 {
     // Get where is the state
-    Location *arr = (state->getState());
+    Cell *arr = (state->getState());
     int i = arr->i;
     int j = arr->j;
 
-    std::set<State<Location>*> result;
+    std::set<State<Cell>*> result;
 
     if (i != 0) {
         result.insert(createState(i-1, j, state));
@@ -56,13 +56,15 @@ std::set<State<Location>*> MatrixSearchable::getAllPossibleStates(State<Location
     return result;
 }
 
-State<Location>* MatrixSearchable::createState(int i, int j, State<Location>* father)
+State<Cell>* MatrixSearchable::createState(int i, int j, State<Cell>* father)
 {
-    Location *loc = new Location(i, j);
+    Cell *loc = new Cell(i, j);
     double fathersCost = 0;
+
     if (father != nullptr) {
         fathersCost = father->getCost();
     }
+
     double cost = matrix[i][j] + fathersCost;
-    return new State<Location>(loc, cost, father);
+    return new State<Cell>(loc, cost, father);
 }

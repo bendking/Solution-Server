@@ -61,12 +61,11 @@ namespace boot {
                 a[i][1] = 1;
                 a[i][2] = 2;
                 a[i][3] = 3;
-
             }
 
             MatrixSearchable sr = MatrixSearchable(4,4,a);
-            BreadthFirstSearch<Location> s = BreadthFirstSearch<Location>();
-            State<Location>* state = s.search(sr);
+            BreadthFirstSearch<Cell> searcher = BreadthFirstSearch<Cell>();
+            State<Cell>* state = searcher.search(sr);
 
 
         }

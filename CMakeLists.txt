@@ -46,7 +46,7 @@ add_executable(Solution_Server
         Searchable/MatrixSearchable.h
         Searcher/DepthFirstSearch.h
         Searcher/AStar.h
-        Tester/Tester.cpp
-        Tester/Tester.h
+        Tester/ModuleTester.cpp
+        Tester/ModuleTester.h
         Tester/SearcherTester.cpp
         Tester/SearcherTester.h)

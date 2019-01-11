@@ -13,9 +13,9 @@
 #include "../CacheManager/FileCacheManager.h"
 #include <thread>
 
-class Tester {
+class ModuleTester {
 public:
-    Tester();
+    ModuleTester();
     void run(TCPServer* server);
     void run_serial();
     void run_parallel();
