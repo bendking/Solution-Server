@@ -3,7 +3,7 @@
 #include "TestClientHandler.h"
 #include "Server/MySerialServer.h"
 #include "Server/MyParallelServer.h"
-#include "Searcher/ConcreteSearchables/MatrixSearchable.h"
+#include "Searchable/MatrixSearchable.h"
 #include "Searcher/BreadthFirstSearch.h"
 #include <string>
 #include <thread>

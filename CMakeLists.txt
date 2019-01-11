@@ -42,8 +42,8 @@ add_executable(Solution_Server
         Searcher/DepthFirstSearch.h
         Searcher/StateCompare.h
         Searcher/MySearcher.h
-        Searcher/ConcreteSearchables/MatrixSearchable.cpp
-        Searcher/ConcreteSearchables/MatrixSearchable.h
+        Searchable/MatrixSearchable.cpp
+        Searchable/MatrixSearchable.h
         Searcher/DepthFirstSearch.h
         Searcher/AStar.h
         Tester/Tester.cpp

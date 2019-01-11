@@ -5,7 +5,7 @@
 #ifndef SOLUTION_SERVER_MATRIXSEARCHABLE_H
 #define SOLUTION_SERVER_MATRIXSEARCHABLE_H
 
-#include "../Searchable.h"
+#include "../Searcher/Searchable.h"
 
 class Location {
 public:
