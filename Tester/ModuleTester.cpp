@@ -4,7 +4,7 @@
 
 #include "ModuleTester.h"
 
-void ModuleTester::ModuleTester() {
+ModuleTester::ModuleTester() {
 
 }
 

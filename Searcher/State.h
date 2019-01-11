@@ -28,7 +28,7 @@ public:
     bool isInSolution();
 
     // Operators
-    bool operator==(const State<T>& rhs);
+    bool operator==(State<T>& rhs);
 };
 
 template <class T>
@@ -40,7 +40,7 @@ State<T>::State(T* _state, double _cost, State<T>* _cameFrom)
 }
 
 template <class T>
-bool State<T>::operator==(const State<T> &rhs) {
+bool State<T>::operator==(State<T> &rhs) {
     return (*this->getState()) == (*rhs.getState());
 }
 

@@ -62,6 +62,8 @@ bool MySerialServer::start()
 {
     thread = new pthread_t;
     pthread_create(thread, nullptr, loop, this);
+
+    // TO DO _ BEN _ Should return something??
 }
 
 void MySerialServer::stop() {

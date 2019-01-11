@@ -23,6 +23,8 @@ public:
 
     //State<T>* popSameStateIfCostMore(State<T>* _state);
     void clearStates();
+    bool isOpenEmpty();
+
 
 };
 
@@ -31,7 +33,10 @@ template <class T>
 State<T>* PriorityQueueSearcher<T>::popOpenList()
 {
     MySearcher<T>::evaluatedNodes++;
-    return priorityQueue.pop();
+
+    State<T>* s = priorityQueue.top();
+    priorityQueue.pop();
+    return s;
 }
 
 /*
@@ -130,4 +135,14 @@ void PriorityQueueSearcher<T>::clearStates()
 
     }
 }
+
+template <class T>
+bool PriorityQueueSearcher<T>::isOpenEmpty()
+{
+    if (priorityQueue.empty()) {
+        return true;
+    }
+    return false;
+}
+
 #endif //SOLUTION_SERVER_MYSEARCHER_H
