@@ -10,8 +10,8 @@
 
 template <class T>
 class DepthFirstSearch : public MySearcher<T> {
+private:
     std::deque<State<T>*> open;
-
 public:
     State<T>* popOpenList();
     void addToOpenList(State<T>* _state);
@@ -20,12 +20,13 @@ public:
 
 
 template <class T>
-State<T>* DepthFirstSearch<T>::popOpenList() {
+State<T>* DepthFirstSearch<T>::popOpenList()
+{
     MySearcher<T>::evaluatedNodes++;
 
     State<T>* state = open.back();
     open.pop_back();
-    //
+
     return state;
 }
 
@@ -35,7 +36,8 @@ void DepthFirstSearch<T>::addToOpenList(State<T>* _state) {
 }
 
 template <class T>
-void DepthFirstSearch<T>::clearStates() {
+void DepthFirstSearch<T>::clearStates()
+{
     MySearcher<T>::clearStates();
 
     // Clear open

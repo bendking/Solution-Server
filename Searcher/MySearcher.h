@@ -32,7 +32,8 @@ public:
 };
 
 template <class T>
-State<T>* MySearcher<T>::search(Searchable<T>& searchable) {
+State<T>* MySearcher<T>::search(Searchable<T>& searchable)
+{
     // Insert first element
     addToOpenList(searchable.getInitialState());
 
@@ -67,7 +68,8 @@ State<T>* MySearcher<T>::search(Searchable<T>& searchable) {
 }
 
 template <class T>
-void MySearcher<T>::clearStates() {
+void MySearcher<T>::clearStates()
+{
     // Clear closed
     for (auto x : closed) {
         // If it's not in solution, delete
@@ -116,7 +118,8 @@ int MySearcher<T>::getNumberOfNodesEvaluated() {
 
 
 template <class T>
-void MySearcher<T>::markSolutionPath(State<T>* _goal){
+void MySearcher<T>::markSolutionPath(State<T>* _goal)
+{
     State<T>* vertex = _goal;
     // Mark each vertex in the solution
     do {

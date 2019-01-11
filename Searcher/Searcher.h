@@ -5,7 +5,7 @@
 #ifndef SOLUTION_SERVER_SEARCHER_H
 #define SOLUTION_SERVER_SEARCHER_H
 
-#include "Searchable.h"
+#include "../Searchable/Searchable.h"
 #include "State.h"
 #include "../Solver/Solver.h"
 

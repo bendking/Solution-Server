@@ -4,7 +4,8 @@
 
 #include "MatrixSearchable.h"
 
-MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix) {
+MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix)
+{
     rows = _rows;
     cols = _cols;
     matrix = _matrix;
@@ -15,7 +16,8 @@ State<Location>* MatrixSearchable::getInitialState() {
 }
 
 
-bool MatrixSearchable::isGoal(State<Location>* state) {
+bool MatrixSearchable::isGoal(State<Location>* state)
+{
     // Get where is the state
     Location *arr = (state->getState());
     int i = arr->i;
@@ -29,7 +31,8 @@ bool MatrixSearchable::isGoal(State<Location>* state) {
     return false;
 }
 
-std::set<State<Location>*> MatrixSearchable::getAllPossibleStates(State<Location>* state) {
+std::set<State<Location>*> MatrixSearchable::getAllPossibleStates(State<Location>* state)
+{
     // Get where is the state
     Location *arr = (state->getState());
     int i = arr->i;
@@ -53,7 +56,8 @@ std::set<State<Location>*> MatrixSearchable::getAllPossibleStates(State<Location
     return result;
 }
 
-State<Location>* MatrixSearchable::createState(int i, int j, State<Location>* father) {
+State<Location>* MatrixSearchable::createState(int i, int j, State<Location>* father)
+{
     Location *loc = new Location(i, j);
     double fathersCost = 0;
     if (father != nullptr) {

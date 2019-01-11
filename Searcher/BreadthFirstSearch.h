@@ -22,7 +22,8 @@ public:
 };
 
 template <class T>
-State<T>* BreadthFirstSearch<T>::popOpenList() {
+State<T>* BreadthFirstSearch<T>::popOpenList()
+{
     MySearcher<T>::evaluatedNodes++;
 
     State<T>* state = open.front();
@@ -37,7 +38,8 @@ void BreadthFirstSearch<T>::addToOpenList(State<T>* _state) {
 }
 
 template <class T>
-void BreadthFirstSearch<T>::clearStates() {
+void BreadthFirstSearch<T>::clearStates()
+{
     MySearcher<T>::clearStates();
 
     // Clear open
@@ -50,8 +52,8 @@ void BreadthFirstSearch<T>::clearStates() {
 }
 
 template <class T>
-bool BreadthFirstSearch<T>::isOpenEmpty() {
-
+bool BreadthFirstSearch<T>::isOpenEmpty()
+{
     if (open.empty()) {
         return true;
     }

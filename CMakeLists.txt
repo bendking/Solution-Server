@@ -34,7 +34,7 @@ add_executable(Solution_Server
         CacheManager/FileCacheManager.cpp
         CacheManager/FileCacheManager.h
         Searcher/State.h
-        Searcher/Searchable.h
+        Searchable/Searchable.h
         Searcher/Searcher.h
         Searcher/PriorityQueueSearcher.h
         Searcher/BestFirstSearch.h

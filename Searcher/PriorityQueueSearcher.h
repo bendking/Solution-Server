@@ -8,16 +8,15 @@
 #include "Searcher.h"
 #include "State.h"
 #include "StateCompare.h"
-#include "Searchable.h"
+#include "../Searchable/Searchable.h"
 #include "MySearcher.h"
 #include <queue>
 
 template <class T>
-class PriorityQueueSearcher : public MySearcher<T>{
+class PriorityQueueSearcher : public MySearcher<T> {
 private:
     std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> priorityQueue;
 public:
-
     // Queue manipulation
     State<T>* popOpenList();
     void addToOpenList(State<T>* _state);
@@ -75,7 +74,8 @@ State<T>* PriorityQueueSearcher<T>::popSameStateIfCostMore(State<T>* _state)
 }
 */
 template <class T>
-void PriorityQueueSearcher<T>::addToOpenList(State<T>* _state) {
+void PriorityQueueSearcher<T>::addToOpenList(State<T>* _state)
+{
     std::vector<State<T>*> vec;
     bool shouldPushState = true;
     // Iterate over the queue
@@ -113,7 +113,8 @@ void PriorityQueueSearcher<T>::addToOpenList(State<T>* _state) {
 
 
 template <class T>
-void PriorityQueueSearcher<T>::clearStates() {
+void PriorityQueueSearcher<T>::clearStates()
+{
     MySearcher<T>::clearStates();
     // Iterate over the queue & delete unnecessary states
     while (!priorityQueue.empty())

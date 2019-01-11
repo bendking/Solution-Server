@@ -5,7 +5,7 @@
 #ifndef SOLUTION_SERVER_SEARCHABLE_H
 #define SOLUTION_SERVER_SEARCHABLE_H
 
-#include "State.h"
+#include "../Searcher/State.h"
 #include <set>
 
 template <class T>

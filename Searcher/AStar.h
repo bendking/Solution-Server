@@ -8,7 +8,7 @@
 #include "Searcher.h"
 #include "State.h"
 #include "StateCompare.h"
-#include "Searchable.h"
+#include "../Searchable/Searchable.h"
 #include "MySearcher.h"
 #include "PriorityQueueSearcher.h"
 #include <queue>

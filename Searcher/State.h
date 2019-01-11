@@ -14,7 +14,8 @@ private:
     bool inSolution = false;
 public:
     State(T* _state, double _cost, State<T>* _cameFrom);
-    ~State() {delete state;}
+    ~State() { delete state; }
+
     // Getters & setters
     T* getState();
     double getCost();
@@ -31,7 +32,8 @@ public:
 };
 
 template <class T>
-State<T>::State(T* _state, double _cost, State<T>* _cameFrom) {
+State<T>::State(T* _state, double _cost, State<T>* _cameFrom)
+{
     state = _state;
     cost = _cost;
     cameFrom = _cameFrom;
