@@ -14,12 +14,19 @@
 template <class T>
 class BestFirstSearch : public PriorityQueueSearcher<T>{
 //    std::set<State<T>*> closed;
+
 public:
    // State<T>* search(Searchable<T> searchable) override;
    // State<T>* popSameStateIfCostMore(State<T>* _state);
    // void clearStates();
+   double getPriorityOfState(State<T>* _state);
+
 };
 
+template <class T>
+double BestFirstSearch<T>::getPriorityOfState(State<T>* _state) {
+    return _state->getCost();
+}
 /*
 template <class T>
 State<T>* BestFirstSearch<T>::search(Searchable<T> searchable) {

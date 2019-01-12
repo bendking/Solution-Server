@@ -16,12 +16,14 @@ class MySearcher : public Searcher<T> {
 protected:
     std::set<State<T>*> closed;
     int evaluatedNodes = 0;
-
+    Searchable<T>* currentSearchable;
 public:
+    MySearcher<T>() = default;
+
     virtual void clearStates() = 0;
     virtual State<T>* popOpenList() = 0;
     virtual void addToOpenList(State<T>* _state) = 0;
-    virtual void processState(State<T>* _state, Searchable<T>& searchable) {};
+    //virtual void processState(State<T>* _state, Searchable<T>& searchable) {};
     virtual bool isOpenEmpty() = 0;
 
     int getNumberOfNodesEvaluated() override;
@@ -29,12 +31,16 @@ public:
     bool hasVisited(State<T>* _state);
     State<T>* search(Searchable<T>& searchable) override;
     void markSolutionPath(State<T>* _goal);
-    int getPathPrice(State<T>*);
+    void initMembers(Searchable<T>& searchable);
+
 };
 
 template <class T>
 State<T>* MySearcher<T>::search(Searchable<T>& searchable)
 {
+    // Initialize members
+    initMembers(searchable);
+
     // Insert first element
     addToOpenList(searchable.getInitialState());
 
@@ -57,8 +63,6 @@ State<T>* MySearcher<T>::search(Searchable<T>& searchable)
         for (auto child : expand) {
             // If not visited
             if (! hasVisited(child)) {
-                // do process if needed
-                processState(child, searchable);
                 // Add element to open list
                 addToOpenList(child);
             }
@@ -81,6 +85,11 @@ void MySearcher<T>::clearStates()
     }
 }
 
+template <class T>
+void MySearcher<T>::initMembers(Searchable<T>& searchable) {
+    evaluatedNodes = 0;
+    currentSearchable = &searchable;
+}
 /*
 template <class T>
 void MySearcher<T>::clearStates(){

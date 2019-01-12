@@ -2,29 +2,30 @@
 // Created by Yaron Israel on 2019-01-06.
 //
 
-#ifndef SOLUTION_SERVER_MYSEARCHER_H
-#define SOLUTION_SERVER_MYSEARCHER_H
+#ifndef SOLUTION_SERVER_PRIORITYQUEUE_H
+#define SOLUTION_SERVER_PRIORITYQUEUE_H
 
 #include "Searcher.h"
 #include "State.h"
 #include "StateCompare.h"
 #include "../Searchable/Searchable.h"
 #include "MySearcher.h"
+#include "PriorityState.h"
 #include <queue>
 
 template <class T>
 class PriorityQueueSearcher : public MySearcher<T> {
 private:
-    std::priority_queue<State<T>*, std::vector<State<T>*>, StateCompare<T>> priorityQueue;
+    std::priority_queue<PriorityState<T>*, std::vector<PriorityState<T>*>, PriorityStateCompare<T>> priorityQueue;
 public:
+
     // Queue manipulation
     State<T>* popOpenList();
     void addToOpenList(State<T>* _state);
-
-    //State<T>* popSameStateIfCostMore(State<T>* _state);
     void clearStates();
     bool isOpenEmpty();
 
+    virtual double getPriorityOfState(State<T>* _state) = 0;
 
 };
 
@@ -34,8 +35,10 @@ State<T>* PriorityQueueSearcher<T>::popOpenList()
 {
     MySearcher<T>::evaluatedNodes++;
 
-    State<T>* s = priorityQueue.top();
+    PriorityState<T>* ps = priorityQueue.top();
     priorityQueue.pop();
+    State<T>* s = ps->getState();
+    delete(ps);
     return s;
 }
 
@@ -81,19 +84,23 @@ State<T>* PriorityQueueSearcher<T>::popSameStateIfCostMore(State<T>* _state)
 template <class T>
 void PriorityQueueSearcher<T>::addToOpenList(State<T>* _state)
 {
-    std::vector<State<T>*> vec;
+    std::vector<PriorityState<T>*> vec;
     bool shouldPushState = true;
+    PriorityState<T>* ps = new PriorityState<T>(_state, getPriorityOfState(_state));
+
+
     // Iterate over the queue
     while (!priorityQueue.empty())
     {
-        State<T>* current = priorityQueue.top();
+        PriorityState<T>* current = priorityQueue.top();
         priorityQueue.pop();
 
         // Check if this is what we are looking for
-        if (*current == *_state) {
-            if (current->getCost() < _state->getCost()) {
+        if (*current->getState() == *_state) {
+            if (current->getPriority() < ps->getPriority()) {
                 shouldPushState = false;
             } else {
+                delete current->getState();
                 delete current;
             }
             break;
@@ -105,7 +112,10 @@ void PriorityQueueSearcher<T>::addToOpenList(State<T>* _state)
     }
 
     if (shouldPushState) {
-        priorityQueue.push(_state);
+        priorityQueue.push(ps);
+    } else {
+        delete _state;
+        delete ps;
     }
 
 
@@ -125,12 +135,12 @@ void PriorityQueueSearcher<T>::clearStates()
     while (!priorityQueue.empty())
     {
         // Get the top and pop
-        State<T>* state = priorityQueue.top();
+        PriorityState<T>* ps = priorityQueue.top();
         priorityQueue.pop();
 
         // Check if it in solution, if not, delete it
-        if (!state->isInSolution()) {
-            delete state;
+        if (!ps->getState()->isInSolution()) {
+            delete ps;
         }
 
     }

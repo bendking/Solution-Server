@@ -18,16 +18,16 @@ template <class T>
 class AStar : public PriorityQueueSearcher<T>{
 
 public:
-    void processState(State<T>* _state, Searchable<T>& searchable);
+    //void processState(State<T>* _state, Searchable<T>& searchable);
+    double getPriorityOfState(State<T>* _state);
 };
 
 
 template <class T>
-void AStar<T>::processState(State<T>* _state, Searchable<T>& searchable) {
-    /*
-    // Get all children
-    std::set<State<T>*> expand = searchable.getAllPossibleStates(_state);
+double AStar<T>::getPriorityOfState(State<T>* _state) {
 
+    // Get all children
+    std::set<State<T>*> expand = MySearcher<T>::currentSearchable->getAllPossibleStates(_state);
     // Get the cost plus the minimum child
     double lowest = DBL_MAX;
     for (auto x : expand) {
@@ -37,9 +37,13 @@ void AStar<T>::processState(State<T>* _state, Searchable<T>& searchable) {
 
         delete x;
     }
-    _state -> setCost(lowest);
 
-     */
+    if (lowest == DBL_MAX) {
+        lowest = 0;
+    }
+
+    return lowest + _state->getCost();
+
 
 }
 

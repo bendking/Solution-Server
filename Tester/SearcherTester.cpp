@@ -40,6 +40,7 @@ tuple<int, int> SearcherTester::run(Searcher<Cell>* searcher, Searchable<Cell>* 
 
 void SearcherTester::test()
 {
+    /*
     // TODO (OFEK): Make it so there aren't any errors
     Searcher<Cell>* BreatdthFS = new BreadthFirstSearch<Cell>();
     Searcher<Cell>* BestFS = new BestFirstSearch<Cell>();
@@ -69,5 +70,6 @@ void SearcherTester::test()
     delete BreatdthFS;
     delete BestFS;
     delete DFS;
-    delete Astar;
+    d8elete Astar;
+     */
 }

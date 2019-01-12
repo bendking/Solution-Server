@@ -6,7 +6,8 @@
 #include "Searchable/MatrixSearchable.h"
 #include "Searcher/BreadthFirstSearch.h"
 #include "Searcher/AStar.h"
-
+#include "Searcher/DepthFirstSearch.h"
+#include "Searcher/BestFirstSearch.h"
 #include <string>
 #include <thread>
 
@@ -59,15 +60,16 @@ namespace boot {
             int** a = new int*[3];
             for(int i = 0; i < 4; ++i) {
                 a[i] = new int[3];
-                a[i][0] = 0;
-                a[i][1] = 1;
-                a[i][2] = 0;
-                a[i][3] = 1;
+                a[i][0] = 3;
+                a[i][1] = 2;
+                a[i][2] = 1;
+                a[i][3] = 0;
 
             }
 
         MatrixSearchable sr = MatrixSearchable(4,4,a);
-        BreadthFirstSearch<Cell> searcher = BreadthFirstSearch<Cell>();
+
+            AStar<Cell> searcher = AStar<Cell>();
         State<Cell>* state = searcher.search(sr);
         }
 
