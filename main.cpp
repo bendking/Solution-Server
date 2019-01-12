@@ -32,8 +32,8 @@ namespace boot
              * Python code is in python_test (copy-paste into python3 command-line)
              */
             // Sleep then stop
-            std::this_thread::sleep_for(std::chrono::seconds(5));
-            server->stop();
+            //std::this_thread::sleep_for(std::chrono::seconds(5));
+            //server->stop();
             // Delete server (and handler)
             delete server;
         }
@@ -82,10 +82,10 @@ namespace boot
         }
 
         int main () {
-            //test_serial_server();
+            test_serial_server();
             //test_parallel_server();
             //test_solver();
-            test_searcher();
+//            test_searcher();
             return 1;
         }
     };

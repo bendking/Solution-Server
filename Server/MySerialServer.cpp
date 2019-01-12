@@ -74,12 +74,10 @@ void* loop(void* args)
 //
 
 // Listen & handle client in succession
-bool MySerialServer::start()
+int MySerialServer::start()
 {
     thread = new pthread_t;
-    pthread_create(thread, nullptr, loop, this);
-
-    // TO DO _ BEN _ Should return something??
+    return pthread_create(thread, nullptr, loop, this);
 }
 
 void MySerialServer::stop() {

@@ -7,3 +7,6 @@ for i in range(3):
   print(s.recv(1024))
   s.send(b"end")
 
+from socket import *
+s = socket(AF_INET, SOCK_STREAM)
+s.connect(('127.0.0.1', 5400))

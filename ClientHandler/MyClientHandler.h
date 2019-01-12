@@ -9,6 +9,7 @@
 #include "../CacheManager/CacheManager.h"
 #include "../Searcher/Searcher.h"
 #include <string>
+#include <algorithm>
 
 
 using namespace std;
@@ -26,7 +27,8 @@ public:
     // Implement ClientHandler
     void handleClient(InputStream *input, OutputStream *output);
 
-    void parseInput(string string1);
+    // Helpers
+    void parseInput(string input);
 
 };
 
@@ -51,10 +53,17 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
     string outputLine;
 
     string matrix = "";
-
+    string all_input = "";
     // Get next line from client
+
     inputLine = input->read();
-    while (inputLine != "end") {
+    while (inputLine.find("end") != string::npos)
+    {
+        // Add input line to total input
+        all_input += inputLine;
+
+        // Get next line from client
+        inputLine = input->read();
 
         /*
         // Check if exist in cache, if not, solve it
@@ -63,13 +72,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
         } else {
             outputLine = solver->solve(inputLine);
         }
-*/
-        matrix += "$";
-        matrix += inputLine;
-
-        // Get next line from client
-        inputLine = input->read();
-
+        */
     }
 
 
@@ -83,70 +86,79 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
 }
 
 template<class Problem, class Solution>
-void MyClientHandler<Problem, Solution>::parseInput(string string1) {
+void MyClientHandler<Problem, Solution>::parseInput(string input)
+{
+    // Text info
+    char line_end = '\n';
+    char row_delim = ',';
 
-    // Get the rows based on the number of $
-    int rowsCount = 0;
-    for (auto x : string1) {
-        if (x == '$') {
-            rowsCount ++;
+    // Get the rows based on the number of \n
+    int rows = 0;
+    for (char x : input) {
+        if (x == line_end) {
+            ++rows;
         }
     }
-    // there are two extra because the last two lines
-    rowsCount -= 2;
+    // There are three extra (entrance, exit, end)
+    rows -= 3;
 
-    // Get the cols based on the number of commas till the first $
-    int colsCount = 0;
-    for (auto x : string1) {
-        if (x == ',') {
-            colsCount ++;
+    // Get the cols based on the number of commas till the first \n
+    int cols = 0;
+    for (auto x : input) {
+        if (x == row_delim) {
+            ++cols;
         }
-        if (x == '$') {
+        if (x == line_end) {
             break;
         }
     }
 
-    // allocate the new matrix
-    int** a = new int*[rowsCount];
-    for(int i = 0; i < rowsCount; ++i)
-        a[i] = new int[colsCount];
+    // Allocate the new matrix
+    int** a = new int*[rows];
+    for(int i = 0; i < rows; ++i)
+        a[i] = new int[cols];
 
-    // init matrix
+    // Initialize matrix values
     int k = 0;
-    string temp = "";
-    for (int i = 0; i < rowsCount; i++) {
-        for (int j = 0; j < colsCount; j++) {
-            string temp = "";
-            while (true) {
-                if (string1[k] == '$') {
-                    k++;
+    string num = "";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            num = "";
+            while (true)
+            {
+                // If reached end of line, go to next line
+                if (input[k] == line_end) {
+                    ++k;
                     break;
                 }
-                else if (string1[k] == ',') {
-                    k++;
+                // If reached delimiter, go to next number
+                else if (input[k] == row_delim) {
+                    ++k;
                     continue;
                 }
-                temp += string1[k];
+                // Else, consider as part of number
+                num += input[k];
             }
-            a[i][j] = stoi(temp);
+            // Put number in matrix
+            a[i][j] = stoi(num);
         }
     }
 
 
-    // get the start and goal
+    // get the start and goal TODO: CHECK
 
     string start = "";
     string end = "";
     int b = 0;
-    for(int i = string1.length()-1; i >= 0; i--){
-        if (string1.at(i) == '$') {
+    for(int i = input.length()-1; i >= 0; i--){
+        if (input.at(i) == line_end) {
             b ++;
             continue;
         }
         if (b == 0)
-            end += string1[i];
+            end += input[i];
         else if (b == 1)
-            start += string1[i];
+            start += input[i];
         else if (b == 2)
             break;
     }
@@ -161,7 +173,7 @@ void MyClientHandler<Problem, Solution>::parseInput(string string1) {
 
     bool flag = true;
     for (auto x : start) {
-        if (x == ',') {
+        if (x == row_delim) {
             flag = !flag;
         }
         if (flag) {
@@ -179,7 +191,7 @@ void MyClientHandler<Problem, Solution>::parseInput(string string1) {
 
     flag = true;
     for (auto x : start) {
-        if (x == ',') {
+        if (x == row_delim) {
             flag = !flag;
         }
         if (flag) {

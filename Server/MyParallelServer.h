@@ -18,7 +18,7 @@ private:
 public:
     // Override
     ~MyParallelServer() override;  // Delete handler & thread
-    bool start() override;        // Start handle loop
+    int start() override;        // Start handle loop
     void stop() override;         // Stop handle loop
     void read(int sock) override;          // Read from client
 

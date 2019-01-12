@@ -38,7 +38,7 @@ public:
     // Virtual
     TCPServer(ClientHandler* clientHandler);
     virtual ~TCPServer() = default;
-    virtual bool start() = 0;        // Start handle loop
+    virtual int start() = 0;        // Start handle loop
     virtual void stop() = 0;         // Stop handle loop
     virtual void read(int sock) = 0; // Read from client
     // Elementary

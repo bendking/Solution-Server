@@ -153,11 +153,11 @@ void MyParallelServer::deleteThreads()
 //
 
 // Listen & handle client in succession
-bool MyParallelServer::start()
+int MyParallelServer::start()
 {
     pthread_t* thread = new pthread_t;
     threads.push_back(thread );
-    pthread_create(thread, nullptr, get_clients, this);
+    return pthread_create(thread, nullptr, get_clients, this);
 }
 
 void MyParallelServer::stop(){

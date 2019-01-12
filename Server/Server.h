@@ -13,7 +13,7 @@ namespace server_side {
     class Server {
         // Elementary
         virtual bool open(int port) = 0; // Uses bind & listen
-        virtual bool start() = 0; // Handle clients
+        virtual int start() = 0; // Handle clients
         virtual void stop() = 0; // Stop handling clients
         virtual char* get_buffer() = 0; // Gets buffer
         // Helper
