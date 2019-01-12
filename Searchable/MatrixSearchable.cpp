@@ -4,11 +4,25 @@
 
 #include "MatrixSearchable.h"
 
+MatrixSearchable::~MatrixSearchable() {
+    delete(goal);
+    // SHOULD DELETE MATRIX TOO???
+}
+
+MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, Cell* _goal)
+{
+    rows = _rows;
+    cols = _cols;
+    matrix = _matrix;
+    goal = _goal;
+}
+
 MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix)
 {
     rows = _rows;
     cols = _cols;
     matrix = _matrix;
+    goal = new Cell(rows - 1, cols - 1);
 }
 
 State<Cell>* MatrixSearchable::getInitialState() {
@@ -24,7 +38,7 @@ bool MatrixSearchable::isGoal(State<Cell>* state)
     int j = arr->j;
 
     // Check if they are in N-1, N-1
-    if (i == rows - 1 && j == cols - 1) {
+    if (*arr == *goal) {
         return true;
     }
 
@@ -58,9 +72,10 @@ std::set<State<Cell>*> MatrixSearchable::getAllPossibleStates(State<Cell>* state
 
 State<Cell>* MatrixSearchable::createState(int i, int j, State<Cell>* father)
 {
-    Cell *cell = new Cell(i, j);
-    double fathersCost = 0;
 
+    Cell *cell = new Cell(i, j);
+
+    double fathersCost = 0;
     if (father != nullptr) {
         fathersCost = father->getCost();
     }

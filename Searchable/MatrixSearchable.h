@@ -28,8 +28,12 @@ class MatrixSearchable : public Searchable<Cell> {
 private:
     int **matrix;
     int rows, cols;
+    Cell* goal;
     State<Cell>* createState(int i, int j, State<Cell>* father);
 public:
+    ~MatrixSearchable();
+
+    MatrixSearchable(int _rows, int _cols, int **_matrix, Cell* _goal);
     MatrixSearchable(int _rows, int _cols, int **_matrix);
     State<Cell>* getInitialState() override;
     bool isGoal(State<Cell>*) override;

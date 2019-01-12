@@ -42,6 +42,14 @@ State<T>* DepthFirstSearch<T>::popOpenList()
 
 template <class T>
 void DepthFirstSearch<T>::addToOpenList(State<T>* _state) {
+
+    // make sure we don't insert twice
+    for (auto x : open) {
+        if (x == *_state) {
+            delete _state;
+            return;
+        }
+    }
     open.push_back(_state);
 }
 
