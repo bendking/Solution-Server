@@ -24,7 +24,12 @@ MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix)
     matrix = _matrix;
     goal = new Cell(rows - 1, cols - 1);
 }
-
+MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, int iGoal, int jGoal) {
+    rows = _rows;
+    cols = _cols;
+    matrix = _matrix;
+    goal = new Cell(iGoal, jGoal);
+}
 State<Cell>* MatrixSearchable::getInitialState() {
     return createState(0, 0, nullptr);
 }

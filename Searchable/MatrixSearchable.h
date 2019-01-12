@@ -35,6 +35,8 @@ public:
 
     MatrixSearchable(int _rows, int _cols, int **_matrix, Cell* _goal);
     MatrixSearchable(int _rows, int _cols, int **_matrix);
+    MatrixSearchable(int _rows, int _cols, int **_matrix, int iGoal, int jGoal);
+
     State<Cell>* getInitialState() override;
     bool isGoal(State<Cell>*) override;
     std::set<State<Cell>*> getAllPossibleStates(State<Cell>*) override;
