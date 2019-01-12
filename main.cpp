@@ -6,13 +6,10 @@
 #include "Searchable/MatrixSearchable.h"
 #include "Searcher/BreadthFirstSearch.h"
 #include "Searcher/AStar.h"
-<<<<<<< HEAD
 #include "Tester/SearcherTester.h"
 
-=======
 #include "Searcher/DepthFirstSearch.h"
 #include "Searcher/BestFirstSearch.h"
->>>>>>> ec0067307e17ddfa07474e32a5d477250aac94cc
 #include <string>
 #include <thread>
 
