@@ -82,34 +82,34 @@ namespace boot
             tester.test();
         }
 
-//        void main_test()
-//        {
-//            // Initialize searcher & solver (decided based on graphs)
-//            Searcher<Cell>* searcher = new AStar<Cell>();
-//            Solver<Searchable<Cell>*, State<Cell>*>* solver = new SearcherSolver<Cell>(searcher);
-//
-//            // Initialize cache manager & client handler
-//            FileCacheManager* cacheManager = new FileCacheManager("searcher_cache.txt");
-//            auto clientHandler = new MyClientHandler<Searchable<Cell>*, State<Cell>*>(solver, cacheManager);
-//
-//            // Define server and start it
-//            MyParallelServer* server = new MyParallelServer(clientHandler);
-//            server->open(5400);
-//            server->start();
-//            /*
-//             * Run Python code as client (must open new socket for each connection)
-//             * Python code is in python_test (copy-paste into python3 command-line)
-//             */
-//            // Delete all objects
-//            delete server;
-//        }
+        void main_test()
+        {
+            // Initialize searcher & solver (decided based on graphs)
+            Searcher<Cell>* searcher = new AStar<Cell>();
+            Solver<Searchable<Cell>*, State<Cell>*>* solver = new SearcherSolver<Cell>(searcher);
+
+            // Initialize cache manager & client handler
+            FileCacheManager* cacheManager = new FileCacheManager("searcher_cache.txt");
+            auto clientHandler = new MyClientHandler<Searchable<Cell>*, State<Cell>*>(solver, cacheManager);
+
+            // Define server and start it
+            MyParallelServer* server = new MyParallelServer(clientHandler);
+            server->open(5400);
+            server->start();
+            /*
+             * Run Python code as client (must open new socket for each connection)
+             * Python code is in python_test (copy-paste into python3 command-line)
+             */
+            // Delete all objects
+            delete server;
+        }
 
         int main () {
             //test_serial_server();
             //test_parallel_server();
             //test_solver();
             //test_searcher();
-            //main_test();
+            main_test();
             return 1;
         }
     };
