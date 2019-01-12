@@ -49,4 +49,4 @@ add_executable(Solution_Server
         Tester/ModuleTester.cpp
         Tester/ModuleTester.h
         Tester/SearcherTester.cpp
-        Tester/SearcherTester.h)
+        Tester/SearcherTester.h Searcher/PriorityState.h)

@@ -6,7 +6,7 @@
 #define SOLUTION_SERVER_STATECOMPARE_H
 
 #include "State.h"
-
+#include "PriorityState.h"
 template <class T>
 class StateCompare {
 public:
@@ -15,6 +15,16 @@ public:
         return left->getCost() > right->getCost();
     }
 };
+
+template <class T>
+class PriorityStateCompare {
+public:
+    // Returns whether left < right
+    bool operator() (PriorityState<T>* left, PriorityState<T>* right) {
+        return left->getPriority() > right->getPriority();
+    }
+};
+
 
 template <class T>
 struct StatePointerCompare

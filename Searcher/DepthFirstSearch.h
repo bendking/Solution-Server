@@ -16,8 +16,18 @@ public:
     State<T>* popOpenList();
     void addToOpenList(State<T>* _state);
     void clearStates();
+    bool isOpenEmpty();
+
 };
 
+template <class T>
+bool DepthFirstSearch<T>::isOpenEmpty()
+{
+    if (open.empty()) {
+        return true;
+    }
+    return false;
+}
 
 template <class T>
 State<T>* DepthFirstSearch<T>::popOpenList()
@@ -32,7 +42,7 @@ State<T>* DepthFirstSearch<T>::popOpenList()
 
 template <class T>
 void DepthFirstSearch<T>::addToOpenList(State<T>* _state) {
-    MySearcher<T>::open.push_back(_state);
+    open.push_back(_state);
 }
 
 template <class T>

@@ -126,6 +126,12 @@ void SearcherTester::test()
 {
     int number_of_matrixes = 10;
 
+    // TODO (OFEK): Make it so there aren't any errors
+    Searcher<Cell>* BreatdthFS = new BreadthFirstSearch<Cell>();
+    Searcher<Cell>* BestFS = new BestFirstSearch<Cell>();
+    Searcher<Cell>* DFS = new DepthFirstSearch<Cell>();
+    Searcher<Cell>* Astar = new AStar<Cell>();
+
     Searcher<Cell> *BreadthFS = new BreadthFirstSearch<Cell>();
     Searcher<Cell> *BestFS = new BestFirstSearch<Cell>();
     Searcher<Cell> *DFS = new DepthFirstSearch<Cell>();
@@ -213,7 +219,8 @@ void SearcherTester::test()
 }
 */
 
-/* OLD TEST (as specified by Eli)
+/* OLD TEST (as specified by Eli)>>>>>>> ec0067307e17ddfa07474e32a5d477250aac94cc
+
 void SearcherTester::test()
  {
     Searcher<Cell> *BreadthFS = new BreadthFirstSearch<Cell>();
@@ -280,6 +287,7 @@ void SearcherTester::test()
     delete BreadthFS;
     delete BestFS;
     delete DFS;
+<<<<<<< HEAD
     delete Astar;
 }
 */
