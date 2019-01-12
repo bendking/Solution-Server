@@ -5,10 +5,6 @@
 #include "SearcherTester.h"
 
 
-SearcherTester::SearcherTester() {
-
-}
-
 int **SearcherTester::generate_matrix(int rows, int cols, int random_limit) {
     int **matrix = new int *[rows];
     for (int i = 0; i < rows; ++i) {
@@ -48,12 +44,14 @@ tuple<int, int> SearcherTester::run(Searcher<Cell> *searcher, Searchable<Cell> *
     return {nodes_aggregate, price_aggregate};
 }
 
-// NEW TEST (as specified by Michael)
-void SearcherTester::test()
+// BFS TEST
+void SearcherTester::test_test()
 {
     int number_of_matrixes = 10;
 
-    Searcher<Cell> *BreadthFS = new BreadthFirstSearch<Cell>();
+    Searcher<Cell>* BreadthFS = new BreadthFirstSearch<Cell>();
+//    SearcherSolver<Cell>* searcher = new SearcherSolver<Cell>(BreadthFS);
+//    Solver<Searchable<Cell>*, State<Cell>*>* searcherSolver = new SearcherSolver<Cell>(BreadthFS);
     vector<tuple<int, int>> BreadthFS_results = vector<tuple<int, int>>();
 
     int size;
@@ -66,7 +64,7 @@ void SearcherTester::test()
 
         // Generate searchable matrix
         int **matrix = generate_matrix(size, size, 10);
-        MatrixSearchable *searchable = new MatrixSearchable(size, size, matrix);
+        MatrixSearchable* searchable = new MatrixSearchable(size, size, matrix);
         matrixes.push_back(matrix); // Keep for later
 
         // Get results for each algorithm
@@ -120,22 +118,16 @@ void SearcherTester::test()
 
 }
 
-/*
 // NEW TEST (as specified by Michael)
 void SearcherTester::test()
 {
     int number_of_matrixes = 10;
 
     // TODO (OFEK): Make it so there aren't any errors
-    Searcher<Cell>* BreatdthFS = new BreadthFirstSearch<Cell>();
+    Searcher<Cell>* BreadthFS = new BreadthFirstSearch<Cell>();
     Searcher<Cell>* BestFS = new BestFirstSearch<Cell>();
     Searcher<Cell>* DFS = new DepthFirstSearch<Cell>();
     Searcher<Cell>* Astar = new AStar<Cell>();
-
-    Searcher<Cell> *BreadthFS = new BreadthFirstSearch<Cell>();
-    Searcher<Cell> *BestFS = new BestFirstSearch<Cell>();
-    Searcher<Cell> *DFS = new DepthFirstSearch<Cell>();
-    Searcher<Cell> *Astar = new AStar<Cell>();
 
     vector<tuple<int, int>> BreadthFS_results = vector<tuple<int, int>>();
     vector<tuple<int, int>> BestFS_results = vector<tuple<int, int>>();
@@ -212,16 +204,14 @@ void SearcherTester::test()
     delete DFS;
     delete Astar;
 
-    for (int i = 0; i < number_of_matrixes) {
+    for (int i = 0; i < number_of_matrixes; ++i) {
         delete_matrix(matrixes[i], matrix_sizes[i]);
     }
 
 }
-*/
 
-/* OLD TEST (as specified by Eli)>>>>>>> ec0067307e17ddfa07474e32a5d477250aac94cc
-
-void SearcherTester::test()
+// OLD TEST (as specified by Eli)
+void SearcherTester::old_test()
  {
     Searcher<Cell> *BreadthFS = new BreadthFirstSearch<Cell>();
     Searcher<Cell> *BestFS = new BestFirstSearch<Cell>();
@@ -287,7 +277,5 @@ void SearcherTester::test()
     delete BreadthFS;
     delete BestFS;
     delete DFS;
-<<<<<<< HEAD
     delete Astar;
 }
-*/

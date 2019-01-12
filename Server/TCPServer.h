@@ -50,7 +50,8 @@ public:
     // Helpers
     void setClientHandler(ClientHandler* clientHandler);
     bool bind() override;         // Bind to port supplied
-    int listen() override;        // Listen for client
+    int listen() override;        // Listen for a client
+    int timeout_listen();         // Listen for a client with a timeout
     bool set_blocking(const int &socket, bool should_block);
     void closeSocket(int socket); // Shutdown and close
     char* get_buffer() override;  // Get what was read

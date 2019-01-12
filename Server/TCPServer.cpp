@@ -61,25 +61,42 @@ bool TCPServer::bind()
     return true;
 }
 
-// Non-blocking listen
+// Blocking listen
 int TCPServer::listen()
 {
-    // Set socket to non-blocking
-    set_blocking(sock, 0);
+    // Server info
+    int addrlen = sizeof(address);
+    int new_socket = -1;
 
-    // Server info //
+    if (::listen(sock, 1) < 0) {
+        perror("listen");
+    }
+
+    // Attempt to accept new client              BIG BUG MEMORIAL
+    if ((new_socket = accept(sock, (struct sockaddr*) &server, (socklen_t*)&addrlen)) < 0) {
+        perror("accept");
+    }
+
+    return new_socket;
+}
+
+
+// Non-blocking listen
+int TCPServer::timeout_listen()
+{
+    // Server info
     int addrlen = sizeof(address);
     int client_limit = 100;
     int new_socket = -1;
 
-    // Timeout info //
-    int time_limit = 5;
+    // Timeout info
+    int time_limit = 1;
     struct timeval timeout;
     fd_set fd;
     int retval;
-    int max = sock + 1;
+    int max_sock = sock + 1;
 
-    // Attempt to get client
+    // Attempt to get client (if timed-out, stop server)
     bool stop = this->getStop();
     while (!stop)
     {
@@ -97,7 +114,7 @@ int TCPServer::listen()
         FD_SET(sock, &fd);
 
         // Check if socket is ready
-        retval = ::select(max, &fd, NULL, NULL, &timeout);
+        retval = ::select(max_sock, &fd, NULL, NULL, &timeout);
 
         // If there was an incoming request to master socket
         if (FD_ISSET(sock, &fd))
@@ -112,10 +129,10 @@ int TCPServer::listen()
             return new_socket;
         }
 
-        // If timed out, loop again
+        // If timed out, stop & leave loop
         if (retval == 0) {
-            stop = this->getStop();
-            continue;
+            this->stop();
+            break;
         }
 
         // If an error has occurred

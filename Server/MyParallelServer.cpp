@@ -75,18 +75,30 @@ void* get_clients(void* args)
     MyParallelServer* server = (MyParallelServer*) args;
     vector<arg_struct*> structs;
 
+    int new_socket; // Socket to be used for client
+    int connections = 0; // Clients connected thus far
     bool stop = server->getStop();
     while (!stop)
     {
-        // Get new client
-        int new_socket = server->listen();
+        // If no client has connected yet, listen without timeout
+        if (connections == 0) { // Listen with timeout
+            new_socket = server->listen();
+        } else { // Else, listen with timeout
+            new_socket = server->timeout_listen();
+        }
+
         // If listen failed, continue
         if (new_socket == -1)
         {
             stop = server->getStop();
             continue;
         }
-        cout << new_socket << endl;
+        // Else, connection made
+        ++connections;
+
+        cout << new_socket << endl; // DEBUG - REMOVE
+
+        // Handle client
 
         // Make input & output streams
         InputStream* input = new InputStream;
@@ -109,6 +121,7 @@ void* get_clients(void* args)
         pthread_t* pthread = new pthread_t;
         server->addThread(pthread);
         pthread_create(pthread, nullptr, client_thread, args);
+
         // Update stop
         stop = server->getStop();
     }

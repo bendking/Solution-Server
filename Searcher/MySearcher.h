@@ -62,7 +62,7 @@ State<T>* MySearcher<T>::search(Searchable<T>& searchable)
 
         for (auto child : expand) {
             // If not visited
-            if (! hasVisited(child)) {
+            if (!hasVisited(child)) {
                 // Add element to open list
                 addToOpenList(child);
             }
