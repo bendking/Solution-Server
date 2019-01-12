@@ -2,8 +2,8 @@
 // Created by Yaron Israel on 2019-01-06.
 //
 
-#ifndef SOLUTION_SERVER_MYSEARCHER_H
-#define SOLUTION_SERVER_MYSEARCHER_H
+#ifndef SOLUTION_SERVER_PRIORITYQUEUESEARCHER_H
+#define SOLUTION_SERVER_PRIORITYQUEUESEARCHER_H
 
 #include "Searcher.h"
 #include "State.h"
@@ -145,4 +145,4 @@ bool PriorityQueueSearcher<T>::isOpenEmpty()
     return false;
 }
 
-#endif //SOLUTION_SERVER_MYSEARCHER_H
+#endif //SOLUTION_SERVER_PRIORITYQUEUESEARCHER_H

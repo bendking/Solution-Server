@@ -6,12 +6,13 @@
 #include "Searchable/MatrixSearchable.h"
 #include "Searcher/BreadthFirstSearch.h"
 #include "Searcher/AStar.h"
+#include "Tester/SearcherTester.h"
 
 #include <string>
 #include <thread>
 
-namespace boot {
-
+namespace boot
+{
     class Main {
     public:
         void test_serial_server()
@@ -55,7 +56,8 @@ namespace boot {
             delete server;
         }
 
-        void test_solver() {
+        void test_solver()
+        {
             int** a = new int*[3];
             for(int i = 0; i < 4; ++i) {
                 a[i] = new int[3];
@@ -66,14 +68,21 @@ namespace boot {
 
             }
 
-        MatrixSearchable sr = MatrixSearchable(4,4,a);
-        BreadthFirstSearch<Cell> searcher = BreadthFirstSearch<Cell>();
-        State<Cell>* state = searcher.search(sr);
+            MatrixSearchable sr = MatrixSearchable(4,4,a);
+            BreadthFirstSearch<Cell> searcher = BreadthFirstSearch<Cell>();
+            State<Cell>* state = searcher.search(sr);
+        }
+
+        void test_searcher()
+        {
+            SearcherTester tester;
+            tester.test();
         }
 
         int main () {
             //test_parallel_server();
-            test_solver();
+            //test_solver();
+            test_searcher();
             return 1;
         }
     };

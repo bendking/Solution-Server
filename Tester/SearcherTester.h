@@ -12,6 +12,7 @@
 #include "../Searcher/BestFirstSearch.h"
 #include "../Searcher/DepthFirstSearch.h"
 #include "../Searcher/AStar.h"
+#include <fstream>
 #include <list>
 #include <tuple>
 #include <thread>
@@ -19,6 +20,7 @@
 using namespace std;
 
 class SearcherTester {
+public:
     SearcherTester();
     int** generate_matrix(int n, int m, int random_limit);
     void delete_matrix(int** matrix, int rows);

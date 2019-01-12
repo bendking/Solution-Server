@@ -38,7 +38,7 @@ State<T>* MySearcher<T>::search(Searchable<T>& searchable)
     // Insert first element
     addToOpenList(searchable.getInitialState());
 
-    while (! isOpenEmpty()) {
+    while (!isOpenEmpty()) {
         State<T>* node = popOpenList();
 
         if (searchable.isGoal(node)) {

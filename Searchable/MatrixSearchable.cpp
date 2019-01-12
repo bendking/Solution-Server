@@ -58,7 +58,7 @@ std::set<State<Cell>*> MatrixSearchable::getAllPossibleStates(State<Cell>* state
 
 State<Cell>* MatrixSearchable::createState(int i, int j, State<Cell>* father)
 {
-    Cell *loc = new Cell(i, j);
+    Cell *cell = new Cell(i, j);
     double fathersCost = 0;
 
     if (father != nullptr) {
@@ -66,5 +66,5 @@ State<Cell>* MatrixSearchable::createState(int i, int j, State<Cell>* father)
     }
 
     double cost = matrix[i][j] + fathersCost;
-    return new State<Cell>(loc, cost, father);
+    return new State<Cell>(cell, cost, father);
 }
