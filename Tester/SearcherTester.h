@@ -28,6 +28,10 @@ public:
     void delete_matrix(int** matrix, int rows);
     tuple<int, int> run(Searcher<Cell>* searcher, Searchable<Cell>* searchable);
     void test();
+
+    // Debug
+    void test_test();
+    void old_test();
 };
 
 

@@ -15,6 +15,6 @@ SearcherSolver<T>::~SearcherSolver() {
 }
 
 template<class T>
-State<T>* SearcherSolver<T>::solve(Searchable<T> searchable) {
+State<T>* SearcherSolver<T>::solve(Searchable<T>* searchable) {
     return searcher->search(searchable);
 }

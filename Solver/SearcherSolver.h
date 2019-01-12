@@ -10,14 +10,13 @@
 #include "../Searcher/Searcher.h"
 
 template <class T>
-class SearcherSolver : public Solver<Searchable<T>, State<T>*> {
+class SearcherSolver : public Solver<Searchable<T>*, State<T>*> {
 private:
     Searcher<T>* searcher;
 public:
-    SearcherSolver();
     explicit SearcherSolver(Searcher<T>* _searcher);
     ~SearcherSolver() override;
-    State<T>* solve(Searchable<T> searchable) override;
+    State<T>* solve(Searchable<T>* searchable) override;
 };
 
 /*
