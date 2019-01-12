@@ -12,6 +12,8 @@
 #include "../Searcher/BestFirstSearch.h"
 #include "../Searcher/DepthFirstSearch.h"
 #include "../Searcher/AStar.h"
+#include "../Solver/SearcherSolver.h"
+
 #include <fstream>
 #include <list>
 #include <tuple>
@@ -21,7 +23,7 @@ using namespace std;
 
 class SearcherTester {
 public:
-    SearcherTester();
+    SearcherTester() = default;
     int** generate_matrix(int n, int m, int random_limit);
     void delete_matrix(int** matrix, int rows);
     tuple<int, int> run(Searcher<Cell>* searcher, Searchable<Cell>* searchable);

@@ -28,6 +28,8 @@ add_executable(Solution_Server
         Server/OutputStream.cpp
         Server/OutputStream.h
         Solver/Solver.h
+        Solver/SearcherSolver.cpp
+        Solver/SearcherSolver.h
         Searcher/StringReverser.cpp
         Searcher/StringReverser.h
         CacheManager/CacheManager.h

@@ -10,7 +10,6 @@
 
 template <class T>
 class Searchable {
-
 public:
     virtual ~Searchable() = default;
     virtual State<T>* getInitialState() = 0;

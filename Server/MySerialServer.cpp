@@ -33,12 +33,28 @@ void* loop(void* args)
     MySerialServer* server = (MySerialServer*) args;
     InputStream* input = new InputStream;
     OutputStream* output = new OutputStream;
+    int new_socket; // Socket to be used for client
 
+    // Listen once without timeout
     bool stop = server->getStop();
+    if (!stop)
+    {
+        // Get new client
+        new_socket = server->listen();
+        // Set client socket to streams
+        input->setSocket(new_socket);
+        output->setSocket(new_socket);
+        // Give streams to handler
+        server->handleClient(input, output);
+        server->closeSocket(new_socket);
+    }
+
+    // Listen with timeout
+    stop = server->getStop();
     while (!stop)
     {
         // Get new client
-        int new_socket = server->listen();
+        new_socket = server->timeout_listen();
         // Set client socket to streams
         input->setSocket(new_socket);
         output->setSocket(new_socket);

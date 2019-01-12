@@ -82,9 +82,10 @@ namespace boot
         }
 
         int main () {
+            test_serial_server();
             //test_parallel_server();
             //test_solver();
-            test_searcher();
+            //test_searcher();
             return 1;
         }
     };

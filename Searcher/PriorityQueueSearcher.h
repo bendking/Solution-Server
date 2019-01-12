@@ -106,7 +106,7 @@ void PriorityQueueSearcher<T>::addToOpenList(State<T>* _state)
             break;
         }
 
-        // save it so we can put it back later to queue
+        // Save it so we can put it back later to queue
         vec.push_back(current);
 
     }

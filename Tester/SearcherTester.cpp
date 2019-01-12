@@ -5,10 +5,6 @@
 #include "SearcherTester.h"
 
 
-SearcherTester::SearcherTester() {
-
-}
-
 int **SearcherTester::generate_matrix(int rows, int cols, int random_limit) {
     int **matrix = new int *[rows];
     for (int i = 0; i < rows; ++i) {
@@ -53,7 +49,8 @@ void SearcherTester::test()
 {
     int number_of_matrixes = 10;
 
-    Searcher<Cell> *BreadthFS = new BreadthFirstSearch<Cell>();
+    Searcher<Cell>* BreadthFS = new BreadthFirstSearch<Cell>();
+    Solver<Searchable<Cell>, State<Cell>*>* searcherSolver = new SearcherSolver<Cell>(BreadthFS);
     vector<tuple<int, int>> BreadthFS_results = vector<tuple<int, int>>();
 
     int size;
@@ -66,7 +63,7 @@ void SearcherTester::test()
 
         // Generate searchable matrix
         int **matrix = generate_matrix(size, size, 10);
-        MatrixSearchable *searchable = new MatrixSearchable(size, size, matrix);
+        MatrixSearchable* searchable = new MatrixSearchable(size, size, matrix);
         matrixes.push_back(matrix); // Keep for later
 
         // Get results for each algorithm
