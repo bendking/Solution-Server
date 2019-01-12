@@ -39,10 +39,10 @@ double AStar<T>::getPriorityOfState(State<T>* _state) {
     }
 
     if (lowest == DBL_MAX) {
-        lowest = 0;
+        lowest = _state->getCost();
     }
 
-    return lowest + _state->getCost();
+    return lowest ;
 
 
 }
