@@ -6,6 +6,7 @@
 
 MatrixSearchable::~MatrixSearchable() {
     delete(goal);
+    delete(start);
     // SHOULD DELETE MATRIX TOO???
 }
 
@@ -15,6 +16,7 @@ MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, Cell* _g
     cols = _cols;
     matrix = _matrix;
     goal = _goal;
+    start = new Cell(0,0);
 }
 
 MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix)
@@ -23,15 +25,35 @@ MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix)
     cols = _cols;
     matrix = _matrix;
     goal = new Cell(rows - 1, cols - 1);
+    start = new Cell(0,0);
+
 }
 MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, int iGoal, int jGoal) {
     rows = _rows;
     cols = _cols;
     matrix = _matrix;
     goal = new Cell(iGoal, jGoal);
+    start = new Cell(0,0);
+
 }
+
+MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, int iStart, int jStart, int iGoal, int jGoal) {
+    rows = _rows;
+    cols = _cols;
+    matrix = _matrix;
+    goal = new Cell(iGoal, jGoal);
+    start = new Cell(iStart, jStart);
+}
+MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, Cell* _start, Cell* _goal) {
+    rows = _rows;
+    cols = _cols;
+    matrix = _matrix;
+    goal = _goal;
+    start = _start;
+}
+
 State<Cell>* MatrixSearchable::getInitialState() {
-    return createState(0, 0, nullptr);
+    return createState(start->i, start->j, nullptr);
 }
 
 
