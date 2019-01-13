@@ -1,15 +1,15 @@
-#include "Searcher/StringReverser.h"
+#include "ClientHandler/TestClientHandler.h"
 #include "CacheManager/FileCacheManager.h"
-#include "TestClientHandler.h"
 #include "Server/MySerialServer.h"
 #include "Server/MyParallelServer.h"
+#include "Searcher/StringReverser.h"
 #include "Searchable/MatrixSearchable.h"
 #include "Searcher/BreadthFirstSearch.h"
+#include "Searcher/BestFirstSearch.h"
+#include "Searcher/DepthFirstSearch.h"
 #include "Searcher/AStar.h"
 #include "Tester/SearcherTester.h"
 
-#include "Searcher/DepthFirstSearch.h"
-#include "Searcher/BestFirstSearch.h"
 #include <string>
 #include <thread>
 #include <MyClientHandler.h>
@@ -32,10 +32,7 @@ namespace boot
              * Run Python code as client (must open new socket for each connection)
              * Python code is in python_test (copy-paste into python3 command-line)
              */
-            // Sleep then stop
-            //std::this_thread::sleep_for(std::chrono::seconds(5));
-            //server->stop();
-            // Delete server (and handler)
+            // Delete server (and thus handler)
             delete server;
         }
 
@@ -53,9 +50,6 @@ namespace boot
              * Run Python code as client (must open new socket for each connection)
              * Python code is in python_test (copy-paste into python3 command-line)
              */
-            // Sleep then stop
-            std::this_thread::sleep_for(std::chrono::seconds(10));
-            server->stop();
             delete server;
         }
 
@@ -100,7 +94,7 @@ namespace boot
              * Run Python code as client (must open new socket for each connection)
              * Python code is in python_test (copy-paste into python3 command-line)
              */
-            // Delete all objects
+            // TODO: Delete all objects
             delete server;
         }
 
