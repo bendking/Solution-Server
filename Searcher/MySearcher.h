@@ -59,11 +59,6 @@ State<T>* MySearcher<T>::search(Searchable<T>* searchable)
         // visit state
         visit(node);
 
-        // Check if our node is a wall
-        if (node -> getCost() == -1) {
-            continue;
-        }
-
 
         // Add its sons
         std::set<State<T>*> expand = searchable->getAllPossibleStates(node);

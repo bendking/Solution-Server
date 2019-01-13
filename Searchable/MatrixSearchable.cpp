@@ -80,18 +80,26 @@ std::set<State<Cell>*> MatrixSearchable::getAllPossibleStates(State<Cell>* state
     int j = arr->j;
 
     std::set<State<Cell>*> result;
-
+    State<Cell>* s;
     if (i != 0) {
-        result.insert(createState(i-1, j, state));
+        s = createState(i-1, j, state);
+        if (s != nullptr)
+            result.insert(s);
     }
     if (j != 0) {
-        result.insert(createState(i, j-1, state));
+        s = createState(i, j-1, state);
+        if (s != nullptr)
+            result.insert(s);
     }
     if (i != rows-1) {
-        result.insert(createState(i+1, j, state));
+        s = createState(i+1, j, state);
+        if (s != nullptr)
+            result.insert(s);
     }
     if (j != cols-1) {
-        result.insert(createState(i, j+1, state));
+        s = createState(i, j+1, state);
+        if (s != nullptr)
+            result.insert(s);
     }
 
     return result;
@@ -99,6 +107,10 @@ std::set<State<Cell>*> MatrixSearchable::getAllPossibleStates(State<Cell>* state
 
 State<Cell>* MatrixSearchable::createState(int i, int j, State<Cell>* father)
 {
+    // Check if it is a wall
+    if (matrix[i][j] == -1) {
+        return nullptr;
+    }
 
     Cell *cell = new Cell(i, j);
 
