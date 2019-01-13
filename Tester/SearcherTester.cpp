@@ -102,7 +102,7 @@ void SearcherTester::test_test()
 
     // Write out solution file
     for (int i = 0; i < number_of_matrixes; ++i) {
-        solutions_file << get<0>(BreadthFS_results[i]) << "," << get<0>(BreadthFS_results[i]) << endl;
+        solutions_file << get<0>(BreadthFS_results[i]) << "," << get<1>(BreadthFS_results[i]) << endl;
     }
 
     // Close files
@@ -187,10 +187,10 @@ void SearcherTester::test()
     // Write out solution file
     for (int i = 0; i < number_of_matrixes; ++i)
     {
-        solutions_file << get<0>(BreadthFS_results[i]) << "," << get<0>(BreadthFS_results[i]) << endl;
-        solutions_file << get<0>(BestFS_results[i]) << "," << get<0>(BestFS_results[i]) << endl;
-        solutions_file << get<0>(DFS_results[i]) << "," << get<0>(DFS_results[i]) << endl;
-        solutions_file << get<0>(Astar_results[i]) << "," << get<0>(Astar_results[i]) << endl;
+        solutions_file << get<0>(BreadthFS_results[i]) << "," << get<1>(BreadthFS_results[i]) << endl;
+        solutions_file << get<0>(BestFS_results[i]) << "," << get<1>(BestFS_results[i]) << endl;
+        solutions_file << get<0>(DFS_results[i]) << "," << get<1>(DFS_results[i]) << endl;
+        solutions_file << get<0>(Astar_results[i]) << "," << get<1>(Astar_results[i]) << endl;
     }
 
 
