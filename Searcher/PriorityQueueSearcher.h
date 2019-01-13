@@ -143,8 +143,9 @@ void PriorityQueueSearcher<T>::clearStates()
 
         // Check if it in solution, if not, delete it
         if (!ps->getState()->isInSolution()) {
-            delete ps;
+            delete ps->getState();
         }
+        delete ps;
 
     }
 

@@ -41,7 +41,7 @@ tuple<int, int> SearcherTester::run(Searcher<Cell> *searcher, Searchable<Cell> *
     price_aggregate /= 10;
 
     // Return tuples of averages
-    return {nodes_aggregate, price_aggregate};
+    return {price_aggregate, nodes_aggregate};
 }
 
 // BFS TEST
@@ -178,6 +178,9 @@ void SearcherTester::test()
         for (int n = 0; n < matrix_size; n++) {
             for (int m = 0; m < matrix_size; m++) {
                 graphs_file << matrix[n][m];
+                if (m < matrix_size-1) {
+                    graphs_file << ",";
+                }
             }
             // Drop line
             graphs_file << endl;
