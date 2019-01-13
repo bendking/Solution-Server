@@ -6,14 +6,16 @@
 #define SOLUTION_SERVER_SEARCHERTEST_H
 
 #include "../Searcher/Searcher.h"
-#include "../Searchable/Searchable.h"
-#include "../Searchable/MatrixSearchable.h"
 #include "../Searcher/BreadthFirstSearch.h"
 #include "../Searcher/BestFirstSearch.h"
 #include "../Searcher/DepthFirstSearch.h"
 #include "../Searcher/AStar.h"
+#include "../Searchable/Searchable.h"
+#include "../Searchable/MatrixSearchable.h"
 #include "../Solver/SearcherSolver.h"
 
+#include <iomanip>
+#include <iostream>
 #include <fstream>
 #include <list>
 #include <tuple>
@@ -30,7 +32,7 @@ public:
     void test();
 
     // Debug
-    void test_test();
+    void test_bfs();
     void old_test();
 };
 
