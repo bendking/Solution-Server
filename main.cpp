@@ -14,11 +14,14 @@
 #include <thread>
 #include <MyClientHandler.h>
 
+// Use as shorthand
+#define MATRIX_PROBLEM Searchable<Cell>*, State<Cell>*
+
 namespace boot
 {
     class Main {
     public:
-        void test_serial_server()
+        void test_serial_reverser()
         {
             StringReverser* stringReverser = new StringReverser();
             FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
@@ -36,7 +39,7 @@ namespace boot
             delete server;
         }
 
-        void test_parallel_server()
+        void test_parallel_reverser()
         {
             StringReverser* stringReverser = new StringReverser();
             FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
@@ -53,30 +56,13 @@ namespace boot
             delete server;
         }
 
-        void test_solver()
-        {
-            int** a = new int*[3];
-            for(int i = 0; i < 4; ++i) {
-                a[i] = new int[3];
-                a[i][0] = 3;
-                a[i][1] = 2;
-                a[i][2] = 1;
-                a[i][3] = 0;
-
-            }
-
-            MatrixSearchable* sr = new MatrixSearchable(4,4,a);
-            AStar<Cell> searcher = AStar<Cell>();
-            State<Cell>* state = searcher.search(sr);
-        }
-
         void test_searcher()
         {
             SearcherTester tester;
             tester.test();
         }
 
-        void main_test()
+        void main_test(string server_type)
         {
             // Initialize searcher & solver (decided based on graphs)
             Searcher<Cell>* searcher = new AStar<Cell>();
@@ -87,7 +73,17 @@ namespace boot
             auto clientHandler = new MyClientHandler<Searchable<Cell>*, State<Cell>*>(solver, cacheManager);
 
             // Define server and start it
-            MyParallelServer* server = new MyParallelServer(clientHandler);
+            Server* server;
+
+            if (server_type == "serial") {
+                server = new MySerialServer(clientHandler);
+            }
+            // Else
+            if (server_type == "parallel") {
+                server = new MyParallelServer(clientHandler);
+            }
+            // Else, fucked
+
             server->open(5400);
             server->start();
             /*
@@ -95,15 +91,16 @@ namespace boot
              * Python code is in python_test (copy-paste into python3 command-line)
              */
             // TODO: Delete all objects
-            delete server;
+            delete server; // Deletes nested objects
+            delete searcher;
         }
 
         int main () {
-            //test_serial_server();
-            //test_parallel_server();
+            //test_serial_reverser();
+            //test_parallel_reverser();
             //test_solver();
             test_searcher();
-            //main_test();
+            main_test("serial");
             return 1;
         }
     };
