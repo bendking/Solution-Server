@@ -65,5 +65,8 @@ void DepthFirstSearch<T>::clearStates()
             delete x;
         }
     }
+
+    open.clear();
+
 }
 #endif //SOLUTION_SERVER_DEPTHFIRSTSEARCH_H

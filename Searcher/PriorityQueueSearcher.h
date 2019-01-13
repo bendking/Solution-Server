@@ -144,6 +144,7 @@ void PriorityQueueSearcher<T>::clearStates()
         }
 
     }
+
 }
 
 template <class T>

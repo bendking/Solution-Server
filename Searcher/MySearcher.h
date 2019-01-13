@@ -29,25 +29,25 @@ public:
     int getNumberOfNodesEvaluated() override;
     void visit(State<T>* _state);
     bool hasVisited(State<T>* _state);
-    State<T>* search(Searchable<T>& searchable) override;
+    State<T>* search(Searchable<T>* searchable) override;
     void markSolutionPath(State<T>* _goal);
-    void initMembers(Searchable<T>& searchable);
+    void initMembers(Searchable<T>* searchable);
 
 };
 
 template <class T>
-State<T>* MySearcher<T>::search(Searchable<T>& searchable)
+State<T>* MySearcher<T>::search(Searchable<T>* searchable)
 {
     // Initialize members
     initMembers(searchable);
 
     // Insert first element
-    addToOpenList(searchable.getInitialState());
+    addToOpenList(searchable->getInitialState());
 
     while (!isOpenEmpty()) {
         State<T>* node = popOpenList();
 
-        if (searchable.isGoal(node)) {
+        if (searchable->isGoal(node)) {
             // Marks all states that n solution so they will not be deleted
             markSolutionPath(node);
             // Delete all states that are not in solution
@@ -55,7 +55,7 @@ State<T>* MySearcher<T>::search(Searchable<T>& searchable)
             return node;
         }
 
-        std::set<State<T>*> expand = searchable.getAllPossibleStates(node);
+        std::set<State<T>*> expand = searchable->getAllPossibleStates(node);
 
         // visit state
         visit(node);
@@ -79,16 +79,18 @@ void MySearcher<T>::clearStates()
     // Clear closed
     for (auto x : closed) {
         // If it's not in solution, delete
-        if (!x->isInSolution()) {
+        if (!x->isInSolution() && x != nullptr) {
             delete x;
         }
     }
+
+    closed.clear();
 }
 
 template <class T>
-void MySearcher<T>::initMembers(Searchable<T>& searchable) {
+void MySearcher<T>::initMembers(Searchable<T>* searchable) {
     evaluatedNodes = 0;
-    currentSearchable = &searchable;
+    currentSearchable = searchable;
 }
 /*
 template <class T>

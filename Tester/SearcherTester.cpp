@@ -11,7 +11,7 @@ int **SearcherTester::generate_matrix(int rows, int cols, int random_limit) {
         matrix[i] = new int[cols];
         for (int j = 0; j < cols; ++j) {
             // Give value between -1 and limit
-            matrix[i][j] = (rand() % (random_limit + 1)) - 1;
+            matrix[i][j] = 2;
         }
     }
 
@@ -31,8 +31,8 @@ tuple<int, int> SearcherTester::run(Searcher<Cell> *searcher, Searchable<Cell> *
     State<Cell> *solution;
 
     // Run search 10 times
-    for (int i = 0; i < 10; ++i) {
-        solution = searcher->search(*searchable);
+    for (int i = 0; i < 1; ++i) {
+        solution = searcher->search(searchable);
         nodes_aggregate += searcher->getNumberOfNodesEvaluated();
         price_aggregate += solution->getCost();
     }
@@ -137,7 +137,7 @@ void SearcherTester::test()
     int size;
     int matrix_sizes [10];
     vector<int**> matrixes;
-    for (int i = 0; i < number_of_matrixes; ++i) {
+    for (int i = 0; i < 2; ++i) {
         // Randomize size of matrix
         size = (rand() % 50) + 1 + 10;
         matrix_sizes[i] = size;
@@ -149,9 +149,9 @@ void SearcherTester::test()
 
         // Get results for each algorithm
         BreadthFS_results.push_back(run(BreadthFS, searchable));
-        BestFS_results.push_back(run(BreadthFS, searchable));
-        DFS_results.push_back(run(DFS, searchable));
-        Astar_results.push_back(run(Astar, searchable));
+       // BestFS_results.push_back(run(BreadthFS, searchable));
+       // DFS_results.push_back(run(DFS, searchable));
+       // Astar_results.push_back(run(Astar, searchable));
 
         delete searchable;
     }
@@ -175,8 +175,8 @@ void SearcherTester::test()
 
         // Write matrix
         graphs_file.setf(ios::left);
-        for (int n = 0; n < matrix_size; ++n) {
-            for (int m = 0; m < matrix_size; ++m) {
+        for (int n = 0; n < matrix_size; n++) {
+            for (int m = 0; m < matrix_size; m++) {
                 graphs_file << matrix[n][m];
             }
             // Drop line

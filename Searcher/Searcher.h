@@ -14,7 +14,7 @@ class Searcher {
 
 public:
     virtual ~Searcher() = default;
-    virtual State<T>* search (Searchable<T>& searchable) = 0;
+    virtual State<T>* search (Searchable<T>* searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
    // void markSolutionPath(State<T>* _goal);
 };

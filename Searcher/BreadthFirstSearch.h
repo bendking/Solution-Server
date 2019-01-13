@@ -57,6 +57,8 @@ void BreadthFirstSearch<T>::clearStates()
             delete x;
         }
     }
+
+    open.clear();
 }
 
 template <class T>
