@@ -93,13 +93,14 @@ void PriorityQueueSearcher<T>::addToOpenList(State<T>* _state)
     while (!priorityQueue.empty())
     {
         PriorityState<T>* current = priorityQueue.top();
-        priorityQueue.pop();
+
 
         // Check if this is what we are looking for
         if (*current->getState() == *_state) {
             if (current->getPriority() < ps->getPriority()) {
                 shouldPushState = false;
             } else {
+                priorityQueue.pop();
                 delete current->getState();
                 delete current;
             }
@@ -107,6 +108,7 @@ void PriorityQueueSearcher<T>::addToOpenList(State<T>* _state)
         }
 
         // Save it so we can put it back later to queue
+        priorityQueue.pop();
         vec.push_back(current);
 
     }
@@ -131,6 +133,7 @@ template <class T>
 void PriorityQueueSearcher<T>::clearStates()
 {
     MySearcher<T>::clearStates();
+
     // Iterate over the queue & delete unnecessary states
     while (!priorityQueue.empty())
     {

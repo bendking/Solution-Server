@@ -71,7 +71,7 @@ namespace boot
 
             }
 
-            MatrixSearchable sr = MatrixSearchable(4,4,a);
+            MatrixSearchable* sr = new MatrixSearchable(4,4,a);
             AStar<Cell> searcher = AStar<Cell>();
             State<Cell>* state = searcher.search(sr);
         }
@@ -108,8 +108,8 @@ namespace boot
             //test_serial_server();
             //test_parallel_server();
             //test_solver();
-            //test_searcher();
-            main_test();
+            test_searcher();
+            //main_test();
             return 1;
         }
     };

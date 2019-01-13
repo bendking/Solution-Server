@@ -70,6 +70,7 @@ State<T>* MySearcher<T>::search(Searchable<T>* searchable)
     }
 
     // Didn't find a solution
+    clearStates();
     return nullptr;
 }
 

@@ -26,8 +26,8 @@ void SearcherTester::delete_matrix(int **matrix, int rows) {
 }
 
 tuple<int, int> SearcherTester::run(Searcher<Cell> *searcher, Searchable<Cell> *searchable) {
-    int nodes_aggregate;
-    int price_aggregate;
+    int nodes_aggregate = 0;
+    int price_aggregate = 0;
     State<Cell> *solution;
 
     // Run search 10 times
@@ -149,7 +149,7 @@ void SearcherTester::test()
 
         // Get results for each algorithm
         BreadthFS_results.push_back(run(BreadthFS, searchable));
-        BestFS_results.push_back(run(BreadthFS, searchable));
+        BestFS_results.push_back(run(BestFS, searchable));
         DFS_results.push_back(run(DFS, searchable));
         Astar_results.push_back(run(Astar, searchable));
 
@@ -210,6 +210,8 @@ void SearcherTester::test()
 
 }
 
+
+/*
 // OLD TEST (as specified by Eli)
 void SearcherTester::old_test()
  {
@@ -279,3 +281,4 @@ void SearcherTester::old_test()
     delete DFS;
     delete Astar;
 }
+*/

@@ -30,6 +30,7 @@ double AStar<T>::getPriorityOfState(State<T>* _state) {
     std::set<State<T>*> expand = MySearcher<T>::currentSearchable->getAllPossibleStates(_state);
     // Get the cost plus the minimum child
     double lowest = DBL_MAX;
+
     for (auto x : expand) {
         if (x -> getCost() < lowest) {
             lowest = x -> getCost();
