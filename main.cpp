@@ -92,9 +92,8 @@ namespace boot
             server->start();
             /*
              * Run Python code as client (must open new socket for each connection)
-             * Python code is in python_test (copy-paste into python3 command-line)
+             * Python code is in test_parallel or test_serial (copy-paste into python3 command-line)
              */
-            // TODO: Delete all objects
             delete server; // Deletes nested objects
             delete searcher;
         }
@@ -113,5 +112,6 @@ namespace boot
 using namespace boot;
 int main (int argc, char *argv[]) {
     Main menu;
-    return menu.main(stoi(argv[1]));
+    //return menu.main(stoi(argv[1]));
+    return menu.main(5400);
 }

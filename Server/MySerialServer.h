@@ -22,7 +22,7 @@ public:
 
     // Elementary
     MySerialServer();
-    MySerialServer(ClientHandler* clientHandler);
+    explicit MySerialServer(ClientHandler* clientHandler);
 };
 
 

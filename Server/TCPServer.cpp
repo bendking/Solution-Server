@@ -13,6 +13,10 @@ TCPServer::TCPServer(ClientHandler* clientHandler) : TCPServer() {
     handler = clientHandler;
 }
 
+TCPServer::~TCPServer() {
+    delete handler;
+}
+
 void TCPServer::setClientHandler(ClientHandler* clientHandler) {
     handler = clientHandler;
 }
