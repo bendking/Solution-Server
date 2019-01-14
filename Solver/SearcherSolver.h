@@ -14,7 +14,6 @@ class SearcherSolver : public Solver<Searchable<T>*, State<T>*> {
 private:
     Searcher<T>* searcher;
 public:
-    SearcherSolver() = default;
     explicit SearcherSolver(Searcher<T>* _searcher);
     ~SearcherSolver() override;
     State<T>* solve(Searchable<T>* searchable) override;

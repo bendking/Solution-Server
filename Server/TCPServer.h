@@ -23,7 +23,7 @@ using namespace server_side;
 class TCPServer : public Server {
 protected:
     // Objects
-    ClientHandler* handler = NULL;
+    ClientHandler* handler = nullptr;
     struct sockaddr_in server;
     std::string address;
     // Thread
