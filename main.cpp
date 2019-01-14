@@ -8,6 +8,7 @@
 #include "Searcher/BestFirstSearch.h"
 #include "Searcher/DepthFirstSearch.h"
 #include "Searcher/AStar.h"
+#include "Solver/SearcherSolver.h"
 #include "Tester/SearcherTester.h"
 
 #include <string>
@@ -62,7 +63,7 @@ namespace boot
             tester.test();
         }
 
-        void main_test(string server_type)
+        void main_test(string server_type, int port)
         {
             // Initialize searcher & solver (decided based on graphs)
             Searcher<Cell>* searcher = new AStar<Cell>();
@@ -75,16 +76,19 @@ namespace boot
             // Define server and start it
             Server* server;
 
+            // Sort out server type
             if (server_type == "serial") {
                 server = new MySerialServer(clientHandler);
             }
-            // Else
-            if (server_type == "parallel") {
+            else if (server_type == "parallel") {
                 server = new MyParallelServer(clientHandler);
+            }
+            else {
+                throw logic_error("No server type supplied, dickhead");
             }
             // Else, fucked
 
-            server->open(5400);
+            server->open(port);
             server->start();
             /*
              * Run Python code as client (must open new socket for each connection)
@@ -95,19 +99,19 @@ namespace boot
             delete searcher;
         }
 
-        int main () {
+        int main (int port) {
             //test_serial_reverser();
             //test_parallel_reverser();
             //test_solver();
-            test_searcher();
-            main_test("serial");
+            //test_searcher();
+            main_test("serial", port);
             return 1;
         }
     };
 }
 
 using namespace boot;
-int main () {
-    Main m;
-    return m.main();
+int main (int argc, char *argv[]) {
+    Main menu;
+    return menu.main(stoi(argv[1]));
 }
