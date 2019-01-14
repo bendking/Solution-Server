@@ -37,7 +37,7 @@ protected:
 public:
     // Virtual
     explicit TCPServer(ClientHandler* clientHandler);
-    ~TCPServer() override;
+    virtual ~TCPServer() = default;
     virtual int start() = 0;        // Start handle loop
     virtual void stop() = 0;         // Stop handle loop
     virtual void read(int sock) = 0; // Read from client

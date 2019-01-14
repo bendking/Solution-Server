@@ -17,7 +17,7 @@ private:
     vector<pthread_t*> threads;
 public:
     // Override
-    ~MyParallelServer() override;  // Delete handler & thread
+    virtual ~MyParallelServer() override;  // Delete handler & thread
     int start() override;        // Start handle loop
     void stop() override;         // Stop handle loop
     void read(int sock) override;          // Read from client
