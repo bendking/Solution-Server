@@ -12,7 +12,6 @@
 namespace server_side {
     class Server {
     public:
-        Server() = default;
         virtual ~Server() = 0;
         // Elementary
         virtual bool open(int port) = 0; // Uses bind & listen

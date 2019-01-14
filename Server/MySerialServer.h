@@ -15,7 +15,7 @@ private:
     pthread_t* thread;
 public:
     // Override
-    ~MySerialServer() override;   // Delete handler & thread
+    virtual ~MySerialServer() override;   // Delete handler & thread
     int start() override;        // Start handle loop
     void stop() override;         // Stop handle loop
     void read(int sock) override;          // Read from client
