@@ -1,38 +1,40 @@
 from socket import *
+import numpy
+from random import randint
+
+def random_matrix():
+      # Generate matrix dimensions
+      rows = randint(10, 50)
+      cols = randint(10, 50)
+      
+      # Generate matrix
+      matrix = numpy.random.randint(-1, 10, (rows, cols))
+      return matrix, rows, cols
+
+def random_point(rows, cols):
+      i = randint(0, rows)
+      j = randint(0, cols)
+      return (i,j)
 
 # Define matrixes
-m1 = [[0, 9, 5, 1, 0, 3,-1, 5, 2, 0],
-      [7, 6, 4, 2, 6, 3, 8, 9, 1,-1],
-      [9, 7, 4,-1, 3, 5,-1, 9, 2, 9],
-      [9, 6, 9, 2, 6, 8, 6, 7, 1, 9],
-      [6, 9, 3, 0,-1, 9, 3, 8, 6, 5],
-      [7, 5, 1, 1, 6, 5, 5, 4, 4, 6],
-      [3, 3, 3, 2, 5, 8, 9, 1, 3, 0],
-      [-1, 9, 8, 3,-1, 9, 0, 1, 5,8],
-      [6, 0, 3, 8, 2, 8, 1, 9, 2, 6],
-      [5, 7, 8, 7, 8, 3, 4, 8, 4, 0]]
+m1, r1, c1 = random_matrix()
+start1 = random_point(r1, c1)
+end1 = random_point(r1, c1)
+print ("Matrix 1 dimensions: {0},{1}, Matrix 1 start: {2[0]},{2[1]}, Matrix 1 end: {3[0]},{3[1]}".format(r1, c1, start1, end1))
+print (m1)
 
-m2 = [[0, 2, 7, 6, 4, 6, 3, 6, 6, 7],
-      [4, 0, 9, 6, 7,-1, 5, 9, 7, 8],
-      [3, 1, 3, 2, 9, 2, 4, 1, 9, 7],
-      [9, 4,-1, 4, 9, 5, 9, 2,-1, 6],
-      [9, 4, 5, 8, 9, 3, 8, 4, 2, 6],
-      [1, 7, 6, 3, 8, 3, 4, 0, 6, 3],
-      [9, 5, 7, 7,-1, 6, 2, 8,-1, 0],
-      [4, 7, 3,-1, 5, 3, 1, 1, 8, 5],
-      [6, 8, 0, 2, 2, 7, 7, 7, 8, 3],
-      [-1, 7, 7, 7, 3, 5, 3, 6, 3,0]]
+m2, r2, c2 = random_matrix()
+start2 = random_point(r2, c2)
+end2 = random_point(r2, c2)
+print ("Matrix 2 dimensions: {0},{1}, Matrix 2 start: {2[0]},{2[1]}, Matrix 2 end: {3[0]},{3[1]}".format(r2, c2, start2, end2))
+print (m2)
 
-m3 = [[0, 6, 9, 1, 5, 2, 3, 7, 5, 0],
-      [0,-1, 9,-1, 3,-1, 7, 9, 6, 6],
-      [0, 6, 1, 8, 1, 5, 1, 3, 0, 4],
-      [6, 7, 9, 3, 7, 2, 5, 1, 0, 9],
-      [2,-1, 9,-1, 0, 0, 0, 6,-1, 7],
-      [2, 0, 1, 3, 7, 3, 9, 8, 7, 8],
-      [2, 1, 5,-1, 4, 1, 3,-1, 3, 2],
-      [7, 4, 2, 6, 4, 1, 8, 3, 9, 6],
-      [0,-1, 8, 0, 3, 3, 4, 3, 1, 0],
-      [-1, 2, 0, 6, 3, 5, 8, 5, 3,0]]
+m3, r3, c3 = random_matrix()
+start3 = random_point(r3, c3)
+end3 = random_point(r3, c3)
+# Print matrix info and the matrix ite
+print ("Matrix 3 dimensions: {0},{1}, Matrix 3 start: {2[0]},{2[1]}, Matrix 3 end: {3[0]},{3[1]}".format(r3, c3, start3, end3))
+print (m3)
 
 # Define & connect sockets to server
 s1 = socket(AF_INET, SOCK_STREAM)
@@ -43,19 +45,25 @@ s2.connect(('127.0.0.1', 5400))
 s3.connect(('127.0.0.1', 5400))
 
 # Send matrixes
-for i in range(10):
-      s1.send((",".join(map(str,m1[i])) + "\n").encode())
-      s2.send((",".join(map(str,m2[i])) + "\n").encode())
-      s3.send((",".join(map(str,m3[i])) + "\n").encode())
+for i in range(50):
+      if (i < r1):
+            s1.send((",".join(map(str,m1[i])) + "\n").encode())
+      
+      if (i < r2):
+            s2.send((",".join(map(str,m2[i])) + "\n").encode())
+      
+      if (i < r3):
+            s3.send((",".join(map(str,m3[i])) + "\n").encode())
+      
 
 # Send start
-s1.send(("0,0" + "\n").encode())
-s2.send(("0,0" + "\n").encode())
-s3.send(("0,0" + "\n").encode())
+s1.send(("{0[0]},{0[1]}".format(start1) + "\n").encode())
+s2.send(("{0[0]},{0[1]}".format(start2) + "\n").encode())
+s3.send(("{0[0]},{0[1]}".format(start3) + "\n").encode())
 # Send goal
-s1.send(("9,9" + "\n").encode())
-s2.send(("9,9" + "\n").encode())
-s3.send(("9,9" + "\n").encode())
+s1.send(("{0[0]},{0[1]}".format(end1) + "\n").encode())
+s2.send(("{0[0]},{0[1]}".format(end2) + "\n").encode())
+s3.send(("{0[0]},{0[1]}".format(end3) + "\n").encode())
 # Send end
 s1.send(("end" + "\n").encode())
 s2.send(("end" + "\n").encode())
