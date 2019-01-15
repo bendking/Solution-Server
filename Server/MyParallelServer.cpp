@@ -96,10 +96,7 @@ void* get_clients(void* args)
         // Else, connection made
         ++connections;
 
-        cout << new_socket << endl; // DEBUG - REMOVE
-
-        // Handle client
-
+        // Handle client //
         // Make input & output streams
         InputStream* input = new InputStream;
         OutputStream* output = new OutputStream;

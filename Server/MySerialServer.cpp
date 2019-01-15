@@ -94,11 +94,3 @@ void MySerialServer::read(int sock) {
     memset(buffer, 0, sizeof(buffer));
     read_value = ::read(sock, buffer, 1024);
 }
-
-/* OLD CLOSE
-void MySerialServer::stop_server()
- {
-    shutdown(sock, SHUT_WR);
-    close(sock);
-}
-*/

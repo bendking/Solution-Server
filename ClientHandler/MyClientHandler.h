@@ -77,6 +77,8 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
         all_input += inputLine;
     }
 
+    cout << all_input << endl;
+
     // Parse input into meaningful data
     auto data = parseInput(all_input);
     // Extract data
@@ -88,6 +90,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
 
     MatrixSearchable* searchable;
     string solution;
+
     // Check if problem exist in cache, if not, solve it
     if (cacheManager->exists(matrix_str))
     {
@@ -100,7 +103,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
     {
         // Solve problem and save in cache
         searchable = new MatrixSearchable(get<0>(size), get<1>(size), matrix);
-        State<Cell>* cell = solver->solve(searchable); // TODO: Create new searcher for each problem
+        State<Cell>* cell = solver->solve(searchable);
 
         // If there's no solution
         if (cell == NULL) {
@@ -132,10 +135,10 @@ string MyClientHandler<Problem, Solution>::extractSolution(State<Cell>* cell)
     State<Cell>* origin = cell->getCameFrom();
     Cell* origin_state;
 
-    string right = "right,";
-    string left = "left,";
-    string down = "down,";
-    string up = "up,";
+    string right = "Right,";
+    string left = "Left,";
+    string down = "Down,";
+    string up = "Up,";
 
     while (origin != nullptr)
     {

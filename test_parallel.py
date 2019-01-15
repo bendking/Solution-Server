@@ -45,8 +45,8 @@ s3.connect(('127.0.0.1', 5400))
 # Send matrixes
 for i in range(10):
       s1.send((",".join(map(str,m1[i])) + "\n").encode())
-      s2.send((",".join(map(str,m1[i])) + "\n").encode())
-      s3.send((",".join(map(str,m1[i])) + "\n").encode())
+      s2.send((",".join(map(str,m2[i])) + "\n").encode())
+      s3.send((",".join(map(str,m3[i])) + "\n").encode())
 
 # Send start
 s1.send(("0,0" + "\n").encode())
