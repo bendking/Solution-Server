@@ -16,6 +16,7 @@ class StringReverser : public Solver<string, string> {
 public:
     // Reverse string given and return result
     string solve(string s);
+    StringReverser* clone();
 };
 
 

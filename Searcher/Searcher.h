@@ -16,7 +16,10 @@ public:
     virtual ~Searcher() = default;
     virtual State<T>* search (Searchable<T>* searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
-   // void markSolutionPath(State<T>* _goal);
+
+    // Clone method: stateless - should return self, stateful - should return a clone of self
+    virtual Searcher* clone() = 0;
+    // void markSolutionPath(State<T>* _goal);
 };
 
 /*

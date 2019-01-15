@@ -15,11 +15,17 @@ class BreadthFirstSearch : public MySearcher<T> {
     std::deque<State<T>*> open;
 
 public:
+    BreadthFirstSearch<T>* clone();
     State<T>* popOpenList();
     void addToOpenList(State<T>* _state);
     void clearStates();
     bool isOpenEmpty();
 };
+
+template <class T>
+BreadthFirstSearch<T>* BreadthFirstSearch<T>::clone() {
+    return new BreadthFirstSearch<T>();
+}
 
 template <class T>
 State<T>* BreadthFirstSearch<T>::popOpenList()

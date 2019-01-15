@@ -22,41 +22,6 @@ namespace boot
 {
     class Main {
     public:
-        void test_serial_reverser()
-        {
-            StringReverser* stringReverser = new StringReverser();
-            FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
-            TestClientHandler<string, string>* clientHandler = new TestClientHandler<string, string>(stringReverser, cacheManager);
-
-            // Define server and start it
-            MySerialServer* server = new MySerialServer(clientHandler);
-            server->open(5400);
-            server->start();
-            /*
-             * Run Python code as client (must open new socket for each connection)
-             * Python code is in python_test (copy-paste into python3 command-line)
-             */
-            // Delete server (and thus handler)
-            delete server;
-        }
-
-        void test_parallel_reverser()
-        {
-            StringReverser* stringReverser = new StringReverser();
-            FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
-            TestClientHandler<string, string>* clientHandler = new TestClientHandler<string, string>(stringReverser, cacheManager);
-
-            // Define server and start it
-            MyParallelServer* server = new MyParallelServer(clientHandler);
-            server->open(5400);
-            server->start();
-            /*
-             * Run Python code as client (must open new socket for each connection)
-             * Python code is in python_test (copy-paste into python3 command-line)
-             */
-            delete server;
-        }
-
         void test_searcher()
         {
             SearcherTester tester;
@@ -66,7 +31,7 @@ namespace boot
         void main_test(string server_type, int port)
         {
             // Initialize searcher & solver (decided based on graphs)
-            Searcher<Cell>* searcher = new DepthFirstSearch<Cell>();
+            Searcher<Cell>* searcher = new AStar<Cell>();
             Solver<Searchable<Cell>*, State<Cell>*>* solver = new SearcherSolver<Cell>(searcher);
 
             // Initialize cache manager & client handler
@@ -95,6 +60,7 @@ namespace boot
              * Python code is in test_parallel or test_serial (copy-paste into python3 command-line)
              */
             delete server; // Deletes nested objects
+            delete cacheManager; // Save to file
         }
 
         int main (int port) {

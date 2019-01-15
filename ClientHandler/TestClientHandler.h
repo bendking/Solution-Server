@@ -21,7 +21,8 @@ private:
 public:
     // Constructor & Destructor
     TestClientHandler(Solver<Problem, Solution>* _solver, CacheManager<Problem, Solution>* _cacheManager);
-    ~TestClientHandler();
+    ~TestClientHandler() override;
+    TestClientHandler<Problem, Solution>* clone() override;
 
     // Implement ClientHandler
     void handleClient(InputStream *input, OutputStream *output);
@@ -38,7 +39,11 @@ template<class Problem, class Solution>
 TestClientHandler<Problem, Solution>::~TestClientHandler()
 {
     delete solver;
-    delete cacheManager;
+}
+
+template<class Problem, class Solution>
+TestClientHandler<Problem, Solution>* TestClientHandler<Problem, Solution>::clone() {
+    return new TestClientHandler(solver, cacheManager);
 }
 
 template<class Problem, class Solution>

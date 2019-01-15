@@ -13,6 +13,7 @@ class DepthFirstSearch : public MySearcher<T> {
 private:
     std::deque<State<T>*> open;
 public:
+    DepthFirstSearch<T>* clone();
     State<T>* popOpenList();
     void addToOpenList(State<T>* _state);
     void clearStates();
@@ -21,11 +22,17 @@ public:
 };
 
 template <class T>
+DepthFirstSearch<T>* DepthFirstSearch<T>::clone() {
+    return new DepthFirstSearch<T>();
+}
+
+template <class T>
 bool DepthFirstSearch<T>::isOpenEmpty()
 {
     if (open.empty()) {
         return true;
     }
+    // Else
     return false;
 }
 

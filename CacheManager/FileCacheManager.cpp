@@ -49,12 +49,13 @@ void FileCacheManager::loadFromFile()
     // Check if succeeded opening file
     if (infile.good()) {
         // Load file here
-        while (getline(infile, problem)) {
+        while (getline(infile, problem))
+        {
             if (!problem.empty()) {
                 getline(infile,solution);
 
-                unformatLine(problem);
-                unformatLine(solution);
+                deformatLine(problem);
+                deformatLine(solution);
 
                 map[problem] = solution;
             }
@@ -71,8 +72,8 @@ void FileCacheManager::saveAllToFile()
     ofstream file(fileName);
 
     // Save all table to file
-    for (auto const& x : map) {
-        file << formatLine(x.first) << endl << formatLine(x.second) << endl;
+    for (auto const& pair : map) {
+        file << formatLine(pair.first) << endl << formatLine(pair.second) << endl;
     }
 
     // Closing the file
@@ -90,11 +91,11 @@ string& replaceChar(string& str, char ch1, char ch2) {
 }
 
 // Get line to format
-string FileCacheManager::formatLine(string line){
-    return replaceChar(line, '\n','$');
+string FileCacheManager::formatLine(string line, char c1, char c2){
+    return replaceChar(line, c1, c2); // Default is '\n' & '$'
 }
 
 // Undo format
-string FileCacheManager::unformatLine(string line){
-    return replaceChar(line, '$','\n');
+string FileCacheManager::deformatLine(string line, char c1, char c2){
+    return replaceChar(line, c1, c2); // Default is '\n' & '$'
 }

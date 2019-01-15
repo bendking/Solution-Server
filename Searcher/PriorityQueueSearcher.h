@@ -1,4 +1,4 @@
-//
+//}
 // Created by Yaron Israel on 2019-01-06.
 //
 
@@ -18,7 +18,6 @@ class PriorityQueueSearcher : public MySearcher<T> {
 private:
     std::priority_queue<PriorityState<T>*, std::vector<PriorityState<T>*>, PriorityStateCompare<T>> priorityQueue;
 public:
-
     // Queue manipulation
     State<T>* popOpenList();
     void addToOpenList(State<T>* _state);

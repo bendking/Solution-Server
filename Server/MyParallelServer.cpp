@@ -19,10 +19,10 @@ MyParallelServer::MyParallelServer(ClientHandler* clientHandler) : TCPServer(cli
 MyParallelServer::~MyParallelServer()
 {
     // Wait for threads to finish
-    char dummy;
+    int* dummy;
     for (pthread_t* thread : threads) {
         if (thread != NULL) {
-            pthread_join(*thread, (void**)dummy);
+            pthread_join(*thread, (void**)&dummy);
         }
     }
 
@@ -168,4 +168,10 @@ void MyParallelServer::read(int sock)
 {
     memset(buffer, 0, sizeof(buffer));
     read_value = ::read(sock, buffer, 1024);
+}
+
+void MyParallelServer::handleClient(InputStream *input, OutputStream *output) {
+    ClientHandler* handler_copy = handler->clone();
+    handler_copy->handleClient(input, output);
+    delete handler_copy;
 }

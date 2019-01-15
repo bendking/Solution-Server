@@ -4,6 +4,11 @@
 
 #include "StringReverser.h"
 
+
+StringReverser* StringReverser::clone() {
+    return new StringReverser;
+}
+
 string StringReverser::solve(string problem)
 {
     string solution;
@@ -11,3 +16,4 @@ string StringReverser::solve(string problem)
     std::reverse(solution.begin(), solution.end());
     return solution;
 }
+

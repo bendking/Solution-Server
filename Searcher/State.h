@@ -15,7 +15,7 @@ private:
 public:
 
     // delete all chain of states from the heap (if allocated there)
-    static void deleteChainOfStatesFromHeap(State<T>* state);
+    static void deleteStateChain(State<T> *state);
 
     State(T* _state, double _cost, State<T>* _cameFrom);
     ~State() { delete state; }
@@ -36,7 +36,7 @@ public:
 };
 
 template <class T>
-void State<T>::deleteChainOfStatesFromHeap(State<T>* state) {
+void State<T>::deleteStateChain(State<T> *state) {
     State<T>* temp;
     while (state != nullptr) {
         temp = state->getCameFrom();

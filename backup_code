@@ -87,3 +87,39 @@ void SearcherTester::old_test()
     delete DFS;
     delete Astar;
 }
+
+void test_serial_reverser()
+        {
+            StringReverser* stringReverser = new StringReverser();
+            FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
+            TestClientHandler<string, string>* clientHandler = new TestClientHandler<string, string>(stringReverser, cacheManager);
+
+            // Define server and start it
+            MySerialServer* server = new MySerialServer(clientHandler);
+            server->open(5400);
+            server->start();
+            /*
+             * Run Python code as client (must open new socket for each connection)
+             * Python code is in python_test (copy-paste into python3 command-line)
+             */
+            // Delete server (and thus handler)
+            delete server;
+        }
+
+        void test_parallel_reverser()
+        {
+            StringReverser* stringReverser = new StringReverser();
+            FileCacheManager* cacheManager = new FileCacheManager("test_file.txt");
+            TestClientHandler<string, string>* clientHandler = new TestClientHandler<string, string>(stringReverser, cacheManager);
+
+            // Define server and start it
+            MyParallelServer* server = new MyParallelServer(clientHandler);
+            server->open(5400);
+            server->start();
+            /*
+             * Run Python code as client (must open new socket for each connection)
+             * Python code is in python_test (copy-paste into python3 command-line)
+             */
+            delete cacheManager;
+            delete server;
+        }

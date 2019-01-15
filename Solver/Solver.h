@@ -11,6 +11,9 @@ class Solver {
 public:
     virtual ~Solver() = default;
     virtual Solution solve(Problem) = 0;
+
+    // Clone method: stateless - should return self, stateful - should return a clone of self
+    virtual Solver<Problem, Solution>* clone() = 0;
 };
 
 

@@ -19,6 +19,7 @@ protected:
     Searchable<T>* currentSearchable;
 public:
     MySearcher<T>() = default;
+    MySearcher<T>* clone() = 0;
 
     virtual void clearStates() = 0;
     virtual State<T>* popOpenList() = 0;
@@ -55,12 +56,10 @@ State<T>* MySearcher<T>::search(Searchable<T>* searchable)
             return node;
         }
 
-
         // visit state
         visit(node);
 
-
-        // Add its sons
+        // Add its children
         std::set<State<T>*> expand = searchable->getAllPossibleStates(node);
         for (auto child : expand) {
             // If not visited

@@ -45,7 +45,7 @@ public:
     TCPServer();
 
     bool open(int port) override;
-    void handleClient(InputStream* input,OutputStream* output);
+    virtual void handleClient(InputStream* input,OutputStream* output);
 
     // Helpers
     void setClientHandler(ClientHandler* clientHandler);

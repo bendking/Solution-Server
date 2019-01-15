@@ -19,9 +19,15 @@ public:
    // State<T>* search(Searchable<T> searchable) override;
    // State<T>* popSameStateIfCostMore(State<T>* _state);
    // void clearStates();
+   BestFirstSearch<T>* clone();
    double getPriorityOfState(State<T>* _state);
 
 };
+
+template <class T>
+BestFirstSearch<T>* BestFirstSearch<T>::clone() {
+    return new BestFirstSearch<T>();
+}
 
 template <class T>
 double BestFirstSearch<T>::getPriorityOfState(State<T>* _state) {

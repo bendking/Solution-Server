@@ -16,6 +16,8 @@ private:
 public:
     explicit SearcherSolver(Searcher<T>* _searcher);
     ~SearcherSolver() override;
+
+    SearcherSolver<T>* clone() override;
     State<T>* solve(Searchable<T>* searchable) override;
 };
 
@@ -35,6 +37,11 @@ SearcherSolver<T>::SearcherSolver(Searcher<T>* _searcher) {
 template<class T>
 SearcherSolver<T>::~SearcherSolver() {
     delete searcher;
+}
+
+template<class T>
+SearcherSolver<T>* SearcherSolver<T>::clone() {
+    return new SearcherSolver<T>(searcher->clone());
 }
 
 template<class T>

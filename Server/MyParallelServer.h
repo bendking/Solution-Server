@@ -20,7 +20,8 @@ public:
     virtual ~MyParallelServer() override;  // Delete handler & thread
     int start() override;        // Start handle loop
     void stop() override;         // Stop handle loop
-    void read(int sock) override;          // Read from client
+    void read(int sock) override; // Read from client
+    void handleClient(InputStream* input,OutputStream* output) override;
 
     // Elementary
     MyParallelServer();

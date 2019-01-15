@@ -20,8 +20,13 @@ class AStar : public PriorityQueueSearcher<T>{
 public:
     //void processState(State<T>* _state, Searchable<T>& searchable);
     double getPriorityOfState(State<T>* _state);
+    AStar<T>* clone();
 };
 
+template <class T>
+AStar<T>* AStar<T>::clone() {
+    return new AStar<T>();
+}
 
 template <class T>
 double AStar<T>::getPriorityOfState(State<T>* _state) {

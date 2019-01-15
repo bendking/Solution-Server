@@ -23,17 +23,18 @@ private:
     Solver<Problem, Solution>* solver;
     CacheManager<string, string>* cacheManager;
 public:
-    // Constructor & Destructor                                    Subject to change
+    // Constructor & Destructor
     MyClientHandler(Solver<Problem, Solution>* _solver, CacheManager<string, string>* _cacheManager);
     ~MyClientHandler() override;
+    MyClientHandler<Problem, Solution>* clone();
 
     // Implement ClientHandler
     void handleClient(InputStream *input, OutputStream *output) override;
 
     // Helpers
     //   <matrix, size, end, start, matrix_string>
-    tuple<int,int> parsePoint(string point, char delim);
     tuple<int**, tuple<int,int>, tuple<int,int>, tuple<int,int>, string> parseInput(string input);
+    tuple<int,int> parsePoint(string point, char delim);
     string extractSolution(State<Cell>* cell);
 
 };
@@ -49,8 +50,13 @@ template<class Problem, class Solution>
 MyClientHandler<Problem, Solution>::~MyClientHandler()
 {
     delete solver;
-    delete cacheManager;
 }
+
+template<class Problem, class Solution>
+MyClientHandler<Problem, Solution>* MyClientHandler<Problem, Solution>::clone() {
+    return new MyClientHandler<Problem, Solution>(solver->clone(), cacheManager);
+}
+
 
 template<class Problem, class Solution>
 void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, OutputStream *output)
@@ -83,13 +89,18 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
     MatrixSearchable* searchable;
     string solution;
     // Check if problem exist in cache, if not, solve it
-    if (cacheManager->exists(matrix_str)) {
+    if (cacheManager->exists(matrix_str))
+    {
         // Get solution from cache
         solution = cacheManager->getSolution(matrix_str);
-    } else {
+        // Delete allocated matrix
+        delete_matrix(matrix, get<0>(size));
+    }
+    else
+    {
         // Solve problem and save in cache
         searchable = new MatrixSearchable(get<0>(size), get<1>(size), matrix);
-        State<Cell>* cell = solver->solve(searchable);
+        State<Cell>* cell = solver->solve(searchable); // TODO: Create new searcher for each problem
 
         // If there's no solution
         if (cell == NULL) {
@@ -101,7 +112,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
             cacheManager->saveSolution(matrix_str, solution);
         }
         // Clean up
-        State<Cell>::deleteChainOfStatesFromHeap(cell);
+        State<Cell>::deleteStateChain(cell);
         delete searchable;
     }
 
