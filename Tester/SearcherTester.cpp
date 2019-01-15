@@ -11,9 +11,13 @@ int **SearcherTester::generate_matrix(int rows, int cols, int random_limit) {
         matrix[i] = new int[cols];
         for (int j = 0; j < cols; ++j) {
             // Give value between -1 and limit
-            matrix[i][j] = (rand() % (random_limit + 1)) - 1;
+            matrix[i][j] = (rand() % (random_limit + 1) ) -1  ;// removed the -1 because sometimes it can's find a path
+            cout << matrix[i][j] << " ";
         }
+        cout << endl;
     }
+    cout << endl;
+
     // Make sure first cell & last cell are not -1
     matrix[0][0] = 0;
     matrix[rows - 1][cols - 1] = 0;
@@ -33,7 +37,7 @@ tuple<int, int> SearcherTester::run(Searcher<Cell> *searcher, Searchable<Cell> *
         nodes_aggregate += searcher->getNumberOfNodesEvaluated();
         price_aggregate += solution->getCost();
     }
-
+    cout << "," <<nodes_aggregate;
     //nodes_aggregate /= 10;
     //price_aggregate /= 10;
 
@@ -48,8 +52,8 @@ void SearcherTester::test()
     // Change as required
     int number_of_matrixes = 10;
 
-    Searcher<Cell>* BreadthFS = new BreadthFirstSearch<Cell>();
     Searcher<Cell>* BestFS = new BestFirstSearch<Cell>();
+    Searcher<Cell>* BreadthFS = new BreadthFirstSearch<Cell>();
     Searcher<Cell>* DFS = new DepthFirstSearch<Cell>();
     Searcher<Cell>* Astar = new AStar<Cell>();
 
@@ -65,8 +69,11 @@ void SearcherTester::test()
     vector<int**> matrixes;
     for (int i = 0; i < number_of_matrixes; ++i) {
         // Randomize size of matrix
-        size = (rand() % 50) + 1 + 10;
+        size = (rand() % 5) + 1 + 5 * i;
+size = 40;
         matrix_sizes[i] = size;
+
+        cout << size;
 
         // Generate searchable matrix
         int **matrix = generate_matrix(size, size, 10);
@@ -79,8 +86,8 @@ void SearcherTester::test()
         DFS_results.push_back(run(DFS, searchable));
         Astar_results.push_back(run(Astar, searchable));
 
-        cout << "Test " << i + 1 << " done." << endl;
-
+        //cout << "Test " << i + 1 << " done." << endl;
+        cout << endl;
         searchables.push_back(searchable);
         //delete searchable;
     }
