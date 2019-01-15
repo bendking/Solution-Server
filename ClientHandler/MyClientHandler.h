@@ -12,6 +12,7 @@
 #include <tuple>
 #include <string>
 #include <algorithm>
+#include <iostream>
 
 
 using namespace std;
@@ -31,6 +32,7 @@ public:
 
     // Helpers
     //   <matrix, size, end, start, matrix_string>
+    tuple<int,int> parsePoint(string point, char delim);
     tuple<int**, tuple<int,int>, tuple<int,int>, tuple<int,int>, string> parseInput(string input);
     string extractSolution(State<Cell>* cell);
 
@@ -59,13 +61,14 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
     string all_input = "";
     // Get next line from client
     inputLine = input->read();
+    all_input += inputLine;
     // Get rest of lines
-    while (inputLine.find("end") != string::npos)
+    while (inputLine.find("end") == string::npos)
     {
-        // Add input line to total input
-        all_input += inputLine;
         // Get next line from client
         inputLine = input->read();
+        // Add input line to total input
+        all_input += inputLine;
     }
 
     // Parse input into meaningful data
@@ -77,6 +80,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
     tuple<int,int> end = get<3>(data);
     string matrix_str = get<4>(data);
 
+    MatrixSearchable* searchable;
     string solution;
     // Check if problem exist in cache, if not, solve it
     if (cacheManager->exists(matrix_str)) {
@@ -84,7 +88,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
         solution = cacheManager->getSolution(matrix_str);
     } else {
         // Solve problem and save in cache
-        MatrixSearchable* searchable = new MatrixSearchable(get<0>(size), get<1>(size), matrix);
+        searchable = new MatrixSearchable(get<0>(size), get<1>(size), matrix);
         State<Cell>* cell = solver->solve(searchable);
 
         // If there's no solution
@@ -96,6 +100,9 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
             solution = extractSolution(cell);
             cacheManager->saveSolution(matrix_str, solution);
         }
+        // Clean up
+        // TODO: Delete chain
+        delete searchable;
     }
 
     // Send Solution
@@ -130,10 +137,10 @@ string MyClientHandler<Problem, Solution>::extractSolution(State<Cell>* cell)
         else if ((origin_state->i == current_state->i) && (origin_state->j > current_state->j)) {
             solution_str.insert(0, left);
         }
-        else if ((origin_state->i > current_state->i) && (origin_state->j == current_state->j)) {
+        else if ((origin_state->i < current_state->i) && (origin_state->j == current_state->j)) {
             solution_str.insert(0, down);
         }
-        else if ((origin_state->i == current_state->i) && (origin_state->j == current_state->j)) {
+        else if ((origin_state->i > current_state->i) && (origin_state->j == current_state->j)) {
             solution_str.insert(0, up);
         }
 
@@ -165,7 +172,7 @@ tuple<int**, tuple<int,int>, tuple<int,int>, tuple<int,int>, string> MyClientHan
     rows -= 3;
 
     // Get the cols based on the number of commas till the first \n
-    int cols = 0;
+    int cols = 1;
     for (auto x : input) {
         if (x == delim) {
             ++cols;
@@ -193,18 +200,14 @@ tuple<int**, tuple<int,int>, tuple<int,int>, tuple<int,int>, string> MyClientHan
                 // Add every char to matrix string
                 matrix_str += input[k];
 
-                // If reached end of line, go to next line
-                if (input[k] == eol) {
+                // If reached delimiter or end-of-line
+                if (input[k] == delim || input[k] == eol) {
                     ++k;
                     break;
                 }
-                // If reached delimiter, go to next number
-                else if (input[k] == delim) {
-                    ++k;
-                    continue;
-                }
                 // Else, consider as part of number
                 num += input[k];
+                ++k;
             }
             // Put number in matrix
             matrix[i][j] = stoi(num);
@@ -217,7 +220,7 @@ tuple<int**, tuple<int,int>, tuple<int,int>, tuple<int,int>, string> MyClientHan
     string start = "";
     string end = "";
     int lines_passed = 0;
-    for(int i = input.length()-1; i >= 0; i--)
+    for(int i = input.length()-2; i >= 0; i--)
     {
         // If reached end of line,
         if (input.at(i) == eol) {
@@ -237,53 +240,44 @@ tuple<int**, tuple<int,int>, tuple<int,int>, tuple<int,int>, string> MyClientHan
     reverse(start.begin(), start.end());
     reverse(end.begin(), end.end());
 
-    // Parse start and end into proper numbers
-    int iStart, jStart;
-    int iGoal, jGoal;
+    tuple<int,int> start_point = parsePoint(start, delim);
+    tuple<int,int> end_point = parsePoint(end, delim);
 
+
+    // Return tuple containing data
+    return {matrix, {rows, cols}, start_point, end_point, matrix_str};
+}
+
+template<class Problem, class Solution>
+tuple<int,int> MyClientHandler<Problem, Solution>::parsePoint(string point, char delim)
+{
+    int i, j;
     string tempI, tempJ;
 
     // Parse start
     bool flag = true;
-    for (char x : start)
+    for (char x : point)
     {
         // If reached ','
         if (x == delim) {
             flag = !flag;
+            continue;
         }
         // If at first number
         if (flag) {
             tempI += x;
         }
-        // If at second number
+            // If at second number
         else {
             tempJ += x;
         }
     }
 
-    iStart = stoi(tempI);
-    jStart = stoi(tempJ);
+    i = stoi(tempI);
+    j = stoi(tempJ);
 
-    tempI, tempJ = "";
-
-    // Parse end
-    flag = true;
-    for (char x : start) {
-        if (x == delim) {
-            flag = !flag;
-        }
-        if (flag) {
-            tempI += x;
-        } else {
-            tempJ += x;
-        }
-    }
-
-    iGoal = stoi(tempI);
-    jGoal= stoi(tempJ);
-
-    // Return tuple containing data
-    return {matrix, {rows, cols}, {iStart, jStart}, {iGoal, jGoal}, matrix_str};
+    return {i,j};
 }
+
 
 #endif //SOLUTION_SERVER_MYCLIENTHANDLER_H

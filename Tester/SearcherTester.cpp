@@ -21,12 +21,6 @@ int **SearcherTester::generate_matrix(int rows, int cols, int random_limit) {
     return matrix;
 }
 
-void SearcherTester::delete_matrix(int **matrix, int rows) {
-    for (int i = 0; i < rows; ++i)
-        delete[] matrix[i];
-    delete[] matrix;
-
-}
 
 tuple<int, int> SearcherTester::run(Searcher<Cell> *searcher, Searchable<Cell> *searchable) {
     int nodes_aggregate = 0;

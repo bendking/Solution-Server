@@ -1,4 +1,4 @@
-//
+//;
 // Created by ben on 1/4/19.
 //
 
@@ -55,6 +55,12 @@ void* loop(void* args)
     {
         // Get new client
         new_socket = server->timeout_listen();
+        // If timed-out, continue (stop is true already)
+        if (new_socket == -1) {
+            stop = server->getStop();
+            continue;
+        }
+        // Else, continue as usual
         // Set client socket to streams
         input->setSocket(new_socket);
         output->setSocket(new_socket);

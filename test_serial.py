@@ -19,14 +19,15 @@ s1.connect(('127.0.0.1', 5400))
 
 # Send matrixes
 for i in range(10):
-      s1.send(join(m1[i], ',') + "\n")
+    to_send = (",".join(map(str,m1[i])) + "\n").encode()
+    s1.send(to_send)
 
 # Send start
-s1.send(b"0,0")
+s1.send(("0,0" + "\n").encode())
 # Send goal
-s1.send(b"9,9")
+s1.send(("9,9" + "\n").encode())
 # Send end
-s1.send(b"end")
+s1.send(("end" + "\n").encode())
 
 # Print solution
 print(s1.recv(1024))

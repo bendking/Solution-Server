@@ -14,6 +14,7 @@ class ClientHandler {
 public:
     // Accepts abstract streams with client
     virtual void handleClient(InputStream *input, OutputStream *output) = 0;
+    virtual ~ClientHandler() = default;
 };
 
 #endif //SOLUTION_SERVER_CLIENTHANDLER_H

@@ -44,22 +44,22 @@ s3.connect(('127.0.0.1', 5400))
 
 # Send matrixes
 for i in range(10):
-      s1.send(join(m1[i], ',') + "\n")
-      s2.send(join(m2[i], ',') + "\n")
-      s3.send(join(m3[i], ',') + "\n")
+      s1.send((",".join(map(str,m1[i])) + "\n").encode())
+      s2.send((",".join(map(str,m1[i])) + "\n").encode())
+      s3.send((",".join(map(str,m1[i])) + "\n").encode())
 
 # Send start
-s1.send(b"0,0")
-s2.send(b"0,0")
-s3.send(b"0,0")
+s1.send(("0,0" + "\n").encode())
+s2.send(("0,0" + "\n").encode())
+s3.send(("0,0" + "\n").encode())
 # Send goal
-s1.send(b"9,9")
-s2.send(b"9,9")
-s3.send(b"9,9")
+s1.send(("9,9" + "\n").encode())
+s2.send(("9,9" + "\n").encode())
+s3.send(("9,9" + "\n").encode())
 # Send end
-s1.send(b"end")
-s2.send(b"end")
-s3.send(b"end")
+s1.send(("end" + "\n").encode())
+s2.send(("end" + "\n").encode())
+s3.send(("end" + "\n").encode())
 
 # Print solutions
 print(s1.recv(1024))

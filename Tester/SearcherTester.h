@@ -27,7 +27,6 @@ class SearcherTester {
 public:
     SearcherTester() = default;
     int** generate_matrix(int n, int m, int random_limit);
-    void delete_matrix(int** matrix, int rows);
     tuple<int, int> run(Searcher<Cell>* searcher, Searchable<Cell>* searchable);
     void test();
 

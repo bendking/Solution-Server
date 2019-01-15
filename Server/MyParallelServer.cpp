@@ -156,7 +156,7 @@ void MyParallelServer::deleteThreads()
 int MyParallelServer::start()
 {
     pthread_t* thread = new pthread_t;
-    threads.push_back(thread );
+    threads.push_back(thread);
     return pthread_create(thread, nullptr, get_clients, this);
 }
 

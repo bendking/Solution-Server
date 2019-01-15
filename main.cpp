@@ -10,10 +10,10 @@
 #include "Searcher/AStar.h"
 #include "Solver/SearcherSolver.h"
 #include "Tester/SearcherTester.h"
+#include "ClientHandler/MyClientHandler.h"
 
 #include <string>
 #include <thread>
-#include <MyClientHandler.h>
 
 // Use as shorthand
 #define MATRIX_PROBLEM Searchable<Cell>*, State<Cell>*
@@ -66,7 +66,7 @@ namespace boot
         void main_test(string server_type, int port)
         {
             // Initialize searcher & solver (decided based on graphs)
-            Searcher<Cell>* searcher = new AStar<Cell>();
+            Searcher<Cell>* searcher = new DepthFirstSearch<Cell>();
             Solver<Searchable<Cell>*, State<Cell>*>* solver = new SearcherSolver<Cell>(searcher);
 
             // Initialize cache manager & client handler
@@ -95,7 +95,6 @@ namespace boot
              * Python code is in test_parallel or test_serial (copy-paste into python3 command-line)
              */
             delete server; // Deletes nested objects
-            delete searcher;
         }
 
         int main (int port) {
@@ -103,7 +102,7 @@ namespace boot
             //test_parallel_reverser();
             //test_solver();
             //test_searcher();
-            main_test("serial", port);
+            main_test("parallel", port);
             return 1;
         }
     };

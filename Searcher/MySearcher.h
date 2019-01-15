@@ -67,6 +67,9 @@ State<T>* MySearcher<T>::search(Searchable<T>* searchable)
             if (!hasVisited(child)) {
                 // Add element to open list
                 addToOpenList(child);
+            } else {
+                // Delete unnecessary states
+                delete child;
             }
         }
     }
