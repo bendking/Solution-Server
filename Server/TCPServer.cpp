@@ -41,11 +41,17 @@ bool TCPServer::bind()
     }
 
     // Forcefully attaching socket to the port 8080
+
+    /*
+     * BIG BUG MEMORIAL #2
+     *
     int opt = 1;
     if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
         perror("setsockopt");
         return false;
     }
+*/
+    sock = socket(AF_INET, SOCK_STREAM, 0);
 
     // Set server attributes
     server.sin_addr.s_addr = INADDR_ANY;
@@ -53,7 +59,7 @@ bool TCPServer::bind()
     server.sin_port = htons(port);
 
     // Bind server to socket
-    if ((::bind(sock, (struct sockaddr*) &server, sizeof(address))) < 0) {
+    if ((::bind(sock, (struct sockaddr*) &server, sizeof(server))) < 0) {
         perror("Failed to bind TCPServer");
         return false;
     }
