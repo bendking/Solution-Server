@@ -28,14 +28,14 @@ tuple<int, int> SearcherTester::run(Searcher<Cell> *searcher, Searchable<Cell> *
     State<Cell> *solution;
 
     // Run search 10 times
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 1; ++i) {
         solution = searcher->search(searchable);
         nodes_aggregate += searcher->getNumberOfNodesEvaluated();
         price_aggregate += solution->getCost();
     }
 
-    nodes_aggregate /= 10;
-    price_aggregate /= 10;
+    //nodes_aggregate /= 10;
+    //price_aggregate /= 10;
 
     // Return tuples of averages
     return {price_aggregate, nodes_aggregate};
@@ -58,6 +58,8 @@ void SearcherTester::test()
     vector<tuple<int, int>> DFS_results = vector<tuple<int, int>>();
     vector<tuple<int, int>> Astar_results = vector<tuple<int, int>>();
 
+    vector<MatrixSearchable*>searchables;
+
     int size;
     int matrix_sizes [10];
     vector<int**> matrixes;
@@ -78,7 +80,9 @@ void SearcherTester::test()
         Astar_results.push_back(run(Astar, searchable));
 
         cout << "Test " << i + 1 << " done." << endl;
-        delete searchable;
+
+        searchables.push_back(searchable);
+        //delete searchable;
     }
 
     ofstream graphs_file("graphs.txt");
@@ -133,8 +137,15 @@ void SearcherTester::test()
     delete DFS;
     delete Astar;
 
+
+    /*
     for (int i = 0; i < number_of_matrixes; ++i) {
         delete_matrix(matrixes[i], matrix_sizes[i]);
+    }
+     */
+
+    for (auto x : searchables) {
+        delete(x);
     }
 
 }

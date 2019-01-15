@@ -52,6 +52,10 @@ void FileCacheManager::loadFromFile()
         while (getline(infile, problem)) {
             if (!problem.empty()) {
                 getline(infile,solution);
+
+                unformatLine(problem);
+                unformatLine(solution);
+
                 map[problem] = solution;
             }
         }
@@ -68,10 +72,29 @@ void FileCacheManager::saveAllToFile()
 
     // Save all table to file
     for (auto const& x : map) {
-        file << x.first << endl << x.second << endl;
+        file << formatLine(x.first) << endl << formatLine(x.second) << endl;
     }
 
     // Closing the file
     file.close();
 }
 
+
+// ch1 to ch2
+string& replaceChar(string& str, char ch1, char ch2) {
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] == ch1)
+            str[i] = ch2;
+    }
+    return str;
+}
+
+// Get line to format
+string FileCacheManager::formatLine(string line){
+    return replaceChar(line, '\n','$');
+}
+
+// Undo format
+string FileCacheManager::unformatLine(string line){
+    return replaceChar(line, '$','\n');
+}

@@ -30,6 +30,13 @@ public:
     // File management
     void loadFromFile();
     void saveAllToFile();
+
+
+    // Get line to format
+    string formatLine(string line);
+    // Undo format
+    string unformatLine(string line);
+
 };
 
 

@@ -25,10 +25,10 @@ private:
 public:
     // Constructor & Destructor                                    Subject to change
     MyClientHandler(Solver<Problem, Solution>* _solver, CacheManager<string, string>* _cacheManager);
-    ~MyClientHandler();
+    ~MyClientHandler() override;
 
     // Implement ClientHandler
-    void handleClient(InputStream *input, OutputStream *output);
+    void handleClient(InputStream *input, OutputStream *output) override;
 
     // Helpers
     //   <matrix, size, end, start, matrix_string>
@@ -101,7 +101,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
             cacheManager->saveSolution(matrix_str, solution);
         }
         // Clean up
-        // TODO: Delete chain
+        State<Cell>::deleteChainOfStatesFromHeap(cell);
         delete searchable;
     }
 
@@ -278,6 +278,7 @@ tuple<int,int> MyClientHandler<Problem, Solution>::parsePoint(string point, char
 
     return {i,j};
 }
+
 
 
 #endif //SOLUTION_SERVER_MYCLIENTHANDLER_H

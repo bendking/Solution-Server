@@ -13,6 +13,10 @@ private:
     State<T>* cameFrom = nullptr;
     bool inSolution = false;
 public:
+
+    // delete all chain of states from the heap (if allocated there)
+    static void deleteChainOfStatesFromHeap(State<T>* state);
+
     State(T* _state, double _cost, State<T>* _cameFrom);
     ~State() { delete state; }
 
@@ -31,6 +35,15 @@ public:
     bool operator==(State<T>& rhs);
 };
 
+template <class T>
+void State<T>::deleteChainOfStatesFromHeap(State<T>* state) {
+    State<T>* temp;
+    while (state != nullptr) {
+        temp = state->getCameFrom();
+        delete state;
+        state = temp;
+    }
+}
 template <class T>
 State<T>::State(T* _state, double _cost, State<T>* _cameFrom)
 {
