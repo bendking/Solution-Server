@@ -19,16 +19,15 @@ FileCacheManager::~FileCacheManager() {
 //
 
 bool FileCacheManager::exists(string _problem) {
-    formatLine(_problem);
+    _problem = formatLine(_problem);
     bool exists = map.count(_problem) > 0;
-    deformatLine(_problem);
     return exists;
 }
 
 string FileCacheManager::getSolution(string _problem) {
-    formatLine(_problem);
+    _problem = formatLine(_problem);
     string solution = map.at(_problem);
-    deformatLine(_problem);
+    solution = deformatLine(solution);
     return solution;
 }
 
