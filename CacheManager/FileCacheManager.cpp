@@ -42,9 +42,6 @@ void FileCacheManager::saveSolution(string _problem, string _solution) {
 
 void FileCacheManager::loadFromFile()
 {
-    // Create file (if not already created)
-    ofstream file(fileName);
-
     // Key and value
     string key, value;
 

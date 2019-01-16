@@ -32,23 +32,26 @@ namespace boot
         {
             // Initialize searcher & solver (decided based on graphs)
             Searcher<Cell>* searcher = new AStar<Cell>();
-            Solver<Searchable<Cell>*, State<Cell>*>* solver = new SearcherSolver<Cell>(searcher);
+            Solver<MATRIX_PROBLEM>* solver = new SearcherSolver<Cell>(searcher);
 
             // Initialize cache manager & client handler
             FileCacheManager* cacheManager = new FileCacheManager("searcher_cache.txt");
-            auto clientHandler = new MyClientHandler<Searchable<Cell>*, State<Cell>*>(solver, cacheManager);
+            auto clientHandler = new MyClientHandler<MATRIX_PROBLEM>(solver, cacheManager);
 
             // Define server and start it
             Server* server;
 
             // Sort out server type
-            if (server_type == "serial") {
+            if (server_type == "serial")
+            {
                 server = new MySerialServer(clientHandler);
             }
-            else if (server_type == "parallel") {
+            else if (server_type == "parallel")
+            {
                 server = new MyParallelServer(clientHandler);
             }
-            else {
+            else // If no type supplied
+            {
                 throw logic_error("No server type supplied, dickhead");
             }
             // Else, fucked
@@ -70,6 +73,7 @@ namespace boot
             //test_searcher();
             main_test("parallel", port);
             return 1;
+            if (!problem.empty()) {
         }
     };
 }
@@ -78,5 +82,6 @@ using namespace boot;
 int main (int argc, char *argv[]) {
     Main menu;
     return menu.main(stoi(argv[1]));
+    //Debug:
     //return menu.main(5400);
 }
