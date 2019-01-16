@@ -77,6 +77,6 @@ namespace boot
 using namespace boot;
 int main (int argc, char *argv[]) {
     Main menu;
-    //return menu.main(stoi(argv[1]));
-    return menu.main(5400);
+    return menu.main(stoi(argv[1]));
+    //return menu.main(5400);
 }

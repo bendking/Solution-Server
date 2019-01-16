@@ -11,12 +11,12 @@ int **SearcherTester::generate_matrix(int rows, int cols, int random_limit) {
         matrix[i] = new int[cols];
         for (int j = 0; j < cols; ++j) {
             // Give value between -1 and limit
-            matrix[i][j] = (rand() % (random_limit + 1) ) -1  ;// removed the -1 because sometimes it can's find a path
-            cout << matrix[i][j] << " ";
+            matrix[i][j] = (rand() % (random_limit + 1) ) -1 ;
+        //    cout << matrix[i][j] << " ";
         }
-        cout << endl;
+      //  cout << endl;
     }
-    cout << endl;
+    //cout << endl;
 
     // Make sure first cell & last cell are not -1
     matrix[0][0] = 0;
@@ -37,7 +37,7 @@ tuple<int, int> SearcherTester::run(Searcher<Cell> *searcher, Searchable<Cell> *
         nodes_aggregate += searcher->getNumberOfNodesEvaluated();
         price_aggregate += solution->getCost();
     }
-    cout << "," <<nodes_aggregate;
+    //cout << "," <<nodes_aggregate;
     //nodes_aggregate /= 10;
     //price_aggregate /= 10;
 
@@ -70,10 +70,9 @@ void SearcherTester::test()
     for (int i = 0; i < number_of_matrixes; ++i) {
         // Randomize size of matrix
         size = (rand() % 5) + 1 + 5 * i;
-size = 40;
         matrix_sizes[i] = size;
 
-        cout << size;
+       // cout << size;
 
         // Generate searchable matrix
         int **matrix = generate_matrix(size, size, 10);
@@ -87,7 +86,7 @@ size = 40;
         Astar_results.push_back(run(Astar, searchable));
 
         //cout << "Test " << i + 1 << " done." << endl;
-        cout << endl;
+       // cout << endl;
         searchables.push_back(searchable);
         //delete searchable;
     }
@@ -110,7 +109,7 @@ size = 40;
         matrix_size = matrix_sizes[i];
         matrix = matrixes[i];
 
-        graphs_file << to_string(matrix_size) << endl;
+        graphs_file << to_string(matrix_size) << "," << to_string(matrix_size) << endl;
         graphs_file << "0,0" << endl;
         graphs_file << matrix_size-1 << "," << matrix_size-1 << endl;
 
@@ -127,9 +126,9 @@ size = 40;
     // Write out solution file
     for (int i = 0; i < number_of_matrixes; ++i)
     {
-        solutions_file << get<0>(BreadthFS_results[i]) << "," << get<1>(BreadthFS_results[i]) << endl;
         solutions_file << get<0>(BestFS_results[i]) << "," << get<1>(BestFS_results[i]) << endl;
         solutions_file << get<0>(DFS_results[i]) << "," << get<1>(DFS_results[i]) << endl;
+        solutions_file << get<0>(BreadthFS_results[i]) << "," << get<1>(BreadthFS_results[i]) << endl;
         solutions_file << get<0>(Astar_results[i]) << "," << get<1>(Astar_results[i]) << endl;
     }
 
