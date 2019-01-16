@@ -40,10 +40,10 @@ bool TCPServer::bind()
         }
     }
 
-    // Doesn't work for Ofec
-    // Forcefully attaching socket to the port 8080
+    // Does[n't] work for Ofec
     int opt = 1;
-    if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+    if (setsockopt(sock, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt)) ||
+            setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
         perror("setsockopt");
         return false;
     }
