@@ -40,18 +40,13 @@ bool TCPServer::bind()
         }
     }
 
+    // Doesn't work for Ofec
     // Forcefully attaching socket to the port 8080
-
-    /*
-     * BIG BUG MEMORIAL #2
-     *
     int opt = 1;
     if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
         perror("setsockopt");
         return false;
     }
-*/
-    sock = socket(AF_INET, SOCK_STREAM, 0);
 
     // Set server attributes
     server.sin_addr.s_addr = INADDR_ANY;
@@ -71,7 +66,7 @@ bool TCPServer::bind()
 int TCPServer::listen()
 {
     // Server info
-    int addrlen = sizeof(address);
+    int addrlen = sizeof(server);
     int new_socket = -1;
 
     if (::listen(sock, 1) < 0) {
@@ -91,7 +86,7 @@ int TCPServer::listen()
 int TCPServer::timeout_listen()
 {
     // Server info
-    int addrlen = sizeof(address);
+    int addrlen = sizeof(server);
     int client_limit = 100;
     int new_socket = -1;
 
@@ -101,6 +96,9 @@ int TCPServer::timeout_listen()
     fd_set fd;
     int retval;
     int max_sock = sock + 1;
+
+    // Prep server for timeout
+    setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
 
     // Attempt to get client (if timed-out, stop server)
     bool stop = this->getStop();
