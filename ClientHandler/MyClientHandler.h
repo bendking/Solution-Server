@@ -102,7 +102,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
     else
     {
         // Solve problem and save in cache
-        searchable = new MatrixSearchable(get<0>(size), get<1>(size), matrix);
+        searchable = new MatrixSearchable(get<0>(size), get<1>(size), matrix, start, end);
         State<Cell>* cell = solver->solve(searchable);
 
         // If there's no solution

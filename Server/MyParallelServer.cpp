@@ -63,6 +63,9 @@ void* client_thread(void* _args)
 
     delete input;
     delete output;
+
+    // Junk
+    return nullptr;
 }
 
 
@@ -127,6 +130,9 @@ void* get_clients(void* args)
     for (arg_struct* _struct : structs) {
         delete _struct;
     }
+
+    // Junk
+    return nullptr;
 }
 
 pthread_mutex_t* MyParallelServer::getMutex() {

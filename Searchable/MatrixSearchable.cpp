@@ -28,6 +28,7 @@ MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix)
     goal = new Cell(rows - 1, cols - 1);
 
 }
+
 MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, int iGoal, int jGoal) {
     rows = _rows;
     cols = _cols;
@@ -44,12 +45,21 @@ MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, int iSta
     start = new Cell(iStart, jStart);
     goal = new Cell(iGoal, jGoal);
 }
+
 MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, Cell* _start, Cell* _goal) {
     rows = _rows;
     cols = _cols;
     matrix = _matrix;
     start = _start;
     goal = _goal;
+}
+
+MatrixSearchable::MatrixSearchable(int _rows, int _cols, int **_matrix, tuple<int,int> _start, tuple<int,int> _goal) {
+    rows = _rows;
+    cols = _cols;
+    matrix = _matrix;
+    start = new Cell(get<0>(_start), get<1>(_start));
+    goal = new Cell(get<0>(_goal), get<1>(_goal));
 }
 
 State<Cell>* MatrixSearchable::getInitialState() {
@@ -61,10 +71,8 @@ bool MatrixSearchable::isGoal(State<Cell>* state)
 {
     // Get where is the state
     Cell *arr = (state->getState());
-    int i = arr->i;
-    int j = arr->j;
 
-    // Check if they are in N-1, N-1
+    // Check if they are in goal
     if (*arr == *goal) {
         return true;
     }
@@ -83,22 +91,26 @@ std::set<State<Cell>*> MatrixSearchable::getAllPossibleStates(State<Cell>* state
     if (matrix[i][j] == -1) {
         return result;
     }
+
     State<Cell>* s;
     if (i != 0) {
         s = createState(i-1, j, state);
         if (s != nullptr)
             result.insert(s);
     }
+
     if (j != 0) {
         s = createState(i, j-1, state);
         if (s != nullptr)
             result.insert(s);
     }
+
     if (i != rows-1) {
         s = createState(i+1, j, state);
         if (s != nullptr)
             result.insert(s);
     }
+
     if (j != cols-1) {
         s = createState(i, j+1, state);
         if (s != nullptr)

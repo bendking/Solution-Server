@@ -202,17 +202,19 @@ void SearcherTester::test_bfs() {
     ofstream solutions_file("solution.txt");
 
     int matrix_size;
+    int real_size;
     int **matrix;
     // Write to graphs file
     graphs_file << to_string(number_of_matrixes) << endl;
     for (int i = 0; i < number_of_matrixes; ++i) {
         // Write matrix stats
         matrix_size = matrix_sizes[i];
+        real_size = matrix_size--;
         matrix = matrixes[i];
 
         graphs_file << to_string(matrix_size) << endl;
         graphs_file << "0,0" << endl;
-        graphs_file << to_string(--matrix_size) + "," + to_string(matrix_size) << endl;
+        graphs_file << to_string(real_size) + "," + to_string(real_size) << endl;
 
         // Write matrix
         graphs_file.setf(ios::left);

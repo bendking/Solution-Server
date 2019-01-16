@@ -73,6 +73,9 @@ void* loop(void* args)
 
     delete input;
     delete output;
+
+    // Junk
+    return nullptr;
 }
 
 //

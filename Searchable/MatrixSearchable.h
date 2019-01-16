@@ -6,6 +6,9 @@
 #define SOLUTION_SERVER_MATRIXSEARCHABLE_H
 
 #include "Searchable.h"
+#include <tuple>
+
+using namespace std;
 
 class Cell {
 public:
@@ -36,8 +39,9 @@ public:
 
     // Default start and goal
     MatrixSearchable(int _rows, int _cols, int **_matrix);
+    MatrixSearchable(int _rows, int _cols, int **_matrix, tuple<int,int> _start, tuple<int,int> _goal);
 
-    // With specific goal
+        // With specific goal
     MatrixSearchable(int _rows, int _cols, int **_matrix, int iGoal, int jGoal);
     MatrixSearchable(int _rows, int _cols, int **_matrix, Cell* _goal);
 
