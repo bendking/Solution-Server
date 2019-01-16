@@ -9,6 +9,10 @@ def random_matrix():
       
       # Generate matrix
       matrix = numpy.random.randint(-1, 10, (rows, cols))
+      # Make sure matrix is valid
+      matrix[0][0] = 0
+      matrix[rows-1,cols-1] = 0
+      # Send off!
       return matrix, rows, cols
 
 def random_point(rows, cols):
