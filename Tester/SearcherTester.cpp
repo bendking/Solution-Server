@@ -5,6 +5,19 @@
 #include "SearcherTester.h"
 
 
+int **bug_matrix () {
+    int matrix1[3][3] = {{0,-1,5},{5,9,4},{4,4,0}};
+    int **matrix = new int *[3];
+    for (int i = 0; i < 3; ++i) {
+        matrix[i] = new int[3];
+        for (int j = 0; j < 3; ++j) {
+            matrix[i][j] = matrix1[i][j] ;
+        }
+    }
+    return matrix;
+}
+
+
 int **SearcherTester::generate_matrix(int rows, int cols, int random_limit) {
     int **matrix = new int *[rows];
     for (int i = 0; i < rows; ++i) {
