@@ -73,7 +73,6 @@ namespace boot
             //test_searcher();
             main_test("parallel", port);
             return 1;
-            if (!problem.empty()) {
         }
     };
 }
