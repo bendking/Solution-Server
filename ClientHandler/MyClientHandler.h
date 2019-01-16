@@ -77,7 +77,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
         all_input += inputLine;
     }
 
-   // cout << all_input << endl;
+    // cout << all_input << endl;
 
     // Parse input into meaningful data
     auto data = parseInput(all_input);
