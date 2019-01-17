@@ -10,7 +10,9 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-
+/////////////////////////////////////////////////////////////////////
+/// there is a bug, only saves the matrix and not the goal & start///
+/////////////////////////////////////////////////////////////////////
 using namespace std;
 
 class FileCacheManager : public CacheManager<string, string> {
