@@ -31,7 +31,7 @@ namespace boot
         void main_test(string server_type, int port)
         {
             // Initialize searcher & solver (decided based on graphs)
-            Searcher<Cell>* searcher = new AStar<Cell>();
+            Searcher<Cell>* searcher = new BestFirstSearch<Cell>();
             Solver<MATRIX_PROBLEM>* solver = new SearcherSolver<Cell>(searcher);
 
             // Initialize cache manager & client handler
