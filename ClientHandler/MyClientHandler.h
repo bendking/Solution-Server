@@ -92,10 +92,10 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
     string solution;
 
     // Check if problem exist in cache, if not, solve it
-    if (cacheManager->exists(matrix_str))
+    if (cacheManager->exists(all_input))
     {
         // Get solution from cache
-        solution = cacheManager->getSolution(matrix_str);
+        solution = cacheManager->getSolution(all_input);
         // Delete allocated matrix
         delete_matrix(matrix, get<0>(size));
     }
@@ -112,7 +112,7 @@ void MyClientHandler<Problem, Solution>::handleClient(InputStream *input, Output
         // If there is a solution
         else {
             solution = extractSolution(cell);
-            cacheManager->saveSolution(matrix_str, solution);
+            cacheManager->saveSolution(all_input, solution);
         }
         // Clean up
         State<Cell>::deleteStateChain(cell);

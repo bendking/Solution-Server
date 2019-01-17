@@ -37,7 +37,7 @@ public:
     // Get line to format
     string formatLine(string line, char c1 = '\n', char c2 = '$');
     // Undo format
-    string deformatLine(string line, char c1 = '\n', char c2 = '$');
+    string deformatLine(string line, char c1 = '$', char c2 = '\n');
 
 };
 

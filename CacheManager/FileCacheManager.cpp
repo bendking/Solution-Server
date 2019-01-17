@@ -19,15 +19,17 @@ FileCacheManager::~FileCacheManager() {
 //
 
 bool FileCacheManager::exists(string _problem) {
-    _problem = formatLine(_problem);
     bool exists = map.count(_problem) > 0;
     return exists;
 }
 
 string FileCacheManager::getSolution(string _problem) {
-    _problem = formatLine(_problem);
+    if (!exists(_problem)) {
+        return  "error 404";
+    }
+
+
     string solution = map.at(_problem);
-    solution = deformatLine(solution);
     return solution;
 }
 
@@ -56,10 +58,7 @@ void FileCacheManager::loadFromFile()
             if (!problem.empty()) {
                 getline(infile,solution);
 
-                deformatLine(problem);
-                deformatLine(solution);
-
-                map[problem] = solution;
+                map[deformatLine(problem)] = deformatLine(solution);
             }
         }
     }
